@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Railway entrypoint for the existing Ranking Shorts Maker helper backend."""
+"""Railway entrypoint for Ranking Shorts Maker backend."""
 import os
 from http.server import ThreadingHTTPServer
 
-import server
+import social_backend
 
 
-class RailwayHandler(server.Handler):
+class RailwayHandler(social_backend.SocialHandler):
     """Adds CORS so the Vercel frontend can call this backend."""
 
     def end_headers(self):
