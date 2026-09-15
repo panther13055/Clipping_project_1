@@ -1,0 +1,11944 @@
+{
+ "global": {
+  "title_bigrams": {
+   "<s>": {
+    "Ranking": 152
+   },
+   "Ranking": {
+    "Best": 54,
+    "the": 32,
+    "Craziest": 14,
+    "Most": 16,
+    "Funniest": 11,
+    "Coldest": 2,
+    "Worst": 1,
+    "Giant": 1,
+    "Internet's": 1,
+    "Luckiest": 1,
+    "Smartest": 1,
+    "Cutest": 1,
+    "Celebrities": 1,
+    "Perfect": 1,
+    "Crunchiest": 1,
+    "Wildest": 5,
+    "Coolest": 1,
+    "Loudest": 1,
+    "Fastest": 1,
+    "Strongest": 1,
+    "Insane": 1,
+    "Scariest": 1,
+    "Kindest": 1,
+    "Sweetest": 1,
+    "Moments": 1
+   },
+   "Best": {
+    "Pool": 1,
+    "Bike": 1,
+    "Treadmill": 1,
+    "Skateboard": 1,
+    "Winter": 1,
+    "Ladder": 1,
+    "Backyard": 1,
+    "Football": 1,
+    "Free": 1,
+    "Goalkeeper": 1,
+    "Last": 1,
+    "Long": 1,
+    "Solo": 1,
+    "NBA": 4,
+    "Rookie": 1,
+    "Fast": 1,
+    "Street": 1,
+    "Dessert": 1,
+    "Ramen": 1,
+    "Reaction": 1,
+    "NPC": 1,
+    "Vine": 1,
+    "Caught": 1,
+    "Unexpected": 1,
+    "Minecraft": 1,
+    "Fortnite": 1,
+    "Speedrun": 1,
+    "GTA": 1,
+    "Dog": 1,
+    "Zoomies": 1,
+    "Animal": 1,
+    "Celebrity": 2,
+    "Paparazzi": 1,
+    "Mic": 1,
+    "Pressure": 1,
+    "Domino": 1,
+    "Paint": 1,
+    "Chemical": 1,
+    "DIY": 1,
+    "Dry": 1,
+    "Non-Newtonian": 1,
+    "Drift": 1,
+    "Burnouts": 1,
+    "Car": 1,
+    "Gym": 1,
+    "Comeback": 1,
+    "PR": 1,
+    "Parkour": 1,
+    "Skate": 1,
+    "Snowboard": 1,
+    "Senior": 1,
+    "Graduation": 1,
+    "Talent": 1,
+    "School": 1,
+    "Surprise": 1,
+    "Proposal": 1,
+    "Grandparent": 1,
+    "Teammate": 1,
+    "Reunion": 1
+   },
+   "Pool": {
+    "Fails": 1
+   },
+   "Fails": {
+    "</s>": 21
+   },
+   "the": {
+    "Worst": 5,
+    "Funniest": 3,
+    "Best": 9,
+    "Craziest": 2,
+    "Most": 6,
+    "Spiciest": 1,
+    "Weirdest": 1,
+    "Year": 1,
+    "Angriest": 1,
+    "Coldest": 1,
+    "Cleanest": 1,
+    "Coolest": 1,
+    "Wildest": 1
+   },
+   "Worst": {
+    "Trampoline": 1,
+    "Penalty": 1,
+    "Cooking": 1,
+    "Gaming": 1,
+    "Parking": 1,
+    "Gym": 1
+   },
+   "Trampoline": {
+    "Fails": 1
+   },
+   "Bike": {
+    "Fails": 1
+   },
+   "Craziest": {
+    "Water": 1,
+    "Goal": 1,
+    "Football": 1,
+    "NBA": 2,
+    "Food": 1,
+    "Gaming": 1,
+    "Live": 1,
+    "Science": 1,
+    "Electricity": 1,
+    "Car": 1,
+    "Truck": 1,
+    "Feats": 1,
+    "Cliff": 1,
+    "Surf": 1,
+    "Teacher": 1
+   },
+   "Water": {
+    "Slide": 1
+   },
+   "Slide": {
+    "Fails": 1
+   },
+   "Treadmill": {
+    "Fails": 1
+   },
+   "Funniest": {
+    "Wedding": 1,
+    "Referee": 1,
+    "NBA": 1,
+    "Memes": 1,
+    "Kid": 1,
+    "Screams": 1,
+    "Glitches": 1,
+    "Cat": 1,
+    "Farm": 1,
+    "Interview": 1,
+    "Talk": 1,
+    "Ego": 1,
+    "School": 1,
+    "Zoom": 1,
+    "Exam": 1
+   },
+   "Wedding": {
+    "Fails": 1
+   },
+   "Skateboard": {
+    "Fails": 1
+   },
+   "Most": {
+    "Painful": 2,
+    "Disrespectful": 2,
+    "Satisfying": 5,
+    "Cursed": 1,
+    "Random": 1,
+    "Dramatic": 1,
+    "Chaotic": 2,
+    "Awkward": 1,
+    "Oddly": 1,
+    "Explosive": 1,
+    "Impressive": 1,
+    "Fearless": 1,
+    "Relatable": 1,
+    "Wholesome": 1,
+    "Heartwarming": 1
+   },
+   "Painful": {
+    "Parkour": 1,
+    "Gaming": 1
+   },
+   "Parkour": {
+    "Fails": 1,
+    "Lines": 1
+   },
+   "Winter": {
+    "Fails": 1
+   },
+   "Ladder": {
+    "Fails": 1
+   },
+   "Backyard": {
+    "Fails": 1
+   },
+   "Football": {
+    "Fails": 1,
+    "Moments": 1
+   },
+   "Free": {
+    "Kicks": 1,
+    "Solo": 1
+   },
+   "Kicks": {
+    "Ever": 1
+   },
+   "Ever": {
+    "</s>": 21
+   },
+   "Goal": {
+    "Celebrations": 1
+   },
+   "Celebrations": {
+    "</s>": 3
+   },
+   "Goalkeeper": {
+    "Saves": 1
+   },
+   "Saves": {
+    "</s>": 2
+   },
+   "Penalty": {
+    "Misses": 1
+   },
+   "Misses": {
+    "</s>": 1
+   },
+   "Disrespectful": {
+    "Skill": 1,
+    "Crossovers": 1
+   },
+   "Skill": {
+    "Moves": 1
+   },
+   "Moves": {
+    "</s>": 1
+   },
+   "Last": {
+    "Minute": 1
+   },
+   "Minute": {
+    "Goals": 1
+   },
+   "Goals": {
+    "</s>": 1,
+    "Ever": 1
+   },
+   "Referee": {
+    "Moments": 1
+   },
+   "Moments": {
+    "</s>": 29,
+    "Ever": 1,
+    "That": 1
+   },
+   "Long": {
+    "Shots": 1
+   },
+   "Shots": {
+    "Ever": 1,
+    "</s>": 1
+   },
+   "Solo": {
+    "Goals": 1,
+    "Climbs": 1
+   },
+   "NBA": {
+    "Dunks": 1,
+    "Buzzer": 1,
+    "Blocks": 1,
+    "Moments": 1,
+    "Trick": 1,
+    "Fights": 1,
+    "Celebrations": 1
+   },
+   "Dunks": {
+    "</s>": 1
+   },
+   "Buzzer": {
+    "Beaters": 1
+   },
+   "Beaters": {
+    "</s>": 1
+   },
+   "Crossovers": {
+    "</s>": 1
+   },
+   "Blocks": {
+    "Ever": 1
+   },
+   "Coldest": {
+    "Game": 1,
+    "1v5": 1,
+    "Award": 1
+   },
+   "Game": {
+    "Winners": 1
+   },
+   "Winners": {
+    "</s>": 1
+   },
+   "Trick": {
+    "Shots": 1
+   },
+   "Fights": {
+    "</s>": 1
+   },
+   "Rookie": {
+    "Highlights": 1
+   },
+   "Highlights": {
+    "</s>": 1
+   },
+   "Fast": {
+    "Food": 1
+   },
+   "Food": {
+    "Burgers": 1,
+    "Combos": 1,
+    "Ever": 1,
+    "vs": 1,
+    "</s>": 1
+   },
+   "Burgers": {
+    "</s>": 1
+   },
+   "Combos": {
+    "</s>": 1
+   },
+   "Satisfying": {
+    "Cheese": 1,
+    "Videos": 1,
+    "Slime": 1,
+    "Machines": 1,
+    "Fails": 1,
+    "Engine": 1
+   },
+   "Cheese": {
+    "Pulls": 1
+   },
+   "Pulls": {
+    "</s>": 1
+   },
+   "Street": {
+    "Food": 1,
+    "Cars": 1
+   },
+   "Spiciest": {
+    "Foods": 1
+   },
+   "Foods": {
+    "Ever": 1
+   },
+   "Cooking": {
+    "Fails": 1
+   },
+   "Dessert": {
+    "Creations": 1
+   },
+   "Creations": {
+    "</s>": 1
+   },
+   "Weirdest": {
+    "Snacks": 1
+   },
+   "Snacks": {
+    "Ever": 1
+   },
+   "Giant": {
+    "Food": 1
+   },
+   "vs": {
+    "Tiny": 1
+   },
+   "Tiny": {
+    "Food": 1
+   },
+   "Ramen": {
+    "Hacks": 1
+   },
+   "Hacks": {
+    "</s>": 1
+   },
+   "Memes": {
+    "of": 1
+   },
+   "of": {
+    "the": 1,
+    "Strength": 1
+   },
+   "Year": {
+    "</s>": 1
+   },
+   "Reaction": {
+    "Videos": 1
+   },
+   "Videos": {
+    "</s>": 2,
+    "Ever": 3
+   },
+   "Cursed": {
+    "Videos": 1
+   },
+   "NPC": {
+    "Moments": 1
+   },
+   "Kid": {
+    "Moments": 1,
+    "Reactions": 1
+   },
+   "Vine": {
+    "Energy": 1
+   },
+   "Energy": {
+    "Clips": 1
+   },
+   "Clips": {
+    "</s>": 1
+   },
+   "Random": {
+    "Videos": 1
+   },
+   "Caught": {
+    "In": 1
+   },
+   "In": {
+    "4K": 1
+   },
+   "4K": {
+    "Moments": 1
+   },
+   "Internet's": {
+    "Funniest": 1
+   },
+   "Screams": {
+    "</s>": 1
+   },
+   "Unexpected": {
+    "Endings": 1
+   },
+   "Endings": {
+    "</s>": 1
+   },
+   "Gaming": {
+    "Clutches": 1,
+    "Rage": 1,
+    "Moments": 1,
+    "Fails": 1
+   },
+   "Clutches": {
+    "</s>": 2
+   },
+   "Minecraft": {
+    "Builds": 1
+   },
+   "Builds": {
+    "</s>": 1
+   },
+   "Rage": {
+    "Quits": 1
+   },
+   "Quits": {
+    "</s>": 1
+   },
+   "Fortnite": {
+    "Snipes": 1
+   },
+   "Snipes": {
+    "</s>": 1
+   },
+   "Luckiest": {
+    "Gaming": 1
+   },
+   "Speedrun": {
+    "Saves": 1
+   },
+   "Glitches": {
+    "Ever": 1
+   },
+   "GTA": {
+    "Stunts": 1
+   },
+   "Stunts": {
+    "</s>": 1
+   },
+   "1v5": {
+    "Clutches": 1
+   },
+   "Cat": {
+    "Moments": 1
+   },
+   "Dog": {
+    "Fails": 1
+   },
+   "Dramatic": {
+    "Pets": 1
+   },
+   "Pets": {
+    "</s>": 1
+   },
+   "Smartest": {
+    "Animal": 1
+   },
+   "Animal": {
+    "Moments": 1,
+    "Reactions": 1,
+    "Rescues": 1
+   },
+   "Angriest": {
+    "Birds": 1
+   },
+   "Birds": {
+    "Ever": 1
+   },
+   "Zoomies": {
+    "Ever": 1
+   },
+   "Farm": {
+    "Animals": 1
+   },
+   "Animals": {
+    "</s>": 2
+   },
+   "Cutest": {
+    "Baby": 1
+   },
+   "Baby": {
+    "Animals": 1
+   },
+   "Chaotic": {
+    "Pet": 1,
+    "Gym": 1
+   },
+   "Pet": {
+    "Duos": 1
+   },
+   "Duos": {
+    "</s>": 1
+   },
+   "Reactions": {
+    "</s>": 6
+   },
+   "Celebrity": {
+    "Clapbacks": 1,
+    "Fan": 1
+   },
+   "Clapbacks": {
+    "</s>": 1
+   },
+   "Interview": {
+    "Moments": 1
+   },
+   "Awkward": {
+    "Red": 1
+   },
+   "Red": {
+    "Carpet": 1
+   },
+   "Carpet": {
+    "Moments": 1
+   },
+   "Paparazzi": {
+    "Reactions": 1
+   },
+   "Live": {
+    "TV": 1
+   },
+   "TV": {
+    "Moments": 1
+   },
+   "Fan": {
+    "Interactions": 1
+   },
+   "Interactions": {
+    "</s>": 1
+   },
+   "Award": {
+    "Show": 1
+   },
+   "Show": {
+    "Moments": 2,
+    "Fails": 1
+   },
+   "Talk": {
+    "Show": 1
+   },
+   "Mic": {
+    "Drop": 1
+   },
+   "Drop": {
+    "Moments": 1
+   },
+   "Celebrities": {
+    "Being": 1
+   },
+   "Being": {
+    "Normal": 1
+   },
+   "Normal": {
+    "</s>": 1
+   },
+   "Pressure": {
+    "Washing": 1
+   },
+   "Washing": {
+    "Reveals": 1
+   },
+   "Reveals": {
+    "</s>": 1
+   },
+   "Slime": {
+    "Sounds": 1
+   },
+   "Sounds": {
+    "</s>": 3
+   },
+   "Perfect": {
+    "Fit": 1
+   },
+   "Fit": {
+    "Moments": 1
+   },
+   "Domino": {
+    "Runs": 1
+   },
+   "Runs": {
+    "</s>": 2
+   },
+   "Machines": {
+    "</s>": 1
+   },
+   "Paint": {
+    "Mixing": 1
+   },
+   "Mixing": {
+    "Moments": 1
+   },
+   "Crunchiest": {
+    "ASMR": 1
+   },
+   "ASMR": {
+    "Sounds": 1
+   },
+   "Cleanest": {
+    "Cake": 1
+   },
+   "Cake": {
+    "Cuts": 1
+   },
+   "Cuts": {
+    "</s>": 1
+   },
+   "Oddly": {
+    "Satisfying": 1
+   },
+   "Science": {
+    "Experiments": 1
+   },
+   "Experiments": {
+    "</s>": 3
+   },
+   "Chemical": {
+    "Reactions": 1
+   },
+   "Coolest": {
+    "Physics": 1,
+    "Magnet": 1
+   },
+   "Physics": {
+    "Tricks": 1
+   },
+   "Tricks": {
+    "</s>": 3,
+    "Ever": 1
+   },
+   "Explosive": {
+    "Experiments": 1
+   },
+   "DIY": {
+    "Rocket": 1
+   },
+   "Rocket": {
+    "Launches": 1
+   },
+   "Launches": {
+    "</s>": 2
+   },
+   "Wildest": {
+    "Slow": 1,
+    "Police": 1,
+    "Home": 1,
+    "Skydiving": 1,
+    "BASE": 1,
+    "Cafeteria": 1
+   },
+   "Slow": {
+    "Motion": 1
+   },
+   "Motion": {
+    "Moments": 1
+   },
+   "Magnet": {
+    "Tricks": 1
+   },
+   "Dry": {
+    "Ice": 1
+   },
+   "Ice": {
+    "Experiments": 1
+   },
+   "Electricity": {
+    "Arcs": 1
+   },
+   "Arcs": {
+    "</s>": 1
+   },
+   "Non-Newtonian": {
+    "Fluid": 1
+   },
+   "Fluid": {
+    "Tests": 1
+   },
+   "Tests": {
+    "</s>": 1
+   },
+   "Car": {
+    "Launches": 1,
+    "Mods": 1
+   },
+   "Drift": {
+    "Moments": 1
+   },
+   "Loudest": {
+    "Exhausts": 1
+   },
+   "Exhausts": {
+    "Ever": 1
+   },
+   "Parking": {
+    "Fails": 1
+   },
+   "Fastest": {
+    "Street": 1
+   },
+   "Cars": {
+    "</s>": 1
+   },
+   "Burnouts": {
+    "Ever": 1
+   },
+   "Truck": {
+    "Moments": 1
+   },
+   "Engine": {
+    "Sounds": 1
+   },
+   "Police": {
+    "Chases": 1
+   },
+   "Chases": {
+    "</s>": 1
+   },
+   "Mods": {
+    "Ever": 1
+   },
+   "Gym": {
+    "Fails": 1,
+    "Stereotypes": 1,
+    "Moments": 1
+   },
+   "Feats": {
+    "of": 1
+   },
+   "Strength": {
+    "</s>": 1
+   },
+   "Stereotypes": {
+    "</s>": 1
+   },
+   "Impressive": {
+    "Calisthenics": 1
+   },
+   "Calisthenics": {
+    "</s>": 1
+   },
+   "Ego": {
+    "Lifts": 1
+   },
+   "Lifts": {
+    "</s>": 1
+   },
+   "Comeback": {
+    "Transformations": 1
+   },
+   "Transformations": {
+    "</s>": 1
+   },
+   "Home": {
+    "Workouts": 1
+   },
+   "Workouts": {
+    "</s>": 1
+   },
+   "Strongest": {
+    "Old": 1
+   },
+   "Old": {
+    "Guys": 1
+   },
+   "Guys": {
+    "Ever": 1
+   },
+   "PR": {
+    "Celebrations": 1
+   },
+   "Cliff": {
+    "Jumps": 1
+   },
+   "Jumps": {
+    "</s>": 2
+   },
+   "Lines": {
+    "Ever": 1
+   },
+   "Skydiving": {
+    "Moments": 1
+   },
+   "Insane": {
+    "Downhill": 1
+   },
+   "Downhill": {
+    "Runs": 1
+   },
+   "Skate": {
+    "Tricks": 1
+   },
+   "Scariest": {
+    "Free": 1
+   },
+   "Climbs": {
+    "</s>": 1
+   },
+   "Surf": {
+    "Waves": 1
+   },
+   "Waves": {
+    "</s>": 1
+   },
+   "Snowboard": {
+    "Tricks": 1
+   },
+   "Fearless": {
+    "Athletes": 1
+   },
+   "Athletes": {
+    "</s>": 1
+   },
+   "BASE": {
+    "Jumps": 1
+   },
+   "School": {
+    "Moments": 1,
+    "Bus": 1
+   },
+   "Senior": {
+    "Pranks": 1
+   },
+   "Pranks": {
+    "Ever": 1
+   },
+   "Relatable": {
+    "Student": 1
+   },
+   "Student": {
+    "Fails": 1
+   },
+   "Teacher": {
+    "Reactions": 1
+   },
+   "Graduation": {
+    "Fails": 1
+   },
+   "Zoom": {
+    "Class": 1
+   },
+   "Class": {
+    "Moments": 1
+   },
+   "Talent": {
+    "Show": 1
+   },
+   "Cafeteria": {
+    "Moments": 1
+   },
+   "Exam": {
+    "Stories": 1
+   },
+   "Stories": {
+    "</s>": 1
+   },
+   "Bus": {
+    "Moments": 1
+   },
+   "Wholesome": {
+    "Moments": 1
+   },
+   "Surprise": {
+    "Homecomings": 1
+   },
+   "Homecomings": {
+    "</s>": 1
+   },
+   "Kindest": {
+    "Stranger": 1
+   },
+   "Stranger": {
+    "Moments": 1
+   },
+   "Proposal": {
+    "Reactions": 1
+   },
+   "Heartwarming": {
+    "Animal": 1
+   },
+   "Rescues": {
+    "</s>": 1
+   },
+   "Grandparent": {
+    "Moments": 1
+   },
+   "Sweetest": {
+    "Kid": 1
+   },
+   "Teammate": {
+    "Moments": 1
+   },
+   "That": {
+    "Cured": 1
+   },
+   "Cured": {
+    "Sadness": 1
+   },
+   "Sadness": {
+    "</s>": 1
+   },
+   "Reunion": {
+    "Videos": 1
+   }
+  },
+  "label_bigrams": {
+   "<s>": {
+    "The": 151,
+    "Rope": 4,
+    "Sled": 2,
+    "Slip": 4,
+    "Dad": 9,
+    "Ice": 12,
+    "Bro": 21,
+    "Treadmill": 9,
+    "Aaaah": 3,
+    "Front": 5,
+    "Scooter": 3,
+    "Ladder": 4,
+    "Nooo": 3,
+    "Diving": 3,
+    "Trampoline": 3,
+    "Sprinkler": 2,
+    "Instant": 2,
+    "Celebration": 4,
+    "Penalty": 5,
+    "Corner": 6,
+    "Ref": 5,
+    "Grass": 8,
+    "Team": 5,
+    "Nutmeg": 1,
+    "Keeper": 9,
+    "Top": 2,
+    "Open": 4,
+    "Save": 3,
+    "Bicycle": 4,
+    "Last": 3,
+    "Own": 4,
+    "Broken": 6,
+    "Bench": 6,
+    "Shaqtin": 4,
+    "Granny": 8,
+    "Free": 2,
+    "Ankles": 3,
+    "Courtside": 3,
+    "Poster": 6,
+    "Clutch": 3,
+    "360": 4,
+    "No-look": 6,
+    "Half": 3,
+    "Mascot": 2,
+    "Sent": 2,
+    "Sauce": 2,
+    "Spice": 5,
+    "Cheese": 3,
+    "Deep": 6,
+    "Sushi": 7,
+    "Street": 4,
+    "Lava": 4,
+    "Giant": 2,
+    "Crunch": 3,
+    "Crispy": 5,
+    "Smash": 1,
+    "Pan": 6,
+    "Egg": 1,
+    "Noodle": 2,
+    "He": 4,
+    "Caught": 11,
+    "Plot": 4,
+    "Unexplainable": 7,
+    "Delulu": 5,
+    "Grandma": 3,
+    "Main": 4,
+    "Laugh": 4,
+    "Why": 3,
+    "Sound": 7,
+    "Certified": 3,
+    "It": 2,
+    "Loot": 3,
+    "Grandpa": 14,
+    "Creeper": 4,
+    "Build": 6,
+    "Rage": 4,
+    "Pixel": 4,
+    "1v5": 3,
+    "Glitch": 3,
+    "Zero": 5,
+    "Silent": 6,
+    "200": 2,
+    "Physics": 3,
+    "Boss": 3,
+    "Dramatic": 6,
+    "Doggo": 3,
+    "Zoomies": 7,
+    "Goose": 3,
+    "Sneezing": 3,
+    "Parrot": 3,
+    "Ninja": 4,
+    "Heist": 5,
+    "Goat": 3,
+    "Duck": 4,
+    "Turbo": 2,
+    "Cat.exe": 5,
+    "Owl": 3,
+    "Cow": 1,
+    "Translator": 4,
+    "Humble": 5,
+    "Chair": 4,
+    "Umbrella": 7,
+    "Crowd": 3,
+    "Award": 3,
+    "Wardrobe": 3,
+    "Snack": 5,
+    "Mic": 1,
+    "Teleprompter": 1,
+    "Security": 3,
+    "Glass": 2,
+    "Soap": 4,
+    "Wood": 5,
+    "Frosting": 5,
+    "Marble": 2,
+    "Hydraulic": 6,
+    "Carpet": 3,
+    "Laser": 5,
+    "Paint": 5,
+    "Kinetic": 5,
+    "Domino": 2,
+    "Power": 3,
+    "Fire": 6,
+    "Bottle": 6,
+    "Elephant": 6,
+    "Vacuum": 6,
+    "Gallium": 6,
+    "Slow-mo": 3,
+    "Magnet": 1,
+    "Thermite": 5,
+    "Walking": 3,
+    "Mentos": 2,
+    "Dry": 3,
+    "Tesla": 1,
+    "Liquid": 2,
+    "Wheelie": 6,
+    "Parallel": 2,
+    "Snow": 4,
+    "Flame": 5,
+    "Mud": 1,
+    "Speed": 5,
+    "Trailer": 5,
+    "Launch": 4,
+    "Tow": 4,
+    "Dyno": 6,
+    "Burnout": 5,
+    "Valet": 2,
+    "Planche": 2,
+    "One": 5,
+    "Chalk": 8,
+    "Cable": 4,
+    "Kettlebell": 5,
+    "PR": 4,
+    "Backflip": 8,
+    "Curls": 5,
+    "Yoga": 3,
+    "Ego": 4,
+    "Protein": 1,
+    "Kayak": 4,
+    "Train": 4,
+    "Triple": 5,
+    "Human": 4,
+    "Roof": 4,
+    "Wingsuit": 7,
+    "Kickflip": 5,
+    "Slackline": 2,
+    "Pool": 4,
+    "Wave": 2,
+    "No": 1,
+    "Lunch": 4,
+    "Bus": 7,
+    "Pencil": 6,
+    "Backpack": 2,
+    "Whiteboard": 4,
+    "Graduation": 5,
+    "Talent": 3,
+    "Teacher": 5,
+    "Projector": 2,
+    "Balloon": 2,
+    "Lost": 2,
+    "First": 3,
+    "Puppy": 5,
+    "Grandpa's": 4,
+    "Deaf": 5,
+    "Cat": 3,
+    "Shelter": 6,
+    "Teacher's": 6,
+    "Rival": 5,
+    "Reunited": 3,
+    "Soldier": 3
+   },
+   "The": {
+    "chair": 9,
+    "fence": 6,
+    "rainbow": 3,
+    "shimmy": 7,
+    "forbidden": 6,
+    "sigma": 4,
+    "scream": 4,
+    "stare": 10,
+    "luckiest": 5,
+    "disrespect": 4,
+    "betrayal": 4,
+    "guilty": 6,
+    "fake": 5,
+    "photobomb": 5,
+    "clapback": 2,
+    "squeegee": 6,
+    "chalk": 1,
+    "perfect": 8,
+    "chain": 4,
+    "wall": 5,
+    "anti-lag": 2,
+    "human": 3,
+    "gym": 3,
+    "spotter": 2,
+    "90": 4,
+    "ice": 6,
+    "near": 4,
+    "59.5%": 2,
+    "fire": 5,
+    "mic": 1,
+    "forged": 2,
+    "double": 6,
+    "100th": 6,
+    "whole": 1
+   },
+   "chair": {
+    "betrayed": 4,
+    "squeak": 5
+   },
+   "betrayed": {
+    "him": 4
+   },
+   "him": {
+    "</s>": 4,
+    "up": 5
+   },
+   "Rope": {
+    "swing": 4
+   },
+   "swing": {
+    "betrayal": 4
+   },
+   "betrayal": {
+    "</s>": 16
+   },
+   "Sled": {
+    "of": 2
+   },
+   "of": {
+    "doom": 2,
+    "the": 10,
+    "fire": 5
+   },
+   "doom": {
+    "</s>": 2
+   },
+   "Slip": {
+    "n": 4
+   },
+   "n": {
+    "slide": 4
+   },
+   "slide": {
+    "chaos": 4,
+    "fail": 8
+   },
+   "chaos": {
+    "</s>": 4
+   },
+   "Dad": {
+    "reflexes": 5,
+    "learned": 4
+   },
+   "reflexes": {
+    "failed": 5
+   },
+   "failed": {
+    "</s>": 5
+   },
+   "Ice": {
+    "was": 6,
+    "crack": 6
+   },
+   "was": {
+    "undefeated": 6,
+    "on": 1
+   },
+   "undefeated": {
+    "</s>": 6
+   },
+   "Bro": {
+    "forgot": 9,
+    "called": 3,
+    "put": 5,
+    "really": 4
+   },
+   "forgot": {
+    "physics": 4,
+    "the": 5
+   },
+   "physics": {
+    "</s>": 4
+   },
+   "Treadmill": {
+    "launch": 5,
+    "superman": 4
+   },
+   "launch": {
+    "</s>": 5
+   },
+   "Aaaah": {
+    "</s>": 3
+   },
+   "Front": {
+    "flip": 5
+   },
+   "flip": {
+    "disaster": 11
+   },
+   "disaster": {
+    "</s>": 15
+   },
+   "Scooter": {
+    "to": 3
+   },
+   "to": {
+    "the": 5,
+    "orbit": 5
+   },
+   "the": {
+    "shin": 3,
+    "cake": 3,
+    "century": 3,
+    "shadow": 2,
+    "year": 3,
+    "lyrics": 5,
+    "GT3": 4,
+    "gods": 2,
+    "squat": 5,
+    "road": 5,
+    "clouds": 2,
+    "decade": 2,
+    "stairs": 2
+   },
+   "shin": {
+    "</s>": 3
+   },
+   "fence": {
+    "won": 6
+   },
+   "won": {
+    "</s>": 9
+   },
+   "Ladder": {
+    "had": 4
+   },
+   "had": {
+    "other": 4,
+    "a": 5
+   },
+   "other": {
+    "plans": 4
+   },
+   "plans": {
+    "</s>": 4
+   },
+   "Nooo": {
+    "not": 3
+   },
+   "not": {
+    "the": 3
+   },
+   "cake": {
+    "</s>": 3
+   },
+   "Diving": {
+    "goes": 3
+   },
+   "goes": {
+    "wrong": 7,
+    "to...": 3
+   },
+   "wrong": {
+    "</s>": 10
+   },
+   "Trampoline": {
+    "said": 3
+   },
+   "said": {
+    "no": 3,
+    "that": 4
+   },
+   "no": {
+    "</s>": 3,
+    "fear": 1
+   },
+   "Sprinkler": {
+    "ambush": 2
+   },
+   "ambush": {
+    "</s>": 6
+   },
+   "Instant": {
+    "regret": 2
+   },
+   "regret": {
+    "</s>": 5
+   },
+   "Celebration": {
+    "goes": 4
+   },
+   "Penalty": {
+    "to": 5
+   },
+   "orbit": {
+    "</s>": 5
+   },
+   "Corner": {
+    "flag": 6
+   },
+   "flag": {
+    "dance": 6,
+    "</s>": 3
+   },
+   "dance": {
+    "</s>": 6
+   },
+   "Ref": {
+    "got": 5
+   },
+   "got": {
+    "trucked": 5,
+    "dunked": 2,
+    "juked": 3
+   },
+   "trucked": {
+    "</s>": 5
+   },
+   "Grass": {
+    "slide": 8
+   },
+   "fail": {
+    "</s>": 11
+   },
+   "Team": {
+    "bus": 5
+   },
+   "bus": {
+    "parked": 5,
+    "sang": 1
+   },
+   "parked": {
+    "</s>": 5
+   },
+   "Nutmeg": {
+    "disrespect": 1
+   },
+   "disrespect": {
+    "</s>": 1,
+    "emote": 4
+   },
+   "Keeper": {
+    "had": 5,
+    "scores": 4
+   },
+   "a": {
+    "nap": 5
+   },
+   "nap": {
+    "</s>": 5
+   },
+   "Top": {
+    "bins": 2
+   },
+   "bins": {
+    "</s>": 2
+   },
+   "Open": {
+    "goal": 4
+   },
+   "goal": {
+    "missed": 4,
+    "horror": 4
+   },
+   "missed": {
+    "</s>": 4
+   },
+   "Save": {
+    "of": 3
+   },
+   "century": {
+    "</s>": 3
+   },
+   "Bicycle": {
+    "kick": 4
+   },
+   "kick": {
+    "madness": 4
+   },
+   "madness": {
+    "</s>": 8
+   },
+   "scores": {
+    "</s>": 4
+   },
+   "Last": {
+    "second": 3
+   },
+   "second": {
+    "dagger": 3
+   },
+   "dagger": {
+    "</s>": 3
+   },
+   "Own": {
+    "goal": 4
+   },
+   "horror": {
+    "</s>": 4
+   },
+   "Broken": {
+    "ankles": 2,
+    "backboard": 4
+   },
+   "ankles": {
+    "</s>": 2
+   },
+   "rainbow": {
+    "flick": 3
+   },
+   "flick": {
+    "</s>": 3
+   },
+   "Bench": {
+    "went": 6
+   },
+   "went": {
+    "nuclear": 6
+   },
+   "nuclear": {
+    "</s>": 6
+   },
+   "Shaqtin": {
+    "moment": 4
+   },
+   "moment": {
+    "</s>": 5
+   },
+   "Granny": {
+    "shot": 4,
+    "in": 4
+   },
+   "shot": {
+    "troll": 4,
+    "ever": 5
+   },
+   "troll": {
+    "</s>": 4
+   },
+   "shimmy": {
+    "</s>": 7
+   },
+   "Free": {
+    "throw": 2
+   },
+   "throw": {
+    "airball": 2
+   },
+   "airball": {
+    "</s>": 2
+   },
+   "Ankles": {
+    "gone": 3
+   },
+   "gone": {
+    "</s>": 3
+   },
+   "backboard": {
+    "</s>": 4
+   },
+   "Courtside": {
+    "spill": 3
+   },
+   "spill": {
+    "</s>": 3
+   },
+   "Poster": {
+    "dunk": 6
+   },
+   "dunk": {
+    "</s>": 6
+   },
+   "called": {
+    "game": 3
+   },
+   "game": {
+    "</s>": 3
+   },
+   "Clutch": {
+    "gene": 3
+   },
+   "gene": {
+    "activated": 3
+   },
+   "activated": {
+    "</s>": 3
+   },
+   "360": {
+    "windmill": 4
+   },
+   "windmill": {
+    "</s>": 4
+   },
+   "No-look": {
+    "dime": 6
+   },
+   "dime": {
+    "</s>": 6
+   },
+   "Half": {
+    "court": 3
+   },
+   "court": {
+    "cash": 3
+   },
+   "cash": {
+    "</s>": 3
+   },
+   "Mascot": {
+    "got": 2
+   },
+   "dunked": {
+    "on": 2
+   },
+   "on": {
+    "</s>": 3,
+    "for": 3,
+    "patrol": 3,
+    "oobleck": 3
+   },
+   "Sent": {
+    "to": 2
+   },
+   "shadow": {
+    "realm": 2
+   },
+   "realm": {
+    "</s>": 2
+   },
+   "Sauce": {
+    "waterfall": 2
+   },
+   "waterfall": {
+    "</s>": 9,
+    "drop": 4
+   },
+   "Spice": {
+    "level": 5
+   },
+   "level": {
+    "demon": 5,
+    "precision": 5
+   },
+   "demon": {
+    "</s>": 9
+   },
+   "Cheese": {
+    "pull": 3
+   },
+   "pull": {
+    "heaven": 3,
+    "infinite": 2,
+    "scream": 6
+   },
+   "heaven": {
+    "</s>": 3
+   },
+   "forbidden": {
+    "combo": 6
+   },
+   "combo": {
+    "</s>": 6
+   },
+   "Deep": {
+    "fried": 6
+   },
+   "fried": {
+    "everything": 6
+   },
+   "everything": {
+    "</s>": 6
+   },
+   "Sushi": {
+    "torch": 7
+   },
+   "torch": {
+    "magic": 7
+   },
+   "magic": {
+    "</s>": 9
+   },
+   "Street": {
+    "wok": 4
+   },
+   "wok": {
+    "inferno": 4
+   },
+   "inferno": {
+    "</s>": 4
+   },
+   "put": {
+    "pineapple": 5
+   },
+   "pineapple": {
+    "</s>": 5
+   },
+   "Lava": {
+    "chocolate": 4
+   },
+   "chocolate": {
+    "core": 4
+   },
+   "core": {
+    "</s>": 4
+   },
+   "Giant": {
+    "candy": 2
+   },
+   "candy": {
+    "jawbreaker": 2
+   },
+   "jawbreaker": {
+    "</s>": 2
+   },
+   "Crunch": {
+    "of": 3
+   },
+   "year": {
+    "</s>": 3
+   },
+   "Crispy": {
+    "ASMR": 5
+   },
+   "ASMR": {
+    "bite": 5
+   },
+   "bite": {
+    "</s>": 5
+   },
+   "Smash": {
+    "patty": 1
+   },
+   "patty": {
+    "sizzle": 1
+   },
+   "sizzle": {
+    "</s>": 1
+   },
+   "Pan": {
+    "flip": 6
+   },
+   "Egg": {
+    "yolk": 1
+   },
+   "yolk": {
+    "explosion": 1
+   },
+   "explosion": {
+    "</s>": 2
+   },
+   "Noodle": {
+    "pull": 2
+   },
+   "infinite": {
+    "</s>": 2
+   },
+   "He": {
+    "chose": 4
+   },
+   "chose": {
+    "violence": 4
+   },
+   "violence": {
+    "</s>": 4
+   },
+   "Caught": {
+    "in": 4,
+    "sleeping": 7
+   },
+   "in": {
+    "4K": 4,
+    "the": 11
+   },
+   "4K": {
+    "</s>": 4
+   },
+   "Plot": {
+    "twist": 4
+   },
+   "twist": {
+    "ending": 4,
+    "</s>": 3
+   },
+   "ending": {
+    "</s>": 4
+   },
+   "Unexplainable": {
+    "</s>": 7
+   },
+   "Delulu": {
+    "confidence": 5
+   },
+   "confidence": {
+    "</s>": 5
+   },
+   "Grandma": {
+    "won": 3
+   },
+   "Main": {
+    "character": 4
+   },
+   "character": {
+    "energy": 4
+   },
+   "energy": {
+    "</s>": 4
+   },
+   "Laugh": {
+    "track": 4
+   },
+   "track": {
+    "broke": 4
+   },
+   "broke": {
+    "</s>": 7
+   },
+   "Why": {
+    "is": 3
+   },
+   "is": {
+    "he": 3
+   },
+   "he": {
+    "like": 3
+   },
+   "like": {
+    "this": 3
+   },
+   "this": {
+    "</s>": 6
+   },
+   "sigma": {
+    "walk": 4
+   },
+   "walk": {
+    "</s>": 7
+   },
+   "really": {
+    "said": 4
+   },
+   "that": {
+    "</s>": 4
+   },
+   "Sound": {
+    "on": 3,
+    "wave": 4
+   },
+   "for": {
+    "this": 3
+   },
+   "scream": {
+    "</s>": 17,
+    "solo": 3
+   },
+   "stare": {
+    "</s>": 4,
+    "down": 6
+   },
+   "Certified": {
+    "NPC": 3
+   },
+   "NPC": {
+    "</s>": 3
+   },
+   "It": {
+    "gets": 2
+   },
+   "gets": {
+    "worse": 2
+   },
+   "worse": {
+    "</s>": 2
+   },
+   "Loot": {
+    "goblin": 3
+   },
+   "goblin": {
+    "down": 3
+   },
+   "down": {
+    "</s>": 9,
+    "12": 5,
+    "the": 2
+   },
+   "Grandpa": {
+    "gamer": 8,
+    "reps": 6
+   },
+   "gamer": {
+    "wins": 8
+   },
+   "wins": {
+    "</s>": 8
+   },
+   "Creeper": {
+    "ambush": 4
+   },
+   "Build": {
+    "battle": 6
+   },
+   "battle": {
+    "god": 6
+   },
+   "god": {
+    "</s>": 6
+   },
+   "Rage": {
+    "quit": 4
+   },
+   "quit": {
+    "speedrun": 4
+   },
+   "speedrun": {
+    "</s>": 4
+   },
+   "Pixel": {
+    "perfect": 4
+   },
+   "perfect": {
+    "save": 4,
+    "fit": 6,
+    "rev": 2
+   },
+   "save": {
+    "</s>": 6
+   },
+   "1v5": {
+    "clutch": 3
+   },
+   "clutch": {
+    "</s>": 3
+   },
+   "Glitch": {
+    "dimension": 3
+   },
+   "dimension": {
+    "</s>": 3
+   },
+   "luckiest": {
+    "shot": 5
+   },
+   "ever": {
+    "</s>": 5
+   },
+   "Zero": {
+    "HP": 4,
+    "gravity": 1
+   },
+   "HP": {
+    "escape": 4
+   },
+   "escape": {
+    "</s>": 4,
+    "artist": 5
+   },
+   "Silent": {
+    "ninja": 6
+   },
+   "ninja": {
+    "defuse": 6
+   },
+   "defuse": {
+    "</s>": 6
+   },
+   "200": {
+    "IQ": 2
+   },
+   "IQ": {
+    "play": 2
+   },
+   "play": {
+    "</s>": 2
+   },
+   "emote": {
+    "</s>": 4
+   },
+   "Physics": {
+    "broke": 3
+   },
+   "Boss": {
+    "fight": 3
+   },
+   "fight": {
+    "betrayal": 3
+   },
+   "Dramatic": {
+    "faint": 6
+   },
+   "faint": {
+    "</s>": 6
+   },
+   "Doggo": {
+    "door": 3
+   },
+   "door": {
+    "fail": 3
+   },
+   "Zoomies": {
+    "unlocked": 7
+   },
+   "unlocked": {
+    "</s>": 7
+   },
+   "guilty": {
+    "look": 6
+   },
+   "look": {
+    "</s>": 6
+   },
+   "Goose": {
+    "on": 3
+   },
+   "patrol": {
+    "</s>": 3
+   },
+   "Sneezing": {
+    "baby": 3
+   },
+   "baby": {
+    "panda": 3,
+    "hears": 5
+   },
+   "panda": {
+    "</s>": 3
+   },
+   "Parrot": {
+    "roast": 3
+   },
+   "roast": {
+    "session": 3
+   },
+   "session": {
+    "</s>": 3
+   },
+   "Ninja": {
+    "kitten": 4
+   },
+   "kitten": {
+    "</s>": 4
+   },
+   "Heist": {
+    "accomplished": 5
+   },
+   "accomplished": {
+    "</s>": 5
+   },
+   "Goat": {
+    "scream": 3
+   },
+   "solo": {
+    "</s>": 8
+   },
+   "Duck": {
+    "stampede": 4
+   },
+   "stampede": {
+    "</s>": 4
+   },
+   "Turbo": {
+    "hamster": 2
+   },
+   "hamster": {
+    "</s>": 2
+   },
+   "Cat.exe": {
+    "stopped": 5
+   },
+   "stopped": {
+    "</s>": 5
+   },
+   "Owl": {
+    "judging": 3
+   },
+   "judging": {
+    "you": 3
+   },
+   "you": {
+    "</s>": 3
+   },
+   "Cow": {
+    "cuddle": 1
+   },
+   "cuddle": {
+    "mode": 1
+   },
+   "mode": {
+    "</s>": 1
+   },
+   "Translator": {
+    "gave": 4
+   },
+   "gave": {
+    "up": 4
+   },
+   "up": {
+    "</s>": 9
+   },
+   "fake": {
+    "laugh": 5
+   },
+   "laugh": {
+    "</s>": 5
+   },
+   "lyrics": {
+    "</s>": 5
+   },
+   "Humble": {
+    "flex": 5
+   },
+   "flex": {
+    "</s>": 5
+   },
+   "Chair": {
+    "too": 4
+   },
+   "too": {
+    "small": 4
+   },
+   "small": {
+    "</s>": 4
+   },
+   "Umbrella": {
+    "bodyguard": 7
+   },
+   "bodyguard": {
+    "</s>": 7
+   },
+   "Crowd": {
+    "surf": 3
+   },
+   "surf": {
+    "regret": 3
+   },
+   "Award": {
+    "goes": 3
+   },
+   "to...": {
+    "wrong": 3
+   },
+   "photobomb": {
+    "</s>": 5
+   },
+   "Wardrobe": {
+    "rescue": 3
+   },
+   "rescue": {
+    "</s>": 3
+   },
+   "Snack": {
+    "run": 5
+   },
+   "run": {
+    "disguise": 5,
+    "flawless": 2,
+    "</s>": 3
+   },
+   "disguise": {
+    "</s>": 5
+   },
+   "clapback": {
+    "</s>": 2
+   },
+   "Mic": {
+    "drop": 1
+   },
+   "drop": {
+    "literal": 1,
+    "</s>": 8,
+    "symphony": 6
+   },
+   "literal": {
+    "</s>": 1
+   },
+   "Teleprompter": {
+    "panic": 1
+   },
+   "panic": {
+    "</s>": 1
+   },
+   "Security": {
+    "got": 3
+   },
+   "juked": {
+    "</s>": 3
+   },
+   "Glass": {
+    "blob": 2
+   },
+   "blob": {
+    "magic": 2
+   },
+   "Soap": {
+    "curl": 4
+   },
+   "curl": {
+    "shave": 4
+   },
+   "shave": {
+    "</s>": 4
+   },
+   "crack": {
+    "symphony": 6
+   },
+   "symphony": {
+    "</s>": 12
+   },
+   "squeegee": {
+    "finale": 6
+   },
+   "finale": {
+    "</s>": 6
+   },
+   "Wood": {
+    "lathe": 5
+   },
+   "lathe": {
+    "silk": 5
+   },
+   "silk": {
+    "</s>": 5
+   },
+   "Frosting": {
+    "robot": 5
+   },
+   "robot": {
+    "</s>": 5
+   },
+   "Marble": {
+    "run": 2
+   },
+   "flawless": {
+    "</s>": 2
+   },
+   "Hydraulic": {
+    "crunch": 2,
+    "watermelon": 4
+   },
+   "crunch": {
+    "</s>": 2
+   },
+   "Carpet": {
+    "line": 3
+   },
+   "line": {
+    "therapy": 3
+   },
+   "therapy": {
+    "</s>": 3
+   },
+   "chalk": {
+    "snap": 1
+   },
+   "snap": {
+    "</s>": 1
+   },
+   "Laser": {
+    "level": 5
+   },
+   "precision": {
+    "</s>": 5
+   },
+   "Paint": {
+    "swirl": 5
+   },
+   "swirl": {
+    "hypnosis": 5
+   },
+   "hypnosis": {
+    "</s>": 5
+   },
+   "Kinetic": {
+    "sand": 5
+   },
+   "sand": {
+    "slice": 5
+   },
+   "slice": {
+    "</s>": 5
+   },
+   "fit": {
+    "</s>": 6
+   },
+   "Domino": {
+    "galaxy": 2
+   },
+   "galaxy": {
+    "</s>": 2
+   },
+   "Power": {
+    "wash": 3
+   },
+   "wash": {
+    "reveal": 3
+   },
+   "reveal": {
+    "</s>": 3
+   },
+   "Fire": {
+    "tornado": 6
+   },
+   "tornado": {
+    "</s>": 6
+   },
+   "Bottle": {
+    "rocket": 6
+   },
+   "rocket": {
+    "overkill": 6
+   },
+   "overkill": {
+    "</s>": 6
+   },
+   "Elephant": {
+    "toothpaste": 6
+   },
+   "toothpaste": {
+    "</s>": 6
+   },
+   "chain": {
+    "fountain": 4
+   },
+   "fountain": {
+    "</s>": 4
+   },
+   "Vacuum": {
+    "marshmallow": 6
+   },
+   "marshmallow": {
+    "</s>": 6
+   },
+   "Gallium": {
+    "spoon": 6
+   },
+   "spoon": {
+    "melt": 6
+   },
+   "melt": {
+    "</s>": 6
+   },
+   "Slow-mo": {
+    "balloon": 3
+   },
+   "balloon": {
+    "burst": 3
+   },
+   "burst": {
+    "</s>": 3
+   },
+   "watermelon": {
+    "</s>": 4
+   },
+   "wave": {
+    "art": 4
+   },
+   "art": {
+    "</s>": 4
+   },
+   "Magnet": {
+    "levitation": 1
+   },
+   "levitation": {
+    "</s>": 1
+   },
+   "Thermite": {
+    "vs": 5
+   },
+   "vs": {
+    "ice": 5
+   },
+   "ice": {
+    "</s>": 5,
+    "scream": 3,
+    "couloir": 6
+   },
+   "Walking": {
+    "on": 3
+   },
+   "oobleck": {
+    "</s>": 3
+   },
+   "Mentos": {
+    "volcano": 2
+   },
+   "volcano": {
+    "row": 2
+   },
+   "row": {
+    "</s>": 2
+   },
+   "Dry": {
+    "ice": 3
+   },
+   "Tesla": {
+    "coil": 1
+   },
+   "coil": {
+    "concert": 1
+   },
+   "concert": {
+    "</s>": 1
+   },
+   "Liquid": {
+    "nitrogen": 2
+   },
+   "nitrogen": {
+    "cloud": 2
+   },
+   "cloud": {
+    "</s>": 2,
+    "entrance": 8
+   },
+   "Wheelie": {
+    "truck": 6
+   },
+   "truck": {
+    "</s>": 6,
+    "irony": 4
+   },
+   "Parallel": {
+    "parking": 2
+   },
+   "parking": {
+    "crime": 2
+   },
+   "crime": {
+    "</s>": 2
+   },
+   "Snow": {
+    "drift": 4
+   },
+   "drift": {
+    "ballet": 4
+   },
+   "ballet": {
+    "</s>": 4
+   },
+   "Flame": {
+    "spitter": 5
+   },
+   "spitter": {
+    "</s>": 5
+   },
+   "Mud": {
+    "pit": 1
+   },
+   "pit": {
+    "victory": 1
+   },
+   "victory": {
+    "</s>": 1
+   },
+   "Speed": {
+    "bump": 5
+   },
+   "bump": {
+    "betrayal": 5
+   },
+   "Trailer": {
+    "escape": 5
+   },
+   "artist": {
+    "</s>": 5
+   },
+   "Launch": {
+    "control": 4
+   },
+   "control": {
+    "demon": 4
+   },
+   "Tow": {
+    "truck": 4
+   },
+   "irony": {
+    "</s>": 4
+   },
+   "Dyno": {
+    "pull": 6
+   },
+   "GT3": {
+    "</s>": 4
+   },
+   "Burnout": {
+    "ring": 5
+   },
+   "ring": {
+    "of": 5
+   },
+   "fire": {
+    "</s>": 5,
+    "drill": 5
+   },
+   "wall": {
+    "tap": 5
+   },
+   "tap": {
+    "</s>": 5
+   },
+   "rev": {
+    "match": 2
+   },
+   "match": {
+    "</s>": 2
+   },
+   "anti-lag": {
+    "bark": 2
+   },
+   "bark": {
+    "</s>": 2
+   },
+   "Valet": {
+    "nightmare": 2
+   },
+   "nightmare": {
+    "</s>": 2
+   },
+   "Planche": {
+    "of": 2
+   },
+   "gods": {
+    "</s>": 2
+   },
+   "human": {
+    "flag": 3
+   },
+   "reps": {
+    "out": 6
+   },
+   "out": {
+    "</s>": 6
+   },
+   "One": {
+    "arm": 5
+   },
+   "arm": {
+    "wonder": 5
+   },
+   "wonder": {
+    "</s>": 5
+   },
+   "Chalk": {
+    "cloud": 8
+   },
+   "entrance": {
+    "</s>": 8
+   },
+   "Cable": {
+    "machine": 4
+   },
+   "machine": {
+    "whip": 4
+   },
+   "whip": {
+    "</s>": 4
+   },
+   "Kettlebell": {
+    "juggling": 5
+   },
+   "juggling": {
+    "</s>": 5
+   },
+   "PR": {
+    "scream": 4,
+    "celebration": 3
+   },
+   "superman": {
+    "</s>": 4
+   },
+   "Backflip": {
+    "PR": 3,
+    "over": 5
+   },
+   "celebration": {
+    "</s>": 3
+   },
+   "gym": {
+    "crab": 3
+   },
+   "crab": {
+    "walk": 3
+   },
+   "Curls": {
+    "in": 5
+   },
+   "squat": {
+    "rack": 5
+   },
+   "rack": {
+    "</s>": 5
+   },
+   "spotter": {
+    "save": 2
+   },
+   "Yoga": {
+    "ball": 3
+   },
+   "ball": {
+    "roulette": 3
+   },
+   "roulette": {
+    "</s>": 3
+   },
+   "Ego": {
+    "lift": 4
+   },
+   "lift": {
+    "disaster": 4
+   },
+   "Protein": {
+    "shaker": 1
+   },
+   "shaker": {
+    "explosion": 1
+   },
+   "Kayak": {
+    "waterfall": 4
+   },
+   "Train": {
+    "grind": 4
+   },
+   "grind": {
+    "exit": 4
+   },
+   "exit": {
+    "</s>": 4
+   },
+   "Triple": {
+    "cork": 5
+   },
+   "cork": {
+    "stomped": 5
+   },
+   "stomped": {
+    "</s>": 5
+   },
+   "Human": {
+    "slingshot": 4
+   },
+   "slingshot": {
+    "</s>": 4
+   },
+   "Roof": {
+    "gap": 4
+   },
+   "gap": {
+    "madness": 4
+   },
+   "over": {
+    "the": 5
+   },
+   "road": {
+    "</s>": 5
+   },
+   "Wingsuit": {
+    "canyon": 7
+   },
+   "canyon": {
+    "thread": 7
+   },
+   "thread": {
+    "</s>": 7
+   },
+   "90": {
+    "foot": 4
+   },
+   "foot": {
+    "drop": 4
+   },
+   "Kickflip": {
+    "down": 5
+   },
+   "12": {
+    "</s>": 5
+   },
+   "Slackline": {
+    "in": 2
+   },
+   "clouds": {
+    "</s>": 2
+   },
+   "couloir": {
+    "</s>": 6
+   },
+   "Pool": {
+    "vert": 4
+   },
+   "vert": {
+    "blast": 4
+   },
+   "blast": {
+    "</s>": 4
+   },
+   "gravity": {
+    "moment": 1
+   },
+   "near": {
+    "miss": 4
+   },
+   "miss": {
+    "</s>": 4
+   },
+   "Wave": {
+    "of": 2
+   },
+   "decade": {
+    "</s>": 2
+   },
+   "No": {
+    "hands": 1
+   },
+   "hands": {
+    "no": 1
+   },
+   "fear": {
+    "</s>": 1
+   },
+   "Lunch": {
+    "tray": 4
+   },
+   "tray": {
+    "domino": 4
+   },
+   "domino": {
+    "</s>": 4
+   },
+   "Bus": {
+    "window": 7
+   },
+   "window": {
+    "waterfall": 7
+   },
+   "Pencil": {
+    "drop": 6
+   },
+   "squeak": {
+    "solo": 5
+   },
+   "Backpack": {
+    "down": 2
+   },
+   "stairs": {
+    "</s>": 2
+   },
+   "Whiteboard": {
+    "masterpiece": 4
+   },
+   "masterpiece": {
+    "</s>": 4
+   },
+   "59.5%": {
+    "negotiation": 2
+   },
+   "negotiation": {
+    "</s>": 2
+   },
+   "Graduation": {
+    "cap": 5
+   },
+   "cap": {
+    "frisbee": 5
+   },
+   "frisbee": {
+    "</s>": 5
+   },
+   "sleeping": {
+    "</s>": 7
+   },
+   "drill": {
+    "timing": 5
+   },
+   "timing": {
+    "</s>": 5
+   },
+   "Talent": {
+    "show": 3
+   },
+   "show": {
+    "plot": 3
+   },
+   "plot": {
+    "twist": 3
+   },
+   "Teacher": {
+    "dunks": 5
+   },
+   "dunks": {
+    "back": 5
+   },
+   "back": {
+    "</s>": 5
+   },
+   "Projector": {
+    "jumpscare": 2
+   },
+   "jumpscare": {
+    "</s>": 2
+   },
+   "Balloon": {
+    "avalanche": 2
+   },
+   "avalanche": {
+    "</s>": 2
+   },
+   "mic": {
+    "was": 1
+   },
+   "forged": {
+    "sick": 2
+   },
+   "sick": {
+    "note": 2
+   },
+   "note": {
+    "</s>": 2
+   },
+   "learned": {
+    "braids": 4
+   },
+   "braids": {
+    "</s>": 4
+   },
+   "Lost": {
+    "wallet": 2
+   },
+   "wallet": {
+    "returned": 2
+   },
+   "returned": {
+    "</s>": 2
+   },
+   "First": {
+    "home": 3
+   },
+   "home": {
+    "run": 3
+   },
+   "Puppy": {
+    "surprise": 5
+   },
+   "surprise": {
+    "box": 5,
+    "</s>": 3
+   },
+   "box": {
+    "</s>": 5
+   },
+   "Grandpa's": {
+    "first": 4
+   },
+   "first": {
+    "gift": 4
+   },
+   "gift": {
+    "</s>": 4
+   },
+   "Deaf": {
+    "baby": 5
+   },
+   "hears": {
+    "mom": 5
+   },
+   "mom": {
+    "</s>": 5
+   },
+   "double": {
+    "proposal": 6
+   },
+   "proposal": {
+    "</s>": 6
+   },
+   "Cat": {
+    "found": 3
+   },
+   "found": {
+    "after": 3
+   },
+   "after": {
+    "flood": 3,
+    "10": 3
+   },
+   "flood": {
+    "</s>": 3
+   },
+   "Shelter": {
+    "dog": 6
+   },
+   "dog": {
+    "chosen": 6
+   },
+   "chosen": {
+    "</s>": 6
+   },
+   "100th": {
+    "birthday": 6
+   },
+   "birthday": {
+    "</s>": 6
+   },
+   "Teacher's": {
+    "jacket": 6
+   },
+   "jacket": {
+    "fund": 6
+   },
+   "fund": {
+    "</s>": 6
+   },
+   "Rival": {
+    "helped": 5
+   },
+   "helped": {
+    "him": 5
+   },
+   "Reunited": {
+    "after": 3
+   },
+   "10": {
+    "years": 3
+   },
+   "years": {
+    "</s>": 3
+   },
+   "Soldier": {
+    "surprise": 3
+   },
+   "whole": {
+    "bus": 1
+   },
+   "sang": {
+    "</s>": 1
+   }
+  },
+  "emoji_freq": {
+   "🪑": 8,
+   "🌊": 9,
+   "🛷": 2,
+   "😱": 14,
+   "🙈": 5,
+   "🧊": 12,
+   "😂": 4,
+   "🚀": 16,
+   "💀": 10,
+   "😵": 11,
+   "🛴": 3,
+   "🥴": 14,
+   "🪜": 4,
+   "🎂": 9,
+   "😭": 10,
+   "🤸": 6,
+   "💦": 2,
+   "☠️": 2,
+   "🙃": 4,
+   "🕺": 13,
+   "🤕": 5,
+   "🚌": 12,
+   "😤": 1,
+   "😴": 12,
+   "🎯": 12,
+   "🧱": 8,
+   "🔥": 21,
+   "🧤": 4,
+   "🗡️": 6,
+   "🌈": 3,
+   "🤯": 6,
+   "🤡": 4,
+   "👵": 11,
+   "😬": 7,
+   "💥": 10,
+   "🍿": 3,
+   "🥶": 6,
+   "🧬": 3,
+   "🌪️": 10,
+   "💰": 6,
+   "🦖": 2,
+   "🚫": 2,
+   "🫗": 2,
+   "🌶️": 5,
+   "🧀": 3,
+   "🤢": 6,
+   "🛢️": 6,
+   "🥘": 4,
+   "🍍": 5,
+   "🍫": 4,
+   "🍬": 2,
+   "🔊": 6,
+   "🎧": 5,
+   "🍔": 1,
+   "🍳": 6,
+   "🥚": 1,
+   "🍜": 2,
+   "😈": 4,
+   "📸": 9,
+   "🔄": 4,
+   "❓": 7,
+   "💅": 5,
+   "🌟": 4,
+   "🤣": 4,
+   "🚶": 4,
+   "🎤": 9,
+   "🗣️": 4,
+   "👁️": 4,
+   "🤖": 8,
+   "📉": 2,
+   "👴": 14,
+   "🏗️": 6,
+   "😡": 4,
+   "🌀": 8,
+   "🍀": 5,
+   "🩸": 4,
+   "🥷": 10,
+   "🧠": 2,
+   "💃": 4,
+   "🚗": 5,
+   "🎭": 6,
+   "🚪": 3,
+   "💨": 7,
+   "😾": 4,
+   "🥺": 6,
+   "🪿": 3,
+   "🐼": 3,
+   "🦜": 3,
+   "🍗": 5,
+   "🐐": 3,
+   "🦆": 4,
+   "🐹": 2,
+   "🐱": 5,
+   "🦉": 3,
+   "🐮": 1,
+   "🌐": 4,
+   "🎶": 6,
+   "💎": 5,
+   "👀": 6,
+   "☂️": 7,
+   "🏆": 3,
+   "🧵": 3,
+   "🕶️": 5,
+   "🎙️": 2,
+   "📺": 1,
+   "🏃": 6,
+   "🔮": 2,
+   "🧴": 4,
+   "🪟": 6,
+   "🪵": 5,
+   "🔵": 2,
+   "🗜️": 2,
+   "🧹": 3,
+   "✏️": 7,
+   "📐": 5,
+   "🎨": 9,
+   "🏖️": 5,
+   "🧩": 6,
+   "🌌": 3,
+   "🧼": 3,
+   "🐘": 6,
+   "⛓️": 4,
+   "🍡": 6,
+   "🥄": 9,
+   "💧": 3,
+   "🍉": 4,
+   "🎵": 4,
+   "🧲": 1,
+   "🌋": 2,
+   "⚡": 1,
+   "☁️": 2,
+   "🛻": 6,
+   "❄️": 10,
+   "🟤": 1,
+   "🐢": 5,
+   "🎪": 5,
+   "🚦": 4,
+   "🪝": 4,
+   "📈": 6,
+   "⭕": 5,
+   "🎼": 2,
+   "🎫": 2,
+   "🕊️": 2,
+   "🚩": 3,
+   "💪": 5,
+   "🌫️": 10,
+   "🪢": 4,
+   "🤹": 5,
+   "📢": 4,
+   "🦸": 4,
+   "🦀": 3,
+   "🙄": 5,
+   "🛟": 2,
+   "🎲": 3,
+   "🥤": 1,
+   "🛶": 4,
+   "🚉": 4,
+   "🏹": 4,
+   "🏙️": 4,
+   "🛣️": 5,
+   "🪂": 7,
+   "🛹": 5,
+   "🏊": 4,
+   "😮‍💨": 4,
+   "🧗": 1,
+   "🥡": 4,
+   "🎺": 5,
+   "🎒": 2,
+   "📊": 2,
+   "🎓": 5,
+   "🚨": 5,
+   "🏀": 5,
+   "📽️": 2,
+   "🎈": 2,
+   "📝": 2,
+   "🎀": 4,
+   "👛": 2,
+   "⚾": 3,
+   "🐶": 5,
+   "🎁": 4,
+   "🦻": 5,
+   "💍": 6,
+   "🐈": 3,
+   "🏠": 6,
+   "🧥": 6,
+   "🤝": 5,
+   "✈️": 3,
+   "🥹": 3
+  },
+  "num_ranks_dist": {
+   "6": 107,
+   "5": 30,
+   "10": 15
+  },
+  "reveal_order_dist": {
+   "best_to_worst": 15,
+   "worst_to_best": 137
+  },
+  "accent_placement": {
+   "2|0": 61,
+   "2|1": 26,
+   "1|0": 20,
+   "1|1": 27,
+   "1|2": 14,
+   "2|3": 1,
+   "1|3": 2,
+   "3|1": 1
+  },
+  "color_pos_freq": [
+   {
+    "gold": 152
+   },
+   {
+    "white": 152
+   },
+   {
+    "red": 152
+   }
+  ],
+  "duration_by_pos": {
+   "1": {
+    "mean": 5.18,
+    "std": 0.77,
+    "n": 152
+   },
+   "2": {
+    "mean": 4.07,
+    "std": 1.08,
+    "n": 152
+   },
+   "3": {
+    "mean": 3.99,
+    "std": 1.12,
+    "n": 152
+   },
+   "4": {
+    "mean": 4.07,
+    "std": 1.21,
+    "n": 152
+   },
+   "5": {
+    "mean": 3.97,
+    "std": 1.24,
+    "n": 152
+   },
+   "6": {
+    "mean": 4.02,
+    "std": 1.16,
+    "n": 122
+   },
+   "7": {
+    "mean": 3.8,
+    "std": 1.28,
+    "n": 15
+   },
+   "8": {
+    "mean": 3.93,
+    "std": 1.34,
+    "n": 15
+   },
+   "9": {
+    "mean": 4.6,
+    "std": 1.2,
+    "n": 15
+   },
+   "10": {
+    "mean": 4.4,
+    "std": 1.08,
+    "n": 15
+   }
+  },
+  "train_labels": [
+   "1v5 clutch",
+   "200 IQ play",
+   "360 windmill",
+   "Aaaah",
+   "Ankles gone",
+   "Award goes to... wrong",
+   "Backflip PR celebration",
+   "Backflip over the road",
+   "Backpack down the stairs",
+   "Balloon avalanche",
+   "Bench went nuclear",
+   "Bicycle kick madness",
+   "Boss fight betrayal",
+   "Bottle rocket overkill",
+   "Bro called game",
+   "Bro forgot physics",
+   "Bro forgot the lyrics",
+   "Bro put pineapple",
+   "Bro really said that",
+   "Broken ankles",
+   "Broken backboard",
+   "Build battle god",
+   "Burnout ring of fire",
+   "Bus window waterfall",
+   "Cable machine whip",
+   "Carpet line therapy",
+   "Cat found after flood",
+   "Cat.exe stopped",
+   "Caught in 4K",
+   "Caught sleeping",
+   "Celebration goes wrong",
+   "Certified NPC",
+   "Chair too small",
+   "Chalk cloud entrance",
+   "Cheese pull heaven",
+   "Clutch gene activated",
+   "Corner flag dance",
+   "Courtside spill",
+   "Cow cuddle mode",
+   "Creeper ambush",
+   "Crispy ASMR bite",
+   "Crowd surf regret",
+   "Crunch of the year",
+   "Curls in the squat rack",
+   "Dad learned braids",
+   "Dad reflexes failed",
+   "Deaf baby hears mom",
+   "Deep fried everything",
+   "Delulu confidence",
+   "Diving goes wrong",
+   "Doggo door fail",
+   "Domino galaxy",
+   "Dramatic faint",
+   "Dry ice scream",
+   "Duck stampede",
+   "Dyno pull scream",
+   "Egg yolk explosion",
+   "Ego lift disaster",
+   "Elephant toothpaste",
+   "Fire tornado",
+   "First home run",
+   "Flame spitter",
+   "Free throw airball",
+   "Front flip disaster",
+   "Frosting robot",
+   "Gallium spoon melt",
+   "Giant candy jawbreaker",
+   "Glass blob magic",
+   "Glitch dimension",
+   "Goat scream solo",
+   "Goose on patrol",
+   "Graduation cap frisbee",
+   "Grandma won",
+   "Grandpa gamer wins",
+   "Grandpa reps out",
+   "Grandpa's first gift",
+   "Granny in the GT3",
+   "Granny shot troll",
+   "Grass slide fail",
+   "Half court cash",
+   "He chose violence",
+   "Heist accomplished",
+   "Human slingshot",
+   "Humble flex",
+   "Hydraulic crunch",
+   "Hydraulic watermelon",
+   "Ice crack symphony",
+   "Ice was undefeated",
+   "Instant regret",
+   "It gets worse",
+   "Kayak waterfall drop",
+   "Keeper had a nap",
+   "Keeper scores",
+   "Kettlebell juggling",
+   "Kickflip down 12",
+   "Kinetic sand slice",
+   "Ladder had other plans",
+   "Laser level precision",
+   "Last second dagger",
+   "Laugh track broke",
+   "Launch control demon",
+   "Lava chocolate core",
+   "Liquid nitrogen cloud",
+   "Loot goblin down",
+   "Lost wallet returned",
+   "Lunch tray domino",
+   "Magnet levitation",
+   "Main character energy",
+   "Marble run flawless",
+   "Mascot got dunked on",
+   "Mentos volcano row",
+   "Mic drop literal",
+   "Mud pit victory",
+   "Ninja kitten",
+   "No hands no fear",
+   "No-look dime",
+   "Noodle pull infinite",
+   "Nooo not the cake",
+   "Nutmeg disrespect",
+   "One arm wonder",
+   "Open goal missed",
+   "Owl judging you",
+   "Own goal horror",
+   "PR scream",
+   "Paint swirl hypnosis",
+   "Pan flip disaster",
+   "Parallel parking crime",
+   "Parrot roast session",
+   "Penalty to orbit",
+   "Pencil drop symphony",
+   "Physics broke",
+   "Pixel perfect save",
+   "Planche of the gods",
+   "Plot twist ending",
+   "Pool vert blast",
+   "Poster dunk",
+   "Power wash reveal",
+   "Projector jumpscare",
+   "Protein shaker explosion",
+   "Puppy surprise box",
+   "Rage quit speedrun",
+   "Ref got trucked",
+   "Reunited after 10 years",
+   "Rival helped him up",
+   "Roof gap madness",
+   "Rope swing betrayal",
+   "Sauce waterfall",
+   "Save of the century",
+   "Scooter to the shin",
+   "Security got juked",
+   "Sent to the shadow realm",
+   "Shaqtin moment",
+   "Shelter dog chosen",
+   "Silent ninja defuse",
+   "Slackline in the clouds",
+   "Sled of doom",
+   "Slip n slide chaos",
+   "Slow-mo balloon burst",
+   "Smash patty sizzle",
+   "Snack run disguise",
+   "Sneezing baby panda",
+   "Snow drift ballet",
+   "Soap curl shave",
+   "Soldier surprise",
+   "Sound on for this",
+   "Sound wave art",
+   "Speed bump betrayal",
+   "Spice level demon",
+   "Sprinkler ambush",
+   "Street wok inferno",
+   "Sushi torch magic",
+   "Talent show plot twist",
+   "Teacher dunks back",
+   "Teacher's jacket fund",
+   "Team bus parked",
+   "Teleprompter panic",
+   "Tesla coil concert",
+   "The 100th birthday",
+   "The 59.5% negotiation",
+   "The 90 foot drop",
+   "The anti-lag bark",
+   "The betrayal",
+   "The chain fountain",
+   "The chair betrayed him",
+   "The chair squeak solo",
+   "The chalk snap",
+   "The clapback",
+   "The disrespect emote",
+   "The double proposal",
+   "The fake laugh",
+   "The fence won",
+   "The fire drill timing",
+   "The forbidden combo",
+   "The forged sick note",
+   "The guilty look",
+   "The gym crab walk",
+   "The human flag",
+   "The ice couloir",
+   "The luckiest shot ever",
+   "The mic was on",
+   "The near miss",
+   "The perfect fit",
+   "The perfect rev match",
+   "The photobomb",
+   "The rainbow flick",
+   "The scream",
+   "The shimmy",
+   "The sigma walk",
+   "The spotter save",
+   "The squeegee finale",
+   "The stare",
+   "The stare down",
+   "The wall tap",
+   "The whole bus sang",
+   "Thermite vs ice",
+   "Top bins",
+   "Tow truck irony",
+   "Trailer escape artist",
+   "Train grind exit",
+   "Trampoline said no",
+   "Translator gave up",
+   "Treadmill launch",
+   "Treadmill superman",
+   "Triple cork stomped",
+   "Turbo hamster",
+   "Umbrella bodyguard",
+   "Unexplainable",
+   "Vacuum marshmallow",
+   "Valet nightmare",
+   "Walking on oobleck",
+   "Wardrobe rescue",
+   "Wave of the decade",
+   "Wheelie truck",
+   "Whiteboard masterpiece",
+   "Why is he like this",
+   "Wingsuit canyon thread",
+   "Wood lathe silk",
+   "Yoga ball roulette",
+   "Zero HP escape",
+   "Zero gravity moment",
+   "Zoomies unlocked"
+  ],
+  "train_titles": [
+   "ranking best animal reactions",
+   "ranking best backyard fails",
+   "ranking best bike fails",
+   "ranking best burnouts ever",
+   "ranking best car mods ever",
+   "ranking best caught in 4k moments",
+   "ranking best celebrity fan interactions",
+   "ranking best chemical reactions",
+   "ranking best comeback transformations",
+   "ranking best dessert creations",
+   "ranking best diy rocket launches",
+   "ranking best dog fails",
+   "ranking best drift moments",
+   "ranking best dry ice experiments",
+   "ranking best football fails",
+   "ranking best fortnite snipes",
+   "ranking best goalkeeper saves",
+   "ranking best graduation fails",
+   "ranking best grandparent moments",
+   "ranking best gta stunts",
+   "ranking best gym stereotypes",
+   "ranking best last minute goals",
+   "ranking best long shots ever",
+   "ranking best mic drop moments",
+   "ranking best minecraft builds",
+   "ranking best nba blocks ever",
+   "ranking best nba buzzer beaters",
+   "ranking best nba trick shots",
+   "ranking best non-newtonian fluid tests",
+   "ranking best npc moments",
+   "ranking best paint mixing moments",
+   "ranking best paparazzi reactions",
+   "ranking best parkour lines ever",
+   "ranking best pool fails",
+   "ranking best pr celebrations",
+   "ranking best pressure washing reveals",
+   "ranking best proposal reactions",
+   "ranking best reaction videos",
+   "ranking best reunion videos ever",
+   "ranking best rookie highlights",
+   "ranking best school bus moments",
+   "ranking best senior pranks ever",
+   "ranking best skate tricks ever",
+   "ranking best skateboard fails",
+   "ranking best snowboard tricks",
+   "ranking best solo goals ever",
+   "ranking best street food ever",
+   "ranking best surprise homecomings",
+   "ranking best talent show moments",
+   "ranking best teammate moments",
+   "ranking best treadmill fails",
+   "ranking best unexpected endings",
+   "ranking best winter fails",
+   "ranking best zoomies ever",
+   "ranking celebrities being normal",
+   "ranking coldest 1v5 clutches",
+   "ranking coldest game winners",
+   "ranking coolest magnet tricks",
+   "ranking craziest car launches",
+   "ranking craziest cliff jumps",
+   "ranking craziest feats of strength",
+   "ranking craziest food combos",
+   "ranking craziest gaming clutches",
+   "ranking craziest goal celebrations",
+   "ranking craziest live tv moments",
+   "ranking craziest nba dunks",
+   "ranking craziest nba fights",
+   "ranking craziest science experiments",
+   "ranking craziest surf waves",
+   "ranking craziest teacher reactions",
+   "ranking craziest truck moments",
+   "ranking craziest water slide fails",
+   "ranking crunchiest asmr sounds",
+   "ranking cutest baby animals",
+   "ranking fastest street cars",
+   "ranking funniest ego lifts",
+   "ranking funniest exam stories",
+   "ranking funniest farm animals",
+   "ranking funniest glitches ever",
+   "ranking funniest interview moments",
+   "ranking funniest kid moments",
+   "ranking funniest nba moments",
+   "ranking funniest referee moments",
+   "ranking funniest school moments",
+   "ranking funniest talk show fails",
+   "ranking funniest zoom class moments",
+   "ranking giant food vs tiny food",
+   "ranking insane downhill runs",
+   "ranking internet's funniest screams",
+   "ranking kindest stranger moments",
+   "ranking loudest exhausts ever",
+   "ranking luckiest gaming moments",
+   "ranking moments that cured sadness",
+   "ranking most awkward red carpet moments",
+   "ranking most chaotic pet duos",
+   "ranking most disrespectful crossovers",
+   "ranking most disrespectful skill moves",
+   "ranking most explosive experiments",
+   "ranking most fearless athletes",
+   "ranking most heartwarming animal rescues",
+   "ranking most impressive calisthenics",
+   "ranking most oddly satisfying fails",
+   "ranking most painful gaming fails",
+   "ranking most painful parkour fails",
+   "ranking most random videos ever",
+   "ranking most relatable student fails",
+   "ranking most satisfying engine sounds",
+   "ranking most satisfying machines",
+   "ranking most satisfying slime sounds",
+   "ranking perfect fit moments",
+   "ranking scariest free solo climbs",
+   "ranking smartest animal moments",
+   "ranking strongest old guys ever",
+   "ranking sweetest kid reactions",
+   "ranking the angriest birds ever",
+   "ranking the best celebrity clapbacks",
+   "ranking the best domino runs",
+   "ranking the best fast food burgers",
+   "ranking the best free kicks ever",
+   "ranking the best ladder fails",
+   "ranking the best nba celebrations",
+   "ranking the best ramen hacks",
+   "ranking the best speedrun saves",
+   "ranking the best vine energy clips",
+   "ranking the cleanest cake cuts",
+   "ranking the coldest award show moments",
+   "ranking the coolest physics tricks",
+   "ranking the craziest electricity arcs",
+   "ranking the craziest football moments",
+   "ranking the funniest cat moments",
+   "ranking the funniest memes of the year",
+   "ranking the funniest wedding fails",
+   "ranking the most chaotic gym moments",
+   "ranking the most cursed videos",
+   "ranking the most dramatic pets",
+   "ranking the most satisfying cheese pulls",
+   "ranking the most satisfying videos ever",
+   "ranking the most wholesome moments ever",
+   "ranking the spiciest foods ever",
+   "ranking the weirdest snacks ever",
+   "ranking the wildest cafeteria moments",
+   "ranking the worst gaming rage quits",
+   "ranking the worst gym fails",
+   "ranking the worst parking fails",
+   "ranking the worst penalty misses",
+   "ranking the worst trampoline fails",
+   "ranking wildest base jumps",
+   "ranking wildest home workouts",
+   "ranking wildest police chases",
+   "ranking wildest skydiving moments",
+   "ranking wildest slow motion moments",
+   "ranking worst cooking fails"
+  ]
+ },
+ "niches": {
+  "fails": {
+   "title_bigrams": {
+    "<s>": {
+     "Ranking": 132,
+     "Top": 11,
+     "Pool": 1,
+     "Trampoline": 1,
+     "Bike": 1,
+     "Water": 1,
+     "Treadmill": 1,
+     "Wedding": 1,
+     "Skateboard": 1,
+     "Parkour": 1,
+     "Winter": 1,
+     "Ladder": 1,
+     "Backyard": 1
+    },
+    "Ranking": {
+     "Best": 28,
+     "the": 36,
+     "Craziest": 12,
+     "Most": 23,
+     "Funniest": 11,
+     "Pool": 2,
+     "Trampoline": 2,
+     "Bike": 2,
+     "Water": 2,
+     "Treadmill": 2,
+     "Wedding": 2,
+     "Skateboard": 2,
+     "Parkour": 2,
+     "Winter": 2,
+     "Ladder": 2,
+     "Backyard": 2
+    },
+    "Best": {
+     "Pool": 4,
+     "Bike": 4,
+     "Treadmill": 4,
+     "Skateboard": 4,
+     "Winter": 4,
+     "Ladder": 4,
+     "Backyard": 4,
+     "Trampoline": 3,
+     "Water": 3,
+     "Wedding": 3,
+     "Parkour": 3,
+     "</s>": 11
+    },
+    "Pool": {
+     "Fails": 3,
+     "Moments": 1,
+     "</s>": 6,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Fails": {
+     "</s>": 33
+    },
+    "the": {
+     "Worst": 23,
+     "Funniest": 1,
+     "Best": 12,
+     "Internet": 11
+    },
+    "Worst": {
+     "Trampoline": 3,
+     "Pool": 2,
+     "Bike": 3,
+     "Water": 3,
+     "Treadmill": 2,
+     "Wedding": 2,
+     "Skateboard": 2,
+     "Parkour": 3,
+     "Winter": 2,
+     "Ladder": 2,
+     "Backyard": 3,
+     "to": 11
+    },
+    "Trampoline": {
+     "Fails": 3,
+     "Moments": 1,
+     "</s>": 6,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Bike": {
+     "Fails": 3,
+     "Moments": 1,
+     "</s>": 6,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Craziest": {
+     "Water": 2,
+     "Pool": 1,
+     "Trampoline": 1,
+     "Bike": 1,
+     "Treadmill": 1,
+     "Wedding": 2,
+     "Skateboard": 2,
+     "Parkour": 1,
+     "Winter": 1,
+     "Ladder": 2,
+     "Backyard": 1
+    },
+    "Water": {
+     "Slide": 14
+    },
+    "Slide": {
+     "Fails": 3,
+     "Moments": 1,
+     "</s>": 6,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Treadmill": {
+     "Fails": 3,
+     "Moments": 1,
+     "</s>": 6,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Funniest": {
+     "Wedding": 2,
+     "Pool": 1,
+     "Trampoline": 1,
+     "Bike": 1,
+     "Water": 1,
+     "Treadmill": 2,
+     "Skateboard": 1,
+     "Parkour": 1,
+     "Winter": 2,
+     "Ladder": 1,
+     "Backyard": 1
+    },
+    "Wedding": {
+     "Fails": 3,
+     "Moments": 1,
+     "</s>": 6,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Skateboard": {
+     "Fails": 3,
+     "Moments": 1,
+     "</s>": 6,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Most": {
+     "Painful": 12,
+     "Instant": 2,
+     "Worst": 4,
+     "Funniest": 2,
+     "Craziest": 3
+    },
+    "Painful": {
+     "Parkour": 2,
+     "Pool": 1,
+     "Trampoline": 1,
+     "Bike": 1,
+     "Water": 1,
+     "Treadmill": 1,
+     "Wedding": 1,
+     "Skateboard": 1,
+     "Winter": 1,
+     "Ladder": 1,
+     "Backyard": 1
+    },
+    "Parkour": {
+     "Fails": 3,
+     "Moments": 1,
+     "</s>": 6,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Winter": {
+     "Fails": 3,
+     "Moments": 1,
+     "</s>": 6,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Ladder": {
+     "Fails": 3,
+     "Moments": 1,
+     "</s>": 6,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Backyard": {
+     "Fails": 3,
+     "Moments": 1,
+     "</s>": 6,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Moments": {
+     "</s>": 11
+    },
+    "Instant": {
+     "Regret": 2
+    },
+    "Regret": {
+     "Pool": 1,
+     "Trampoline": 1
+    },
+    "Top": {
+     "7": 2,
+     "10": 5,
+     "5": 4
+    },
+    "7": {
+     "Pool": 1,
+     "Ladder": 1
+    },
+    "Ranked": {
+     "</s>": 11
+    },
+    "10": {
+     "Trampoline": 1,
+     "Treadmill": 1,
+     "Parkour": 1,
+     "Winter": 1,
+     "Backyard": 1
+    },
+    "5": {
+     "Bike": 1,
+     "Water": 1,
+     "Wedding": 1,
+     "Skateboard": 1
+    },
+    "Tier": {
+     "List": 11
+    },
+    "List": {
+     "</s>": 11
+    },
+    "From": {
+     "Worst": 11
+    },
+    "to": {
+     "Best": 11
+    },
+    "Until": {
+     "#1": 11
+    },
+    "#1": {
+     "Breaks": 11
+    },
+    "Breaks": {
+     "the": 11
+    },
+    "Internet": {
+     "</s>": 11
+    }
+   },
+   "label_bigrams": {
+    "<s>": {
+     "The": 16,
+     "Rope": 4,
+     "Sled": 2,
+     "Slip": 4,
+     "Dad": 5,
+     "Ice": 6,
+     "Bro": 5,
+     "Treadmill": 6,
+     "Aaaah": 3,
+     "Front": 5,
+     "Scooter": 3,
+     "Ladder": 4,
+     "Nooo": 3,
+     "Diving": 3,
+     "Trampoline": 3,
+     "Sprinkler": 2,
+     "Instant": 3,
+     "Skateboard": 1,
+     "Wedding": 2,
+     "Backyard": 2,
+     "Bike": 2,
+     "Slide": 1,
+     "Winter": 1,
+     "Pool": 2
+    },
+    "The": {
+     "chair": 4,
+     "fence": 6,
+     "Treadmill": 1,
+     "Parkour": 1,
+     "Backyard": 1,
+     "Wedding": 1,
+     "Trampoline": 1,
+     "Skateboard": 1
+    },
+    "chair": {
+     "betrayed": 4
+    },
+    "betrayed": {
+     "him": 10
+    },
+    "him": {
+     "</s>": 10
+    },
+    "Rope": {
+     "swing": 4
+    },
+    "swing": {
+     "betrayal": 4
+    },
+    "betrayal": {
+     "</s>": 4
+    },
+    "Sled": {
+     "of": 2
+    },
+    "of": {
+     "doom": 2
+    },
+    "doom": {
+     "</s>": 2
+    },
+    "Slip": {
+     "n": 4
+    },
+    "n": {
+     "slide": 4
+    },
+    "slide": {
+     "chaos": 4
+    },
+    "chaos": {
+     "</s>": 4
+    },
+    "Dad": {
+     "reflexes": 5
+    },
+    "reflexes": {
+     "failed": 5
+    },
+    "failed": {
+     "</s>": 5
+    },
+    "Ice": {
+     "was": 6
+    },
+    "was": {
+     "undefeated": 6
+    },
+    "undefeated": {
+     "</s>": 6
+    },
+    "Bro": {
+     "forgot": 5
+    },
+    "forgot": {
+     "physics": 5
+    },
+    "physics": {
+     "</s>": 5
+    },
+    "Treadmill": {
+     "launch": 5,
+     "goes": 1,
+     "won": 1
+    },
+    "launch": {
+     "</s>": 5
+    },
+    "Aaaah": {
+     "</s>": 3
+    },
+    "Front": {
+     "flip": 5
+    },
+    "flip": {
+     "disaster": 5
+    },
+    "disaster": {
+     "</s>": 5
+    },
+    "Scooter": {
+     "to": 3
+    },
+    "to": {
+     "the": 3
+    },
+    "the": {
+     "shin": 3,
+     "cake": 3
+    },
+    "shin": {
+     "</s>": 3
+    },
+    "fence": {
+     "won": 6
+    },
+    "won": {
+     "</s>": 12
+    },
+    "Ladder": {
+     "had": 4
+    },
+    "had": {
+     "other": 4
+    },
+    "other": {
+     "plans": 4
+    },
+    "plans": {
+     "</s>": 4
+    },
+    "Nooo": {
+     "not": 3
+    },
+    "not": {
+     "the": 3
+    },
+    "cake": {
+     "</s>": 3
+    },
+    "Diving": {
+     "goes": 3
+    },
+    "goes": {
+     "wrong": 9
+    },
+    "wrong": {
+     "</s>": 9
+    },
+    "Trampoline": {
+     "said": 3,
+     "won": 1
+    },
+    "said": {
+     "no": 3
+    },
+    "no": {
+     "</s>": 3
+    },
+    "Sprinkler": {
+     "ambush": 2
+    },
+    "ambush": {
+     "</s>": 2
+    },
+    "Instant": {
+     "regret": 3
+    },
+    "regret": {
+     "</s>": 3
+    },
+    "Skateboard": {
+     "betrayed": 1,
+     "won": 1
+    },
+    "Wedding": {
+     "betrayed": 2,
+     "won": 1
+    },
+    "Backyard": {
+     "betrayed": 2,
+     "won": 1
+    },
+    "Bike": {
+     "betrayed": 1,
+     "goes": 1
+    },
+    "Slide": {
+     "goes": 1
+    },
+    "Winter": {
+     "goes": 1
+    },
+    "Pool": {
+     "goes": 2
+    },
+    "Parkour": {
+     "won": 1
+    }
+   },
+   "emoji_freq": {
+    "🪑": 4,
+    "🌊": 4,
+    "🛷": 2,
+    "😱": 4,
+    "🙈": 5,
+    "🧊": 6,
+    "😂": 4,
+    "🚀": 5,
+    "💀": 3,
+    "😵": 5,
+    "🛴": 3,
+    "🥴": 6,
+    "🪜": 4,
+    "🎂": 3,
+    "😭": 3,
+    "🤸": 3,
+    "💦": 2,
+    "☠️": 2
+   },
+   "num_ranks_dist": {
+    "6": 8,
+    "5": 2,
+    "10": 1
+   },
+   "reveal_order_dist": {
+    "best_to_worst": 2,
+    "worst_to_best": 9
+   },
+   "accent_placement": {
+    "2|0": 10,
+    "2|1": 1
+   },
+   "color_pos_freq": [
+    {
+     "gold": 11
+    },
+    {
+     "white": 11
+    },
+    {
+     "red": 11
+    }
+   ],
+   "duration_by_pos": {
+    "1": {
+     "mean": 5.64,
+     "std": 0.64,
+     "n": 11
+    },
+    "2": {
+     "mean": 3.64,
+     "std": 1.07,
+     "n": 11
+    },
+    "3": {
+     "mean": 4.55,
+     "std": 1.3,
+     "n": 11
+    },
+    "4": {
+     "mean": 3.91,
+     "std": 1.16,
+     "n": 11
+    },
+    "5": {
+     "mean": 4.73,
+     "std": 0.62,
+     "n": 11
+    },
+    "6": {
+     "mean": 4.22,
+     "std": 1.13,
+     "n": 9
+    },
+    "7": {
+     "mean": 4.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "8": {
+     "mean": 2.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "9": {
+     "mean": 6.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "10": {
+     "mean": 5.0,
+     "std": 0.0,
+     "n": 1
+    }
+   },
+   "train_labels": [
+    "Aaaah",
+    "Bro forgot physics",
+    "Dad reflexes failed",
+    "Diving goes wrong",
+    "Front flip disaster",
+    "Ice was undefeated",
+    "Instant regret",
+    "Ladder had other plans",
+    "Nooo not the cake",
+    "Rope swing betrayal",
+    "Scooter to the shin",
+    "Sled of doom",
+    "Slip n slide chaos",
+    "Sprinkler ambush",
+    "The chair betrayed him",
+    "The fence won",
+    "Trampoline said no",
+    "Treadmill launch"
+   ],
+   "train_titles": [
+    "ranking best backyard fails",
+    "ranking best bike fails",
+    "ranking best pool fails",
+    "ranking best skateboard fails",
+    "ranking best treadmill fails",
+    "ranking best winter fails",
+    "ranking craziest water slide fails",
+    "ranking most painful parkour fails",
+    "ranking the best ladder fails",
+    "ranking the funniest wedding fails",
+    "ranking the worst trampoline fails"
+   ]
+  },
+  "football": {
+   "title_bigrams": {
+    "<s>": {
+     "Ranking": 99,
+     "Top": 8,
+     "Fails": 1,
+     "Free": 1,
+     "Celebrations": 1,
+     "Saves": 1,
+     "Penalty": 1,
+     "Skill": 1,
+     "Last": 1,
+     "Solo": 1
+    },
+    "Ranking": {
+     "Best": 21,
+     "the": 27,
+     "Craziest": 9,
+     "Most": 17,
+     "Funniest": 9,
+     "Fails": 2,
+     "Free": 2,
+     "Celebrations": 2,
+     "Saves": 2,
+     "Penalty": 2,
+     "Skill": 2,
+     "Last": 2,
+     "Solo": 2
+    },
+    "Best": {
+     "Football": 9,
+     "Free": 4,
+     "Goalkeeper": 1,
+     "Last": 4,
+     "Long": 1,
+     "Solo": 4,
+     "Fails": 3,
+     "Celebrations": 3,
+     "Saves": 3,
+     "Penalty": 3,
+     "Skill": 3,
+     "</s>": 8
+    },
+    "Football": {
+     "Fails": 2,
+     "Moments": 1,
+     "Free": 1,
+     "Celebrations": 1,
+     "Saves": 1,
+     "Penalty": 1,
+     "Skill": 1,
+     "Last": 1,
+     "Solo": 1
+    },
+    "Fails": {
+     "</s>": 9,
+     "Ever": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "the": {
+     "Best": 17,
+     "Worst": 9,
+     "Craziest": 1,
+     "Internet": 8
+    },
+    "Free": {
+     "Kicks": 14
+    },
+    "Kicks": {
+     "Ever": 2,
+     "</s>": 8,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Ever": {
+     "</s>": 11
+    },
+    "Craziest": {
+     "Goal": 1,
+     "Football": 1,
+     "Fails": 2,
+     "Free": 1,
+     "Celebrations": 1,
+     "Saves": 1,
+     "Penalty": 2,
+     "Skill": 1,
+     "Last": 1,
+     "Solo": 1
+    },
+    "Goal": {
+     "Celebrations": 1
+    },
+    "Celebrations": {
+     "</s>": 9,
+     "Ever": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Goalkeeper": {
+     "Saves": 1
+    },
+    "Saves": {
+     "</s>": 9,
+     "Ever": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Worst": {
+     "Penalty": 2,
+     "Fails": 1,
+     "Free": 1,
+     "Celebrations": 1,
+     "Saves": 1,
+     "Skill": 1,
+     "Last": 1,
+     "Solo": 1,
+     "to": 8
+    },
+    "Penalty": {
+     "Misses": 14
+    },
+    "Misses": {
+     "</s>": 9,
+     "Ever": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Most": {
+     "Disrespectful": 11,
+     "Craziest": 2,
+     "Cleanest": 1,
+     "Coldest": 3
+    },
+    "Disrespectful": {
+     "Skill": 2,
+     "Fails": 1,
+     "Free": 1,
+     "Celebrations": 2,
+     "Saves": 2,
+     "Penalty": 1,
+     "Last": 1,
+     "Solo": 1
+    },
+    "Skill": {
+     "Moves": 14
+    },
+    "Moves": {
+     "</s>": 9,
+     "Ever": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Last": {
+     "Minute": 14
+    },
+    "Minute": {
+     "Goals": 14
+    },
+    "Goals": {
+     "</s>": 17,
+     "Ever": 3,
+     "Ranked": 2,
+     "Tier": 2,
+     "From": 2,
+     "Until": 2
+    },
+    "Funniest": {
+     "Referee": 1,
+     "Fails": 1,
+     "Free": 1,
+     "Celebrations": 1,
+     "Saves": 1,
+     "Penalty": 1,
+     "Skill": 1,
+     "Last": 1,
+     "Solo": 1
+    },
+    "Referee": {
+     "Moments": 1
+    },
+    "Moments": {
+     "</s>": 2
+    },
+    "Long": {
+     "Shots": 1
+    },
+    "Shots": {
+     "Ever": 1
+    },
+    "Solo": {
+     "Goals": 14
+    },
+    "Cleanest": {
+     "Free": 1
+    },
+    "Coldest": {
+     "Skill": 1,
+     "Last": 1,
+     "Solo": 1
+    },
+    "Top": {
+     "7": 4,
+     "5": 2,
+     "10": 2
+    },
+    "7": {
+     "Fails": 1,
+     "Celebrations": 1,
+     "Saves": 1,
+     "Solo": 1
+    },
+    "Ranked": {
+     "</s>": 8
+    },
+    "5": {
+     "Free": 1,
+     "Last": 1
+    },
+    "10": {
+     "Penalty": 1,
+     "Skill": 1
+    },
+    "Tier": {
+     "List": 8
+    },
+    "List": {
+     "</s>": 8
+    },
+    "From": {
+     "Worst": 8
+    },
+    "to": {
+     "Best": 8
+    },
+    "Until": {
+     "#1": 8
+    },
+    "#1": {
+     "Breaks": 8
+    },
+    "Breaks": {
+     "the": 8
+    },
+    "Internet": {
+     "</s>": 8
+    }
+   },
+   "label_bigrams": {
+    "<s>": {
+     "Celebration": 4,
+     "Penalty": 5,
+     "Corner": 6,
+     "Ref": 5,
+     "Grass": 8,
+     "Team": 5,
+     "Nutmeg": 1,
+     "Keeper": 10,
+     "Top": 3,
+     "Open": 4,
+     "Save": 4,
+     "Bicycle": 4,
+     "Last": 3,
+     "Own": 5,
+     "Broken": 3,
+     "The": 3,
+     "Move": 1,
+     "Miss": 3,
+     "Goal": 1
+    },
+    "Celebration": {
+     "goes": 4
+    },
+    "goes": {
+     "wrong": 4
+    },
+    "wrong": {
+     "</s>": 4
+    },
+    "Penalty": {
+     "to": 5
+    },
+    "to": {
+     "orbit": 5
+    },
+    "orbit": {
+     "</s>": 5
+    },
+    "Corner": {
+     "flag": 6
+    },
+    "flag": {
+     "dance": 6
+    },
+    "dance": {
+     "</s>": 6
+    },
+    "Ref": {
+     "got": 5
+    },
+    "got": {
+     "trucked": 5
+    },
+    "trucked": {
+     "</s>": 5
+    },
+    "Grass": {
+     "slide": 8
+    },
+    "slide": {
+     "fail": 8
+    },
+    "fail": {
+     "</s>": 8
+    },
+    "Team": {
+     "bus": 5
+    },
+    "bus": {
+     "parked": 5
+    },
+    "parked": {
+     "</s>": 5
+    },
+    "Nutmeg": {
+     "disrespect": 1
+    },
+    "disrespect": {
+     "</s>": 7
+    },
+    "Keeper": {
+     "had": 6,
+     "scores": 4
+    },
+    "had": {
+     "a": 6
+    },
+    "a": {
+     "nap": 6
+    },
+    "nap": {
+     "</s>": 6
+    },
+    "Top": {
+     "bins": 3
+    },
+    "bins": {
+     "</s>": 3
+    },
+    "Open": {
+     "goal": 4
+    },
+    "goal": {
+     "missed": 4,
+     "horror": 5
+    },
+    "missed": {
+     "</s>": 4
+    },
+    "Save": {
+     "of": 3,
+     "disrespect": 1
+    },
+    "of": {
+     "the": 3
+    },
+    "the": {
+     "century": 3
+    },
+    "century": {
+     "</s>": 3
+    },
+    "Bicycle": {
+     "kick": 4
+    },
+    "kick": {
+     "madness": 4
+    },
+    "madness": {
+     "</s>": 4
+    },
+    "scores": {
+     "</s>": 4
+    },
+    "Last": {
+     "second": 3
+    },
+    "second": {
+     "dagger": 3
+    },
+    "dagger": {
+     "</s>": 3
+    },
+    "Own": {
+     "goal": 5
+    },
+    "horror": {
+     "</s>": 5
+    },
+    "Broken": {
+     "ankles": 3
+    },
+    "ankles": {
+     "</s>": 3
+    },
+    "The": {
+     "rainbow": 3
+    },
+    "rainbow": {
+     "flick": 3
+    },
+    "flick": {
+     "</s>": 3
+    },
+    "Move": {
+     "disrespect": 1
+    },
+    "Miss": {
+     "disrespect": 3
+    },
+    "Goal": {
+     "disrespect": 1
+    }
+   },
+   "emoji_freq": {
+    "🙃": 4,
+    "🚀": 5,
+    "🕺": 6,
+    "🤕": 5,
+    "🥴": 8,
+    "🚌": 5,
+    "😤": 1,
+    "😴": 5,
+    "🎯": 2,
+    "💀": 4,
+    "🧱": 3,
+    "🔥": 4,
+    "🧤": 4,
+    "🗡️": 3,
+    "😭": 4,
+    "😵": 2,
+    "🌈": 3
+   },
+   "num_ranks_dist": {
+    "6": 8,
+    "5": 2,
+    "10": 1
+   },
+   "reveal_order_dist": {
+    "worst_to_best": 11
+   },
+   "accent_placement": {
+    "2|0": 4,
+    "2|1": 4,
+    "1|0": 2,
+    "1|1": 1
+   },
+   "color_pos_freq": [
+    {
+     "gold": 11
+    },
+    {
+     "white": 11
+    },
+    {
+     "red": 11
+    }
+   ],
+   "duration_by_pos": {
+    "1": {
+     "mean": 4.91,
+     "std": 0.67,
+     "n": 11
+    },
+    "2": {
+     "mean": 4.09,
+     "std": 1.31,
+     "n": 11
+    },
+    "3": {
+     "mean": 4.09,
+     "std": 1.38,
+     "n": 11
+    },
+    "4": {
+     "mean": 4.18,
+     "std": 1.27,
+     "n": 11
+    },
+    "5": {
+     "mean": 3.73,
+     "std": 1.05,
+     "n": 11
+    },
+    "6": {
+     "mean": 3.78,
+     "std": 1.03,
+     "n": 9
+    },
+    "7": {
+     "mean": 4.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "8": {
+     "mean": 6.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "9": {
+     "mean": 4.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "10": {
+     "mean": 3.0,
+     "std": 0.0,
+     "n": 1
+    }
+   },
+   "train_labels": [
+    "Bicycle kick madness",
+    "Broken ankles",
+    "Celebration goes wrong",
+    "Corner flag dance",
+    "Grass slide fail",
+    "Keeper had a nap",
+    "Keeper scores",
+    "Last second dagger",
+    "Nutmeg disrespect",
+    "Open goal missed",
+    "Own goal horror",
+    "Penalty to orbit",
+    "Ref got trucked",
+    "Save of the century",
+    "Team bus parked",
+    "The rainbow flick",
+    "Top bins"
+   ],
+   "train_titles": [
+    "ranking best football fails",
+    "ranking best goalkeeper saves",
+    "ranking best last minute goals",
+    "ranking best long shots ever",
+    "ranking best solo goals ever",
+    "ranking craziest goal celebrations",
+    "ranking funniest referee moments",
+    "ranking most disrespectful skill moves",
+    "ranking the best free kicks ever",
+    "ranking the craziest football moments",
+    "ranking the worst penalty misses"
+   ]
+  },
+  "nba": {
+   "title_bigrams": {
+    "<s>": {
+     "Ranking": 87,
+     "Top": 7,
+     "Dunks": 1,
+     "Buzzer": 1,
+     "Crossovers": 1,
+     "Blocks": 1,
+     "Game": 1,
+     "Trick": 1,
+     "Celebrations": 1
+    },
+    "Ranking": {
+     "Craziest": 16,
+     "Best": 18,
+     "Most": 8,
+     "Funniest": 8,
+     "Coldest": 8,
+     "the": 15,
+     "Dunks": 2,
+     "Buzzer": 2,
+     "Crossovers": 2,
+     "Blocks": 2,
+     "Game": 2,
+     "Trick": 2,
+     "Celebrations": 2
+    },
+    "Craziest": {
+     "NBA": 9,
+     "Dunks": 1,
+     "Buzzer": 1,
+     "Crossovers": 1,
+     "Blocks": 1,
+     "Game": 1,
+     "Trick": 1,
+     "Celebrations": 1
+    },
+    "NBA": {
+     "Dunks": 3,
+     "Buzzer": 3,
+     "Blocks": 3,
+     "Moments": 1,
+     "Trick": 3,
+     "Fights": 1,
+     "Celebrations": 3,
+     "Crossovers": 2,
+     "Game": 2
+    },
+    "Dunks": {
+     "</s>": 9,
+     "Ever": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Best": {
+     "NBA": 11,
+     "Rookie": 1,
+     "Dunks": 2,
+     "Buzzer": 2,
+     "Crossovers": 2,
+     "Blocks": 2,
+     "Game": 2,
+     "Trick": 2,
+     "Celebrations": 2,
+     "</s>": 7
+    },
+    "Buzzer": {
+     "Beaters": 14
+    },
+    "Beaters": {
+     "</s>": 9,
+     "Ever": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Most": {
+     "Disrespectful": 3,
+     "Nastiest": 3,
+     "Clutch": 1,
+     "Coldest": 1
+    },
+    "Disrespectful": {
+     "Crossovers": 1,
+     "Buzzer": 1,
+     "Blocks": 1
+    },
+    "Crossovers": {
+     "</s>": 9,
+     "Ever": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Blocks": {
+     "Ever": 2,
+     "</s>": 8,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Ever": {
+     "</s>": 8
+    },
+    "Funniest": {
+     "NBA": 1,
+     "Dunks": 1,
+     "Buzzer": 1,
+     "Crossovers": 1,
+     "Blocks": 1,
+     "Game": 1,
+     "Trick": 1,
+     "Celebrations": 1
+    },
+    "Moments": {
+     "</s>": 1
+    },
+    "Coldest": {
+     "Game": 2,
+     "Dunks": 1,
+     "Buzzer": 1,
+     "Crossovers": 1,
+     "Blocks": 1,
+     "Trick": 1,
+     "Celebrations": 2
+    },
+    "Game": {
+     "Winners": 14
+    },
+    "Winners": {
+     "</s>": 9,
+     "Ever": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Trick": {
+     "Shots": 14
+    },
+    "Shots": {
+     "</s>": 9,
+     "Ever": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Fights": {
+     "</s>": 1
+    },
+    "Rookie": {
+     "Highlights": 1
+    },
+    "Highlights": {
+     "</s>": 1
+    },
+    "the": {
+     "Best": 8,
+     "Worst": 7,
+     "Internet": 7
+    },
+    "Celebrations": {
+     "</s>": 9,
+     "Ever": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Worst": {
+     "Dunks": 1,
+     "Buzzer": 1,
+     "Crossovers": 1,
+     "Blocks": 1,
+     "Game": 1,
+     "Trick": 1,
+     "Celebrations": 1,
+     "to": 7
+    },
+    "Nastiest": {
+     "Dunks": 1,
+     "Crossovers": 1,
+     "Trick": 1
+    },
+    "Clutch": {
+     "Game": 1
+    },
+    "Top": {
+     "7": 3,
+     "5": 1,
+     "10": 3
+    },
+    "7": {
+     "Dunks": 1,
+     "Game": 1,
+     "Celebrations": 1
+    },
+    "Ranked": {
+     "</s>": 7
+    },
+    "5": {
+     "Buzzer": 1
+    },
+    "10": {
+     "Crossovers": 1,
+     "Blocks": 1,
+     "Trick": 1
+    },
+    "Tier": {
+     "List": 7
+    },
+    "List": {
+     "</s>": 7
+    },
+    "From": {
+     "Worst": 7
+    },
+    "to": {
+     "Best": 7
+    },
+    "Until": {
+     "#1": 7
+    },
+    "#1": {
+     "Breaks": 7
+    },
+    "Breaks": {
+     "the": 7
+    },
+    "Internet": {
+     "</s>": 7
+    }
+   },
+   "label_bigrams": {
+    "<s>": {
+     "Bench": 6,
+     "Shaqtin": 4,
+     "Granny": 4,
+     "The": 7,
+     "Free": 2,
+     "Ankles": 4,
+     "Broken": 4,
+     "Courtside": 3,
+     "Poster": 7,
+     "Bro": 4,
+     "Clutch": 4,
+     "360": 4,
+     "No-look": 6,
+     "Half": 3,
+     "Mascot": 2,
+     "Sent": 3
+    },
+    "Bench": {
+     "went": 6
+    },
+    "went": {
+     "nuclear": 6
+    },
+    "nuclear": {
+     "</s>": 6
+    },
+    "Shaqtin": {
+     "moment": 4
+    },
+    "moment": {
+     "</s>": 4
+    },
+    "Granny": {
+     "shot": 4
+    },
+    "shot": {
+     "troll": 4
+    },
+    "troll": {
+     "</s>": 4
+    },
+    "The": {
+     "shimmy": 7
+    },
+    "shimmy": {
+     "</s>": 7
+    },
+    "Free": {
+     "throw": 2
+    },
+    "throw": {
+     "airball": 2
+    },
+    "airball": {
+     "</s>": 2
+    },
+    "Ankles": {
+     "gone": 4
+    },
+    "gone": {
+     "</s>": 4
+    },
+    "Broken": {
+     "backboard": 4
+    },
+    "backboard": {
+     "</s>": 4
+    },
+    "Courtside": {
+     "spill": 3
+    },
+    "spill": {
+     "</s>": 3
+    },
+    "Poster": {
+     "dunk": 7
+    },
+    "dunk": {
+     "</s>": 7
+    },
+    "Bro": {
+     "called": 4
+    },
+    "called": {
+     "game": 4
+    },
+    "game": {
+     "</s>": 4
+    },
+    "Clutch": {
+     "gene": 4
+    },
+    "gene": {
+     "activated": 4
+    },
+    "activated": {
+     "</s>": 4
+    },
+    "360": {
+     "windmill": 4
+    },
+    "windmill": {
+     "</s>": 4
+    },
+    "No-look": {
+     "dime": 6
+    },
+    "dime": {
+     "</s>": 6
+    },
+    "Half": {
+     "court": 3
+    },
+    "court": {
+     "cash": 3
+    },
+    "cash": {
+     "</s>": 3
+    },
+    "Mascot": {
+     "got": 2
+    },
+    "got": {
+     "dunked": 2
+    },
+    "dunked": {
+     "on": 2
+    },
+    "on": {
+     "</s>": 2
+    },
+    "Sent": {
+     "to": 3
+    },
+    "to": {
+     "the": 3
+    },
+    "the": {
+     "shadow": 3
+    },
+    "shadow": {
+     "realm": 3
+    },
+    "realm": {
+     "</s>": 3
+    }
+   },
+   "emoji_freq": {
+    "🤯": 6,
+    "🤡": 4,
+    "👵": 4,
+    "🕺": 7,
+    "😬": 2,
+    "💀": 3,
+    "💥": 4,
+    "🍿": 3,
+    "😱": 6,
+    "🥶": 3,
+    "🧬": 3,
+    "🌪️": 4,
+    "🎯": 6,
+    "💰": 3,
+    "🦖": 2,
+    "🚫": 2
+   },
+   "num_ranks_dist": {
+    "6": 7,
+    "5": 2,
+    "10": 1
+   },
+   "reveal_order_dist": {
+    "worst_to_best": 8,
+    "best_to_worst": 2
+   },
+   "accent_placement": {
+    "2|0": 6,
+    "1|0": 2,
+    "1|1": 2
+   },
+   "color_pos_freq": [
+    {
+     "gold": 10
+    },
+    {
+     "white": 10
+    },
+    {
+     "red": 10
+    }
+   ],
+   "duration_by_pos": {
+    "1": {
+     "mean": 5.0,
+     "std": 0.77,
+     "n": 10
+    },
+    "2": {
+     "mean": 4.1,
+     "std": 1.22,
+     "n": 10
+    },
+    "3": {
+     "mean": 3.1,
+     "std": 0.94,
+     "n": 10
+    },
+    "4": {
+     "mean": 4.5,
+     "std": 1.12,
+     "n": 10
+    },
+    "5": {
+     "mean": 4.3,
+     "std": 1.1,
+     "n": 10
+    },
+    "6": {
+     "mean": 4.0,
+     "std": 1.41,
+     "n": 8
+    },
+    "7": {
+     "mean": 2.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "8": {
+     "mean": 4.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "9": {
+     "mean": 6.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "10": {
+     "mean": 5.0,
+     "std": 0.0,
+     "n": 1
+    }
+   },
+   "train_labels": [
+    "360 windmill",
+    "Ankles gone",
+    "Bench went nuclear",
+    "Bro called game",
+    "Broken backboard",
+    "Clutch gene activated",
+    "Courtside spill",
+    "Free throw airball",
+    "Granny shot troll",
+    "Half court cash",
+    "Mascot got dunked on",
+    "No-look dime",
+    "Poster dunk",
+    "Sent to the shadow realm",
+    "Shaqtin moment",
+    "The shimmy"
+   ],
+   "train_titles": [
+    "ranking best nba blocks ever",
+    "ranking best nba buzzer beaters",
+    "ranking best nba trick shots",
+    "ranking best rookie highlights",
+    "ranking coldest game winners",
+    "ranking craziest nba dunks",
+    "ranking craziest nba fights",
+    "ranking funniest nba moments",
+    "ranking most disrespectful crossovers",
+    "ranking the best nba celebrations"
+   ]
+  },
+  "food": {
+   "title_bigrams": {
+    "<s>": {
+     "Ranking": 98,
+     "Top": 8,
+     "Fast": 1,
+     "Food": 1,
+     "Cheese": 1,
+     "Street": 1,
+     "Spiciest": 1,
+     "Cooking": 1,
+     "Desserts": 1,
+     "Ramen": 1
+    },
+    "Ranking": {
+     "the": 37,
+     "Craziest": 17,
+     "Best": 10,
+     "Worst": 1,
+     "Giant": 1,
+     "Funniest": 8,
+     "Most": 8,
+     "Fast": 2,
+     "Food": 2,
+     "Cheese": 2,
+     "Street": 2,
+     "Spiciest": 2,
+     "Cooking": 2,
+     "Desserts": 2,
+     "Ramen": 2
+    },
+    "the": {
+     "Best": 18,
+     "Most": 9,
+     "Spiciest": 1,
+     "Weirdest": 1,
+     "Worst": 8,
+     "Internet": 8
+    },
+    "Best": {
+     "Fast": 4,
+     "Street": 4,
+     "Dessert": 1,
+     "Ramen": 4,
+     "Food": 3,
+     "Cheese": 3,
+     "Spiciest": 3,
+     "Cooking": 3,
+     "Desserts": 3,
+     "</s>": 8
+    },
+    "Fast": {
+     "Food": 14
+    },
+    "Food": {
+     "Burgers": 14,
+     "Combos": 14,
+     "Ever": 1,
+     "vs": 1,
+     "</s>": 10,
+     "Fast": 1,
+     "Food": 1,
+     "Cheese": 1,
+     "Street": 1,
+     "Spiciest": 1,
+     "Cooking": 1,
+     "Desserts": 1,
+     "Ramen": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Burgers": {
+     "</s>": 10,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Craziest": {
+     "Food": 10,
+     "Fast": 1,
+     "Cheese": 1,
+     "Street": 1,
+     "Spiciest": 1,
+     "Cooking": 1,
+     "Desserts": 1,
+     "Ramen": 1
+    },
+    "Combos": {
+     "</s>": 10,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Most": {
+     "Satisfying": 9,
+     "Weirdest": 3,
+     "Forbidden": 3,
+     "Spiciest": 2
+    },
+    "Satisfying": {
+     "Cheese": 2,
+     "Fast": 1,
+     "Food": 1,
+     "Street": 1,
+     "Spiciest": 1,
+     "Cooking": 1,
+     "Desserts": 1,
+     "Ramen": 1
+    },
+    "Cheese": {
+     "Pulls": 14
+    },
+    "Pulls": {
+     "</s>": 10,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Street": {
+     "Food": 14
+    },
+    "Ever": {
+     "</s>": 3
+    },
+    "Spiciest": {
+     "Foods": 14,
+     "Cooking": 1,
+     "Ramen": 1
+    },
+    "Foods": {
+     "Ever": 1,
+     "</s>": 9,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Worst": {
+     "Cooking": 2,
+     "Fast": 1,
+     "Food": 1,
+     "Cheese": 1,
+     "Street": 1,
+     "Spiciest": 1,
+     "Desserts": 1,
+     "Ramen": 1,
+     "to": 8
+    },
+    "Cooking": {
+     "Fails": 14
+    },
+    "Fails": {
+     "</s>": 10,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Dessert": {
+     "Creations": 1
+    },
+    "Creations": {
+     "</s>": 1
+    },
+    "Weirdest": {
+     "Snacks": 1,
+     "Fast": 1,
+     "Cheese": 1,
+     "Street": 1
+    },
+    "Snacks": {
+     "Ever": 1
+    },
+    "Giant": {
+     "Food": 1
+    },
+    "vs": {
+     "Tiny": 1
+    },
+    "Tiny": {
+     "Food": 1
+    },
+    "Ramen": {
+     "Hacks": 14
+    },
+    "Hacks": {
+     "</s>": 10,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Desserts": {
+     "</s>": 9,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Funniest": {
+     "Fast": 1,
+     "Food": 1,
+     "Cheese": 1,
+     "Street": 1,
+     "Spiciest": 1,
+     "Cooking": 1,
+     "Desserts": 1,
+     "Ramen": 1
+    },
+    "Forbidden": {
+     "Food": 1,
+     "Spiciest": 1,
+     "Desserts": 1
+    },
+    "Top": {
+     "7": 4,
+     "10": 1,
+     "5": 3
+    },
+    "7": {
+     "Fast": 1,
+     "Food": 1,
+     "Cheese": 1,
+     "Spiciest": 1
+    },
+    "Ranked": {
+     "</s>": 8
+    },
+    "10": {
+     "Street": 1
+    },
+    "5": {
+     "Cooking": 1,
+     "Desserts": 1,
+     "Ramen": 1
+    },
+    "Tier": {
+     "List": 8
+    },
+    "List": {
+     "</s>": 8
+    },
+    "From": {
+     "Worst": 8
+    },
+    "to": {
+     "Best": 8
+    },
+    "Until": {
+     "#1": 8
+    },
+    "#1": {
+     "Breaks": 8
+    },
+    "Breaks": {
+     "the": 8
+    },
+    "Internet": {
+     "</s>": 8
+    }
+   },
+   "label_bigrams": {
+    "<s>": {
+     "Sauce": 2,
+     "Spice": 6,
+     "Cheese": 3,
+     "The": 7,
+     "Deep": 6,
+     "Sushi": 7,
+     "Street": 4,
+     "Bro": 5,
+     "Lava": 4,
+     "Giant": 2,
+     "Crunch": 4,
+     "Crispy": 5,
+     "Smash": 1,
+     "Pan": 6,
+     "Egg": 1,
+     "Noodle": 2,
+     "Hack": 1,
+     "Pull": 3,
+     "Burger": 2,
+     "Dessert": 2,
+     "Combo": 1,
+     "Food": 3
+    },
+    "Sauce": {
+     "waterfall": 2
+    },
+    "waterfall": {
+     "</s>": 8
+    },
+    "Spice": {
+     "level": 6
+    },
+    "level": {
+     "demon": 6
+    },
+    "demon": {
+     "</s>": 6
+    },
+    "Cheese": {
+     "pull": 3
+    },
+    "pull": {
+     "heaven": 3,
+     "infinite": 2
+    },
+    "heaven": {
+     "</s>": 9
+    },
+    "The": {
+     "forbidden": 7
+    },
+    "forbidden": {
+     "combo": 7
+    },
+    "combo": {
+     "</s>": 7
+    },
+    "Deep": {
+     "fried": 6
+    },
+    "fried": {
+     "everything": 6
+    },
+    "everything": {
+     "</s>": 6
+    },
+    "Sushi": {
+     "torch": 7
+    },
+    "torch": {
+     "magic": 7
+    },
+    "magic": {
+     "</s>": 7
+    },
+    "Street": {
+     "wok": 4
+    },
+    "wok": {
+     "inferno": 4
+    },
+    "inferno": {
+     "</s>": 4
+    },
+    "Bro": {
+     "put": 5
+    },
+    "put": {
+     "pineapple": 5
+    },
+    "pineapple": {
+     "</s>": 5
+    },
+    "Lava": {
+     "chocolate": 4
+    },
+    "chocolate": {
+     "core": 4
+    },
+    "core": {
+     "</s>": 4
+    },
+    "Giant": {
+     "candy": 2
+    },
+    "candy": {
+     "jawbreaker": 2
+    },
+    "jawbreaker": {
+     "</s>": 2
+    },
+    "Crunch": {
+     "of": 4
+    },
+    "of": {
+     "the": 4
+    },
+    "the": {
+     "year": 4
+    },
+    "year": {
+     "</s>": 4
+    },
+    "Crispy": {
+     "ASMR": 5
+    },
+    "ASMR": {
+     "bite": 5
+    },
+    "bite": {
+     "</s>": 5
+    },
+    "Smash": {
+     "patty": 1
+    },
+    "patty": {
+     "sizzle": 1
+    },
+    "sizzle": {
+     "</s>": 1
+    },
+    "Pan": {
+     "flip": 6
+    },
+    "flip": {
+     "disaster": 6
+    },
+    "disaster": {
+     "</s>": 6
+    },
+    "Egg": {
+     "yolk": 1
+    },
+    "yolk": {
+     "explosion": 1
+    },
+    "explosion": {
+     "</s>": 1
+    },
+    "Noodle": {
+     "pull": 2
+    },
+    "infinite": {
+     "</s>": 2
+    },
+    "Hack": {
+     "heaven": 1
+    },
+    "Pull": {
+     "heaven": 1,
+     "waterfall": 2
+    },
+    "Burger": {
+     "heaven": 1,
+     "waterfall": 1
+    },
+    "Dessert": {
+     "heaven": 1,
+     "waterfall": 1
+    },
+    "Combo": {
+     "heaven": 1
+    },
+    "Food": {
+     "heaven": 1,
+     "waterfall": 2
+    }
+   },
+   "emoji_freq": {
+    "🫗": 2,
+    "🌶️": 5,
+    "🧀": 3,
+    "🤢": 6,
+    "🛢️": 6,
+    "🔥": 7,
+    "🥘": 4,
+    "🍍": 5,
+    "🍫": 4,
+    "🍬": 2,
+    "🔊": 3,
+    "🎧": 5,
+    "🍔": 1,
+    "🍳": 6,
+    "🥚": 1,
+    "🍜": 2
+   },
+   "num_ranks_dist": {
+    "6": 7,
+    "5": 2,
+    "10": 1
+   },
+   "reveal_order_dist": {
+    "worst_to_best": 10
+   },
+   "accent_placement": {
+    "1|0": 1,
+    "2|0": 5,
+    "2|1": 1,
+    "1|2": 2,
+    "2|3": 1
+   },
+   "color_pos_freq": [
+    {
+     "gold": 10
+    },
+    {
+     "white": 10
+    },
+    {
+     "red": 10
+    }
+   ],
+   "duration_by_pos": {
+    "1": {
+     "mean": 5.2,
+     "std": 0.75,
+     "n": 10
+    },
+    "2": {
+     "mean": 4.4,
+     "std": 0.92,
+     "n": 10
+    },
+    "3": {
+     "mean": 4.3,
+     "std": 1.0,
+     "n": 10
+    },
+    "4": {
+     "mean": 4.2,
+     "std": 1.08,
+     "n": 10
+    },
+    "5": {
+     "mean": 4.4,
+     "std": 0.92,
+     "n": 10
+    },
+    "6": {
+     "mean": 4.0,
+     "std": 1.41,
+     "n": 8
+    },
+    "7": {
+     "mean": 4.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "8": {
+     "mean": 5.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "9": {
+     "mean": 4.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "10": {
+     "mean": 4.0,
+     "std": 0.0,
+     "n": 1
+    }
+   },
+   "train_labels": [
+    "Bro put pineapple",
+    "Cheese pull heaven",
+    "Crispy ASMR bite",
+    "Crunch of the year",
+    "Deep fried everything",
+    "Egg yolk explosion",
+    "Giant candy jawbreaker",
+    "Lava chocolate core",
+    "Noodle pull infinite",
+    "Pan flip disaster",
+    "Sauce waterfall",
+    "Smash patty sizzle",
+    "Spice level demon",
+    "Street wok inferno",
+    "Sushi torch magic",
+    "The forbidden combo"
+   ],
+   "train_titles": [
+    "ranking best dessert creations",
+    "ranking best street food ever",
+    "ranking craziest food combos",
+    "ranking giant food vs tiny food",
+    "ranking the best fast food burgers",
+    "ranking the best ramen hacks",
+    "ranking the most satisfying cheese pulls",
+    "ranking the spiciest foods ever",
+    "ranking the weirdest snacks ever",
+    "ranking worst cooking fails"
+   ]
+  },
+  "memes": {
+   "title_bigrams": {
+    "<s>": {
+     "Ranking": 87,
+     "Top": 7,
+     "Memes": 1,
+     "Reaction": 1,
+     "Cursed": 1,
+     "NPC": 1,
+     "Kid": 1,
+     "Caught": 1,
+     "Unexpected": 1
+    },
+    "Ranking": {
+     "the": 24,
+     "Best": 18,
+     "Funniest": 8,
+     "Most": 15,
+     "Internet's": 1,
+     "Craziest": 7,
+     "Memes": 2,
+     "Reaction": 2,
+     "Cursed": 2,
+     "NPC": 2,
+     "Kid": 2,
+     "Caught": 2,
+     "Unexpected": 2
+    },
+    "the": {
+     "Funniest": 8,
+     "Year": 1,
+     "Most": 1,
+     "Best": 8,
+     "Worst": 7,
+     "Internet": 7
+    },
+    "Funniest": {
+     "Memes": 3,
+     "Kid": 4,
+     "Screams": 1,
+     "Reaction": 2,
+     "Cursed": 2,
+     "NPC": 2,
+     "Caught": 2,
+     "Unexpected": 2
+    },
+    "Memes": {
+     "of": 1,
+     "</s>": 7,
+     "Moments": 1,
+     "Ever": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "of": {
+     "the": 1
+    },
+    "Year": {
+     "</s>": 1
+    },
+    "Best": {
+     "Reaction": 4,
+     "NPC": 4,
+     "Vine": 1,
+     "Caught": 4,
+     "Unexpected": 4,
+     "Memes": 3,
+     "Cursed": 3,
+     "Kid": 3,
+     "</s>": 7
+    },
+    "Reaction": {
+     "Videos": 14
+    },
+    "Videos": {
+     "</s>": 16,
+     "Ever": 3,
+     "Moments": 2,
+     "Ranked": 2,
+     "Tier": 2,
+     "From": 2,
+     "Until": 2
+    },
+    "Most": {
+     "Cursed": 3,
+     "Random": 10,
+     "Unhinged": 1,
+     "Unexplainable": 1,
+     "Funniest": 1
+    },
+    "Cursed": {
+     "Videos": 14,
+     "Cursed": 1,
+     "Caught": 1
+    },
+    "NPC": {
+     "Moments": 14
+    },
+    "Moments": {
+     "</s>": 31,
+     "Moments": 3,
+     "Ever": 3,
+     "Ranked": 3,
+     "Tier": 3,
+     "From": 3,
+     "Until": 3
+    },
+    "Kid": {
+     "Moments": 14
+    },
+    "Vine": {
+     "Energy": 1
+    },
+    "Energy": {
+     "Clips": 1
+    },
+    "Clips": {
+     "</s>": 1
+    },
+    "Random": {
+     "Videos": 1,
+     "Memes": 1,
+     "Reaction": 2,
+     "Cursed": 1,
+     "NPC": 1,
+     "Kid": 1,
+     "Caught": 1,
+     "Unexpected": 2
+    },
+    "Ever": {
+     "</s>": 8
+    },
+    "Caught": {
+     "In": 14
+    },
+    "In": {
+     "4K": 14
+    },
+    "4K": {
+     "Moments": 14
+    },
+    "Internet's": {
+     "Funniest": 1
+    },
+    "Screams": {
+     "</s>": 1
+    },
+    "Unexpected": {
+     "Endings": 14
+    },
+    "Endings": {
+     "</s>": 8,
+     "Moments": 1,
+     "Ever": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Worst": {
+     "Memes": 1,
+     "Reaction": 1,
+     "Cursed": 1,
+     "NPC": 1,
+     "Kid": 1,
+     "Caught": 1,
+     "Unexpected": 1,
+     "to": 7
+    },
+    "Craziest": {
+     "Memes": 1,
+     "Reaction": 1,
+     "Cursed": 1,
+     "NPC": 1,
+     "Kid": 1,
+     "Caught": 1,
+     "Unexpected": 1
+    },
+    "Unhinged": {
+     "Memes": 1
+    },
+    "Unexplainable": {
+     "NPC": 1
+    },
+    "Top": {
+     "10": 3,
+     "5": 2,
+     "7": 2
+    },
+    "10": {
+     "Memes": 1,
+     "NPC": 1,
+     "Caught": 1
+    },
+    "Ranked": {
+     "</s>": 7
+    },
+    "5": {
+     "Reaction": 1,
+     "Cursed": 1
+    },
+    "7": {
+     "Kid": 1,
+     "Unexpected": 1
+    },
+    "Tier": {
+     "List": 7
+    },
+    "List": {
+     "</s>": 7
+    },
+    "From": {
+     "Worst": 7
+    },
+    "to": {
+     "Best": 7
+    },
+    "Until": {
+     "#1": 7
+    },
+    "#1": {
+     "Breaks": 7
+    },
+    "Breaks": {
+     "the": 7
+    },
+    "Internet": {
+     "</s>": 7
+    }
+   },
+   "label_bigrams": {
+    "<s>": {
+     "He": 5,
+     "Caught": 5,
+     "Plot": 5,
+     "Unexplainable": 7,
+     "Delulu": 5,
+     "Grandma": 3,
+     "Main": 5,
+     "Laugh": 4,
+     "Why": 4,
+     "The": 12,
+     "Bro": 4,
+     "Sound": 3,
+     "Certified": 4,
+     "It": 2
+    },
+    "He": {
+     "chose": 5
+    },
+    "chose": {
+     "violence": 5
+    },
+    "violence": {
+     "</s>": 5
+    },
+    "Caught": {
+     "in": 5
+    },
+    "in": {
+     "4K": 5
+    },
+    "4K": {
+     "</s>": 5
+    },
+    "Plot": {
+     "twist": 5
+    },
+    "twist": {
+     "ending": 5
+    },
+    "ending": {
+     "</s>": 5
+    },
+    "Unexplainable": {
+     "</s>": 7
+    },
+    "Delulu": {
+     "confidence": 5
+    },
+    "confidence": {
+     "</s>": 5
+    },
+    "Grandma": {
+     "won": 3
+    },
+    "won": {
+     "</s>": 3
+    },
+    "Main": {
+     "character": 5
+    },
+    "character": {
+     "energy": 5
+    },
+    "energy": {
+     "</s>": 5
+    },
+    "Laugh": {
+     "track": 4
+    },
+    "track": {
+     "broke": 4
+    },
+    "broke": {
+     "</s>": 4
+    },
+    "Why": {
+     "is": 4
+    },
+    "is": {
+     "he": 4
+    },
+    "he": {
+     "like": 4
+    },
+    "like": {
+     "this": 4
+    },
+    "this": {
+     "</s>": 7
+    },
+    "The": {
+     "sigma": 4,
+     "scream": 4,
+     "stare": 4
+    },
+    "sigma": {
+     "walk": 4
+    },
+    "walk": {
+     "</s>": 4
+    },
+    "Bro": {
+     "really": 4
+    },
+    "really": {
+     "said": 4
+    },
+    "said": {
+     "that": 4
+    },
+    "that": {
+     "</s>": 4
+    },
+    "Sound": {
+     "on": 3
+    },
+    "on": {
+     "for": 3
+    },
+    "for": {
+     "this": 3
+    },
+    "scream": {
+     "</s>": 4
+    },
+    "stare": {
+     "</s>": 4
+    },
+    "Certified": {
+     "NPC": 4
+    },
+    "NPC": {
+     "</s>": 4
+    },
+    "It": {
+     "gets": 2
+    },
+    "gets": {
+     "worse": 2
+    },
+    "worse": {
+     "</s>": 2
+    }
+   },
+   "emoji_freq": {
+    "😈": 4,
+    "📸": 4,
+    "🔄": 4,
+    "❓": 7,
+    "💅": 5,
+    "👵": 3,
+    "🌟": 4,
+    "🤣": 4,
+    "😭": 3,
+    "🚶": 4,
+    "🎤": 4,
+    "🔊": 3,
+    "🗣️": 4,
+    "👁️": 4,
+    "🤖": 3,
+    "📉": 2
+   },
+   "num_ranks_dist": {
+    "6": 7,
+    "5": 2,
+    "10": 1
+   },
+   "reveal_order_dist": {
+    "worst_to_best": 10
+   },
+   "accent_placement": {
+    "1|3": 1,
+    "2|0": 2,
+    "1|1": 3,
+    "2|1": 1,
+    "1|2": 1,
+    "3|1": 1,
+    "1|0": 1
+   },
+   "color_pos_freq": [
+    {
+     "gold": 10
+    },
+    {
+     "white": 10
+    },
+    {
+     "red": 10
+    }
+   ],
+   "duration_by_pos": {
+    "1": {
+     "mean": 5.2,
+     "std": 0.87,
+     "n": 10
+    },
+    "2": {
+     "mean": 3.9,
+     "std": 0.3,
+     "n": 10
+    },
+    "3": {
+     "mean": 4.0,
+     "std": 0.89,
+     "n": 10
+    },
+    "4": {
+     "mean": 4.4,
+     "std": 1.2,
+     "n": 10
+    },
+    "5": {
+     "mean": 3.9,
+     "std": 1.3,
+     "n": 10
+    },
+    "6": {
+     "mean": 4.12,
+     "std": 0.78,
+     "n": 8
+    },
+    "7": {
+     "mean": 3.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "8": {
+     "mean": 5.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "9": {
+     "mean": 6.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "10": {
+     "mean": 6.0,
+     "std": 0.0,
+     "n": 1
+    }
+   },
+   "train_labels": [
+    "Bro really said that",
+    "Caught in 4K",
+    "Certified NPC",
+    "Delulu confidence",
+    "Grandma won",
+    "He chose violence",
+    "It gets worse",
+    "Laugh track broke",
+    "Main character energy",
+    "Plot twist ending",
+    "Sound on for this",
+    "The scream",
+    "The sigma walk",
+    "The stare",
+    "Unexplainable",
+    "Why is he like this"
+   ],
+   "train_titles": [
+    "ranking best caught in 4k moments",
+    "ranking best npc moments",
+    "ranking best reaction videos",
+    "ranking best unexpected endings",
+    "ranking funniest kid moments",
+    "ranking internet's funniest screams",
+    "ranking most random videos ever",
+    "ranking the best vine energy clips",
+    "ranking the funniest memes of the year",
+    "ranking the most cursed videos"
+   ]
+  },
+  "gaming": {
+   "title_bigrams": {
+    "<s>": {
+     "Ranking": 98,
+     "Top": 8,
+     "Clutches": 1,
+     "Snipes": 1,
+     "Rage": 1,
+     "Glitches": 1,
+     "Speedrun": 1,
+     "1v5s": 1,
+     "Minecraft": 1,
+     "GTA": 1
+    },
+    "Ranking": {
+     "Craziest": 17,
+     "Best": 19,
+     "the": 18,
+     "Luckiest": 9,
+     "Funniest": 9,
+     "Most": 9,
+     "Coldest": 1,
+     "Clutches": 2,
+     "Snipes": 2,
+     "Rage": 2,
+     "Glitches": 2,
+     "Speedrun": 2,
+     "1v5s": 2,
+     "Minecraft": 2,
+     "GTA": 2
+    },
+    "Craziest": {
+     "Gaming": 9,
+     "Clutches": 1,
+     "Snipes": 1,
+     "Rage": 1,
+     "Glitches": 1,
+     "Speedrun": 1,
+     "1v5s": 1,
+     "Minecraft": 1,
+     "GTA": 1
+    },
+    "Gaming": {
+     "Clutches": 2,
+     "Rage": 2,
+     "Moments": 1,
+     "Fails": 1,
+     "Snipes": 1,
+     "Glitches": 1,
+     "Speedrun": 1,
+     "1v5s": 1,
+     "Minecraft": 1,
+     "GTA": 1
+    },
+    "Clutches": {
+     "</s>": 10,
+     "Clutches": 1,
+     "Moments": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Best": {
+     "Minecraft": 4,
+     "Fortnite": 1,
+     "Speedrun": 4,
+     "GTA": 4,
+     "Clutches": 3,
+     "Snipes": 3,
+     "Rage": 3,
+     "Glitches": 3,
+     "1v5s": 3,
+     "</s>": 8
+    },
+    "Minecraft": {
+     "Builds": 15
+    },
+    "Builds": {
+     "</s>": 9,
+     "Minecraft": 1,
+     "Moments": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "the": {
+     "Worst": 9,
+     "Best": 9,
+     "Internet": 8
+    },
+    "Worst": {
+     "Gaming": 1,
+     "Clutches": 1,
+     "Snipes": 1,
+     "Rage": 1,
+     "Glitches": 1,
+     "Speedrun": 1,
+     "1v5s": 1,
+     "Minecraft": 1,
+     "GTA": 1,
+     "to": 8
+    },
+    "Rage": {
+     "Quits": 15
+    },
+    "Quits": {
+     "</s>": 9,
+     "Rage": 1,
+     "Moments": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Fortnite": {
+     "Snipes": 1
+    },
+    "Snipes": {
+     "</s>": 9,
+     "Snipes": 1,
+     "Moments": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Luckiest": {
+     "Gaming": 1,
+     "Clutches": 1,
+     "Snipes": 2,
+     "Rage": 2,
+     "Glitches": 2,
+     "Speedrun": 1,
+     "1v5s": 2,
+     "Minecraft": 1,
+     "GTA": 1
+    },
+    "Moments": {
+     "</s>": 9
+    },
+    "Speedrun": {
+     "Saves": 15
+    },
+    "Saves": {
+     "</s>": 9,
+     "Speedrun": 1,
+     "Moments": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Funniest": {
+     "Glitches": 2,
+     "Clutches": 1,
+     "Snipes": 1,
+     "Rage": 1,
+     "Speedrun": 1,
+     "1v5s": 1,
+     "Minecraft": 1,
+     "GTA": 1
+    },
+    "Glitches": {
+     "Ever": 1,
+     "</s>": 8,
+     "Glitches": 1,
+     "Moments": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Ever": {
+     "</s>": 1
+    },
+    "GTA": {
+     "Stunts": 15
+    },
+    "Stunts": {
+     "</s>": 9,
+     "GTA": 1,
+     "Moments": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Most": {
+     "Painful": 1,
+     "200": 2,
+     "Luckiest": 4,
+     "Impossible": 2
+    },
+    "Painful": {
+     "Gaming": 1
+    },
+    "Fails": {
+     "</s>": 1
+    },
+    "Coldest": {
+     "1v5": 1
+    },
+    "1v5": {
+     "Clutches": 1
+    },
+    "1v5s": {
+     "</s>": 8,
+     "1v5s": 1,
+     "Moments": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "200": {
+     "Iq": 2
+    },
+    "Iq": {
+     "Clutches": 1,
+     "Minecraft": 1
+    },
+    "Impossible": {
+     "Speedrun": 1,
+     "GTA": 1
+    },
+    "Top": {
+     "10": 2,
+     "5": 2,
+     "7": 4
+    },
+    "10": {
+     "Clutches": 1,
+     "Glitches": 1
+    },
+    "Ranked": {
+     "</s>": 8
+    },
+    "5": {
+     "Snipes": 1,
+     "Speedrun": 1
+    },
+    "7": {
+     "Rage": 1,
+     "1v5s": 1,
+     "Minecraft": 1,
+     "GTA": 1
+    },
+    "Tier": {
+     "List": 8
+    },
+    "List": {
+     "</s>": 8
+    },
+    "From": {
+     "Worst": 8
+    },
+    "to": {
+     "Best": 8
+    },
+    "Until": {
+     "#1": 8
+    },
+    "#1": {
+     "Breaks": 8
+    },
+    "Breaks": {
+     "the": 8
+    },
+    "Internet": {
+     "</s>": 8
+    }
+   },
+   "label_bigrams": {
+    "<s>": {
+     "Loot": 3,
+     "Grandpa": 8,
+     "Creeper": 4,
+     "Build": 6,
+     "Rage": 5,
+     "Pixel": 4,
+     "1v5": 4,
+     "Glitch": 3,
+     "The": 9,
+     "Zero": 5,
+     "Silent": 6,
+     "200": 3,
+     "Physics": 4,
+     "Boss": 3
+    },
+    "Loot": {
+     "goblin": 3
+    },
+    "goblin": {
+     "down": 3
+    },
+    "down": {
+     "</s>": 3
+    },
+    "Grandpa": {
+     "gamer": 8
+    },
+    "gamer": {
+     "wins": 8
+    },
+    "wins": {
+     "</s>": 8
+    },
+    "Creeper": {
+     "ambush": 4
+    },
+    "ambush": {
+     "</s>": 4
+    },
+    "Build": {
+     "battle": 6
+    },
+    "battle": {
+     "god": 6
+    },
+    "god": {
+     "</s>": 6
+    },
+    "Rage": {
+     "quit": 5
+    },
+    "quit": {
+     "speedrun": 5
+    },
+    "speedrun": {
+     "</s>": 5
+    },
+    "Pixel": {
+     "perfect": 4
+    },
+    "perfect": {
+     "save": 4
+    },
+    "save": {
+     "</s>": 4
+    },
+    "1v5": {
+     "clutch": 4
+    },
+    "clutch": {
+     "</s>": 4
+    },
+    "Glitch": {
+     "dimension": 3
+    },
+    "dimension": {
+     "</s>": 3
+    },
+    "The": {
+     "luckiest": 5,
+     "disrespect": 4
+    },
+    "luckiest": {
+     "shot": 5
+    },
+    "shot": {
+     "ever": 5
+    },
+    "ever": {
+     "</s>": 5
+    },
+    "Zero": {
+     "HP": 5
+    },
+    "HP": {
+     "escape": 5
+    },
+    "escape": {
+     "</s>": 5
+    },
+    "Silent": {
+     "ninja": 6
+    },
+    "ninja": {
+     "defuse": 6
+    },
+    "defuse": {
+     "</s>": 6
+    },
+    "200": {
+     "IQ": 3
+    },
+    "IQ": {
+     "play": 3
+    },
+    "play": {
+     "</s>": 3
+    },
+    "disrespect": {
+     "emote": 4
+    },
+    "emote": {
+     "</s>": 4
+    },
+    "Physics": {
+     "broke": 4
+    },
+    "broke": {
+     "</s>": 4
+    },
+    "Boss": {
+     "fight": 3
+    },
+    "fight": {
+     "betrayal": 3
+    },
+    "betrayal": {
+     "</s>": 3
+    }
+   },
+   "emoji_freq": {
+    "💰": 3,
+    "👴": 8,
+    "💥": 4,
+    "🏗️": 6,
+    "😡": 4,
+    "🎯": 4,
+    "🥶": 3,
+    "🌀": 3,
+    "🍀": 5,
+    "🩸": 4,
+    "🥷": 6,
+    "🧠": 2,
+    "💃": 4,
+    "🚗": 3,
+    "🗡️": 3
+   },
+   "num_ranks_dist": {
+    "6": 7,
+    "5": 2,
+    "10": 1
+   },
+   "reveal_order_dist": {
+    "worst_to_best": 8,
+    "best_to_worst": 2
+   },
+   "accent_placement": {
+    "1|0": 2,
+    "2|0": 4,
+    "1|2": 1,
+    "1|1": 3
+   },
+   "color_pos_freq": [
+    {
+     "gold": 10
+    },
+    {
+     "white": 10
+    },
+    {
+     "red": 10
+    }
+   ],
+   "duration_by_pos": {
+    "1": {
+     "mean": 5.4,
+     "std": 0.8,
+     "n": 10
+    },
+    "2": {
+     "mean": 4.2,
+     "std": 1.17,
+     "n": 10
+    },
+    "3": {
+     "mean": 4.4,
+     "std": 1.43,
+     "n": 10
+    },
+    "4": {
+     "mean": 3.8,
+     "std": 0.87,
+     "n": 10
+    },
+    "5": {
+     "mean": 3.6,
+     "std": 1.43,
+     "n": 10
+    },
+    "6": {
+     "mean": 3.88,
+     "std": 0.93,
+     "n": 8
+    },
+    "7": {
+     "mean": 5.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "8": {
+     "mean": 5.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "9": {
+     "mean": 4.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "10": {
+     "mean": 6.0,
+     "std": 0.0,
+     "n": 1
+    }
+   },
+   "train_labels": [
+    "1v5 clutch",
+    "200 IQ play",
+    "Boss fight betrayal",
+    "Build battle god",
+    "Creeper ambush",
+    "Glitch dimension",
+    "Grandpa gamer wins",
+    "Loot goblin down",
+    "Physics broke",
+    "Pixel perfect save",
+    "Rage quit speedrun",
+    "Silent ninja defuse",
+    "The disrespect emote",
+    "The luckiest shot ever",
+    "Zero HP escape"
+   ],
+   "train_titles": [
+    "ranking best fortnite snipes",
+    "ranking best gta stunts",
+    "ranking best minecraft builds",
+    "ranking coldest 1v5 clutches",
+    "ranking craziest gaming clutches",
+    "ranking funniest glitches ever",
+    "ranking luckiest gaming moments",
+    "ranking most painful gaming fails",
+    "ranking the best speedrun saves",
+    "ranking the worst gaming rage quits"
+   ]
+  },
+  "animals": {
+   "title_bigrams": {
+    "<s>": {
+     "Ranking": 87,
+     "Top": 7,
+     "Cat": 1,
+     "Dog": 1,
+     "Dramatic": 1,
+     "Zoomies": 1,
+     "Farm": 1,
+     "Baby": 1,
+     "Animal": 1
+    },
+    "Ranking": {
+     "the": 31,
+     "Best": 17,
+     "Smartest": 1,
+     "Funniest": 8,
+     "Cutest": 1,
+     "Most": 8,
+     "Craziest": 7,
+     "Cat": 2,
+     "Dog": 2,
+     "Dramatic": 2,
+     "Zoomies": 2,
+     "Farm": 2,
+     "Baby": 2,
+     "Animal": 2
+    },
+    "the": {
+     "Funniest": 8,
+     "Most": 8,
+     "Angriest": 1,
+     "Best": 7,
+     "Worst": 7,
+     "Internet": 7
+    },
+    "Funniest": {
+     "Cat": 3,
+     "Farm": 3,
+     "Dog": 2,
+     "Dramatic": 2,
+     "Zoomies": 2,
+     "Baby": 2,
+     "Animal": 2
+    },
+    "Cat": {
+     "Moments": 14
+    },
+    "Moments": {
+     "</s>": 16,
+     "Moments": 1,
+     "Fails": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Best": {
+     "Dog": 4,
+     "Zoomies": 4,
+     "Animal": 4,
+     "Cat": 3,
+     "Dramatic": 3,
+     "Farm": 3,
+     "Baby": 3,
+     "</s>": 7
+    },
+    "Dog": {
+     "Fails": 14
+    },
+    "Fails": {
+     "</s>": 15,
+     "Moments": 1,
+     "Fails": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Most": {
+     "Dramatic": 9,
+     "Chaotic": 2,
+     "Smartest": 2,
+     "Guilty": 3
+    },
+    "Dramatic": {
+     "Pets": 14,
+     "Cat": 1,
+     "Dog": 2,
+     "Dramatic": 1,
+     "Zoomies": 1,
+     "Farm": 1,
+     "Baby": 1,
+     "Animal": 1
+    },
+    "Pets": {
+     "</s>": 8,
+     "Moments": 1,
+     "Fails": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Smartest": {
+     "Animal": 2,
+     "Cat": 1
+    },
+    "Animal": {
+     "Moments": 1,
+     "Reactions": 14
+    },
+    "Angriest": {
+     "Birds": 1
+    },
+    "Birds": {
+     "Ever": 1
+    },
+    "Ever": {
+     "</s>": 2
+    },
+    "Zoomies": {
+     "Ever": 1,
+     "Moments": 1,
+     "Fails": 1,
+     "</s>": 7,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Farm": {
+     "Animals": 14
+    },
+    "Animals": {
+     "</s>": 16,
+     "Moments": 2,
+     "Fails": 2,
+     "Ranked": 2,
+     "Tier": 2,
+     "From": 2,
+     "Until": 2
+    },
+    "Cutest": {
+     "Baby": 1
+    },
+    "Baby": {
+     "Animals": 14
+    },
+    "Chaotic": {
+     "Pet": 1,
+     "Zoomies": 1
+    },
+    "Pet": {
+     "Duos": 1
+    },
+    "Duos": {
+     "</s>": 1
+    },
+    "Reactions": {
+     "</s>": 8,
+     "Moments": 1,
+     "Fails": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Worst": {
+     "Cat": 1,
+     "Dog": 1,
+     "Dramatic": 1,
+     "Zoomies": 1,
+     "Farm": 1,
+     "Baby": 1,
+     "Animal": 1,
+     "to": 7
+    },
+    "Craziest": {
+     "Cat": 1,
+     "Dog": 1,
+     "Dramatic": 1,
+     "Zoomies": 1,
+     "Farm": 1,
+     "Baby": 1,
+     "Animal": 1
+    },
+    "Guilty": {
+     "Dramatic": 1,
+     "Farm": 1,
+     "Baby": 1
+    },
+    "Top": {
+     "5": 4,
+     "10": 2,
+     "7": 1
+    },
+    "5": {
+     "Cat": 1,
+     "Farm": 1,
+     "Baby": 1,
+     "Animal": 1
+    },
+    "Ranked": {
+     "</s>": 7
+    },
+    "10": {
+     "Dog": 1,
+     "Dramatic": 1
+    },
+    "7": {
+     "Zoomies": 1
+    },
+    "Tier": {
+     "List": 7
+    },
+    "List": {
+     "</s>": 7
+    },
+    "From": {
+     "Worst": 7
+    },
+    "to": {
+     "Best": 7
+    },
+    "Until": {
+     "#1": 7
+    },
+    "#1": {
+     "Breaks": 7
+    },
+    "Breaks": {
+     "the": 7
+    },
+    "Internet": {
+     "</s>": 7
+    }
+   },
+   "label_bigrams": {
+    "<s>": {
+     "Dramatic": 6,
+     "Doggo": 3,
+     "Zoomies": 8,
+     "The": 12,
+     "Goose": 3,
+     "Sneezing": 3,
+     "Parrot": 3,
+     "Ninja": 4,
+     "Heist": 6,
+     "Goat": 3,
+     "Duck": 4,
+     "Turbo": 2,
+     "Cat.exe": 6,
+     "Owl": 3,
+     "Cow": 1,
+     "Dog.exe": 1,
+     "Animal.exe": 3,
+     "Zoomies.exe": 1
+    },
+    "Dramatic": {
+     "faint": 6
+    },
+    "faint": {
+     "</s>": 6
+    },
+    "Doggo": {
+     "door": 3
+    },
+    "door": {
+     "fail": 3
+    },
+    "fail": {
+     "</s>": 3
+    },
+    "Zoomies": {
+     "unlocked": 8
+    },
+    "unlocked": {
+     "</s>": 8
+    },
+    "The": {
+     "betrayal": 5,
+     "guilty": 7
+    },
+    "betrayal": {
+     "</s>": 5
+    },
+    "guilty": {
+     "look": 7
+    },
+    "look": {
+     "</s>": 7
+    },
+    "Goose": {
+     "on": 3
+    },
+    "on": {
+     "patrol": 3
+    },
+    "patrol": {
+     "</s>": 3
+    },
+    "Sneezing": {
+     "baby": 3
+    },
+    "baby": {
+     "panda": 3
+    },
+    "panda": {
+     "</s>": 3
+    },
+    "Parrot": {
+     "roast": 3
+    },
+    "roast": {
+     "session": 3
+    },
+    "session": {
+     "</s>": 3
+    },
+    "Ninja": {
+     "kitten": 4
+    },
+    "kitten": {
+     "</s>": 4
+    },
+    "Heist": {
+     "accomplished": 6
+    },
+    "accomplished": {
+     "</s>": 6
+    },
+    "Goat": {
+     "scream": 3
+    },
+    "scream": {
+     "solo": 3
+    },
+    "solo": {
+     "</s>": 3
+    },
+    "Duck": {
+     "stampede": 4
+    },
+    "stampede": {
+     "</s>": 4
+    },
+    "Turbo": {
+     "hamster": 2
+    },
+    "hamster": {
+     "</s>": 2
+    },
+    "Cat.exe": {
+     "stopped": 6
+    },
+    "stopped": {
+     "</s>": 11
+    },
+    "Owl": {
+     "judging": 3
+    },
+    "judging": {
+     "you": 3
+    },
+    "you": {
+     "</s>": 3
+    },
+    "Cow": {
+     "cuddle": 1
+    },
+    "cuddle": {
+     "mode": 1
+    },
+    "mode": {
+     "</s>": 1
+    },
+    "Dog.exe": {
+     "stopped": 1
+    },
+    "Animal.exe": {
+     "stopped": 3
+    },
+    "Zoomies.exe": {
+     "stopped": 1
+    }
+   },
+   "emoji_freq": {
+    "🎭": 6,
+    "🚪": 3,
+    "💨": 7,
+    "😾": 4,
+    "🥺": 6,
+    "🪿": 3,
+    "🐼": 3,
+    "🦜": 3,
+    "🥷": 4,
+    "🍗": 5,
+    "🐐": 3,
+    "🦆": 4,
+    "🐹": 2,
+    "🐱": 5,
+    "🦉": 3,
+    "🐮": 1
+   },
+   "num_ranks_dist": {
+    "6": 7,
+    "5": 2,
+    "10": 1
+   },
+   "reveal_order_dist": {
+    "worst_to_best": 10
+   },
+   "accent_placement": {
+    "2|0": 5,
+    "1|2": 3,
+    "1|1": 1,
+    "1|0": 1
+   },
+   "color_pos_freq": [
+    {
+     "gold": 10
+    },
+    {
+     "white": 10
+    },
+    {
+     "red": 10
+    }
+   ],
+   "duration_by_pos": {
+    "1": {
+     "mean": 5.5,
+     "std": 0.67,
+     "n": 10
+    },
+    "2": {
+     "mean": 3.9,
+     "std": 1.14,
+     "n": 10
+    },
+    "3": {
+     "mean": 3.8,
+     "std": 1.25,
+     "n": 10
+    },
+    "4": {
+     "mean": 4.8,
+     "std": 1.4,
+     "n": 10
+    },
+    "5": {
+     "mean": 4.0,
+     "std": 1.1,
+     "n": 10
+    },
+    "6": {
+     "mean": 3.62,
+     "std": 0.86,
+     "n": 8
+    },
+    "7": {
+     "mean": 2.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "8": {
+     "mean": 4.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "9": {
+     "mean": 4.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "10": {
+     "mean": 3.0,
+     "std": 0.0,
+     "n": 1
+    }
+   },
+   "train_labels": [
+    "Cat.exe stopped",
+    "Cow cuddle mode",
+    "Doggo door fail",
+    "Dramatic faint",
+    "Duck stampede",
+    "Goat scream solo",
+    "Goose on patrol",
+    "Heist accomplished",
+    "Ninja kitten",
+    "Owl judging you",
+    "Parrot roast session",
+    "Sneezing baby panda",
+    "The betrayal",
+    "The guilty look",
+    "Turbo hamster",
+    "Zoomies unlocked"
+   ],
+   "train_titles": [
+    "ranking best animal reactions",
+    "ranking best dog fails",
+    "ranking best zoomies ever",
+    "ranking cutest baby animals",
+    "ranking funniest farm animals",
+    "ranking most chaotic pet duos",
+    "ranking smartest animal moments",
+    "ranking the angriest birds ever",
+    "ranking the funniest cat moments",
+    "ranking the most dramatic pets"
+   ]
+  },
+  "celebrity": {
+   "title_bigrams": {
+    "<s>": {
+     "Ranking": 76,
+     "Top": 6,
+     "Clapbacks": 1,
+     "Interview": 1,
+     "Red": 1,
+     "Live": 1,
+     "Fan": 1,
+     "Mic": 1
+    },
+    "Ranking": {
+     "the": 20,
+     "Funniest": 14,
+     "Most": 13,
+     "Best": 9,
+     "Craziest": 7,
+     "Celebrities": 1,
+     "Clapbacks": 2,
+     "Interview": 2,
+     "Red": 2,
+     "Live": 2,
+     "Fan": 2,
+     "Mic": 2
+    },
+    "the": {
+     "Best": 13,
+     "Coldest": 1,
+     "Worst": 6,
+     "Internet": 6
+    },
+    "Best": {
+     "Celebrity": 8,
+     "Paparazzi": 1,
+     "Mic": 3,
+     "Clapbacks": 2,
+     "Interview": 2,
+     "Red": 2,
+     "Live": 2,
+     "Fan": 2,
+     "</s>": 6
+    },
+    "Celebrity": {
+     "Clapbacks": 2,
+     "Fan": 2,
+     "Interview": 1,
+     "Red": 1,
+     "Live": 1,
+     "Mic": 1
+    },
+    "Clapbacks": {
+     "</s>": 9,
+     "Moments": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Funniest": {
+     "Interview": 3,
+     "Talk": 1,
+     "Clapbacks": 2,
+     "Red": 2,
+     "Live": 2,
+     "Fan": 2,
+     "Mic": 2
+    },
+    "Interview": {
+     "Moments": 14
+    },
+    "Moments": {
+     "</s>": 43,
+     "Moments": 4,
+     "Ranked": 4,
+     "Tier": 4,
+     "From": 4,
+     "Until": 4
+    },
+    "Most": {
+     "Awkward": 10,
+     "Coldest": 1,
+     "Iconic": 1,
+     "Unscripted": 1
+    },
+    "Awkward": {
+     "Red": 3,
+     "Clapbacks": 1,
+     "Interview": 2,
+     "Live": 2,
+     "Fan": 1,
+     "Mic": 1
+    },
+    "Red": {
+     "Carpet": 14
+    },
+    "Carpet": {
+     "Moments": 14
+    },
+    "Paparazzi": {
+     "Reactions": 1
+    },
+    "Reactions": {
+     "</s>": 1
+    },
+    "Craziest": {
+     "Live": 2,
+     "Clapbacks": 1,
+     "Interview": 1,
+     "Red": 1,
+     "Fan": 1,
+     "Mic": 1
+    },
+    "Live": {
+     "TV": 14
+    },
+    "TV": {
+     "Moments": 14
+    },
+    "Fan": {
+     "Interactions": 14
+    },
+    "Interactions": {
+     "</s>": 9,
+     "Moments": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Coldest": {
+     "Award": 1,
+     "Clapbacks": 1
+    },
+    "Award": {
+     "Show": 1
+    },
+    "Show": {
+     "Moments": 1,
+     "Fails": 1
+    },
+    "Talk": {
+     "Show": 1
+    },
+    "Fails": {
+     "</s>": 1
+    },
+    "Mic": {
+     "Drop": 14
+    },
+    "Drop": {
+     "Moments": 14
+    },
+    "Celebrities": {
+     "Being": 1
+    },
+    "Being": {
+     "Normal": 1
+    },
+    "Normal": {
+     "</s>": 1
+    },
+    "Worst": {
+     "Clapbacks": 1,
+     "Interview": 1,
+     "Red": 1,
+     "Live": 1,
+     "Fan": 1,
+     "Mic": 1,
+     "to": 6
+    },
+    "Iconic": {
+     "Fan": 1
+    },
+    "Unscripted": {
+     "Mic": 1
+    },
+    "Top": {
+     "7": 3,
+     "5": 2,
+     "10": 1
+    },
+    "7": {
+     "Clapbacks": 1,
+     "Interview": 1,
+     "Live": 1
+    },
+    "Ranked": {
+     "</s>": 6
+    },
+    "5": {
+     "Red": 1,
+     "Fan": 1
+    },
+    "10": {
+     "Mic": 1
+    },
+    "Tier": {
+     "List": 6
+    },
+    "List": {
+     "</s>": 6
+    },
+    "From": {
+     "Worst": 6
+    },
+    "to": {
+     "Best": 6
+    },
+    "Until": {
+     "#1": 6
+    },
+    "#1": {
+     "Breaks": 6
+    },
+    "Breaks": {
+     "the": 6
+    },
+    "Internet": {
+     "</s>": 6
+    }
+   },
+   "label_bigrams": {
+    "<s>": {
+     "Translator": 4,
+     "The": 21,
+     "Bro": 6,
+     "Humble": 6,
+     "Chair": 4,
+     "Umbrella": 7,
+     "Crowd": 3,
+     "Award": 3,
+     "Wardrobe": 3,
+     "Snack": 5,
+     "Mic": 1,
+     "Teleprompter": 1,
+     "Security": 3
+    },
+    "Translator": {
+     "gave": 4
+    },
+    "gave": {
+     "up": 4
+    },
+    "up": {
+     "</s>": 4
+    },
+    "The": {
+     "fake": 6,
+     "stare": 7,
+     "photobomb": 5,
+     "clapback": 3
+    },
+    "fake": {
+     "laugh": 6
+    },
+    "laugh": {
+     "</s>": 6
+    },
+    "Bro": {
+     "forgot": 6
+    },
+    "forgot": {
+     "the": 6
+    },
+    "the": {
+     "lyrics": 6
+    },
+    "lyrics": {
+     "</s>": 6
+    },
+    "Humble": {
+     "flex": 6
+    },
+    "flex": {
+     "</s>": 6
+    },
+    "Chair": {
+     "too": 4
+    },
+    "too": {
+     "small": 4
+    },
+    "small": {
+     "</s>": 4
+    },
+    "stare": {
+     "down": 7
+    },
+    "down": {
+     "</s>": 7
+    },
+    "Umbrella": {
+     "bodyguard": 7
+    },
+    "bodyguard": {
+     "</s>": 7
+    },
+    "Crowd": {
+     "surf": 3
+    },
+    "surf": {
+     "regret": 3
+    },
+    "regret": {
+     "</s>": 3
+    },
+    "Award": {
+     "goes": 3
+    },
+    "goes": {
+     "to...": 3
+    },
+    "to...": {
+     "wrong": 3
+    },
+    "wrong": {
+     "</s>": 3
+    },
+    "photobomb": {
+     "</s>": 5
+    },
+    "Wardrobe": {
+     "rescue": 3
+    },
+    "rescue": {
+     "</s>": 3
+    },
+    "Snack": {
+     "run": 5
+    },
+    "run": {
+     "disguise": 5
+    },
+    "disguise": {
+     "</s>": 5
+    },
+    "clapback": {
+     "</s>": 3
+    },
+    "Mic": {
+     "drop": 1
+    },
+    "drop": {
+     "literal": 1
+    },
+    "literal": {
+     "</s>": 1
+    },
+    "Teleprompter": {
+     "panic": 1
+    },
+    "panic": {
+     "</s>": 1
+    },
+    "Security": {
+     "got": 3
+    },
+    "got": {
+     "juked": 3
+    },
+    "juked": {
+     "</s>": 3
+    }
+   },
+   "emoji_freq": {
+    "🌐": 4,
+    "😬": 5,
+    "🎶": 5,
+    "💎": 5,
+    "🪑": 4,
+    "👀": 6,
+    "☂️": 7,
+    "🌊": 3,
+    "🏆": 3,
+    "📸": 5,
+    "🧵": 3,
+    "🕶️": 5,
+    "🎤": 2,
+    "🎙️": 1,
+    "📺": 1,
+    "🏃": 3
+   },
+   "num_ranks_dist": {
+    "6": 7,
+    "5": 2,
+    "10": 1
+   },
+   "reveal_order_dist": {
+    "worst_to_best": 7,
+    "best_to_worst": 3
+   },
+   "accent_placement": {
+    "1|0": 1,
+    "1|1": 2,
+    "1|3": 1,
+    "2|1": 4,
+    "2|0": 2
+   },
+   "color_pos_freq": [
+    {
+     "gold": 10
+    },
+    {
+     "white": 10
+    },
+    {
+     "red": 10
+    }
+   ],
+   "duration_by_pos": {
+    "1": {
+     "mean": 5.2,
+     "std": 0.75,
+     "n": 10
+    },
+    "2": {
+     "mean": 4.0,
+     "std": 0.89,
+     "n": 10
+    },
+    "3": {
+     "mean": 4.2,
+     "std": 0.87,
+     "n": 10
+    },
+    "4": {
+     "mean": 4.0,
+     "std": 1.41,
+     "n": 10
+    },
+    "5": {
+     "mean": 3.7,
+     "std": 1.35,
+     "n": 10
+    },
+    "6": {
+     "mean": 4.38,
+     "std": 0.99,
+     "n": 8
+    },
+    "7": {
+     "mean": 4.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "8": {
+     "mean": 2.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "9": {
+     "mean": 6.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "10": {
+     "mean": 3.0,
+     "std": 0.0,
+     "n": 1
+    }
+   },
+   "train_labels": [
+    "Award goes to... wrong",
+    "Bro forgot the lyrics",
+    "Chair too small",
+    "Crowd surf regret",
+    "Humble flex",
+    "Mic drop literal",
+    "Security got juked",
+    "Snack run disguise",
+    "Teleprompter panic",
+    "The clapback",
+    "The fake laugh",
+    "The photobomb",
+    "The stare down",
+    "Translator gave up",
+    "Umbrella bodyguard",
+    "Wardrobe rescue"
+   ],
+   "train_titles": [
+    "ranking best celebrity fan interactions",
+    "ranking best mic drop moments",
+    "ranking best paparazzi reactions",
+    "ranking celebrities being normal",
+    "ranking craziest live tv moments",
+    "ranking funniest interview moments",
+    "ranking funniest talk show fails",
+    "ranking most awkward red carpet moments",
+    "ranking the best celebrity clapbacks",
+    "ranking the coldest award show moments"
+   ]
+  },
+  "satisfying": {
+   "title_bigrams": {
+    "<s>": {
+     "Ranking": 87,
+     "Top": 7,
+     "Videos": 1,
+     "Pressure": 1,
+     "Slime": 1,
+     "Perfect": 1,
+     "Domino": 1,
+     "Paint": 1,
+     "Cake": 1
+    },
+    "Ranking": {
+     "the": 24,
+     "Best": 16,
+     "Most": 10,
+     "Perfect": 3,
+     "Crunchiest": 8,
+     "Craziest": 7,
+     "Funniest": 7,
+     "Videos": 2,
+     "Pressure": 2,
+     "Slime": 2,
+     "Domino": 2,
+     "Paint": 2,
+     "Cake": 2
+    },
+    "the": {
+     "Most": 8,
+     "Best": 8,
+     "Cleanest": 1,
+     "Worst": 7,
+     "Internet": 7
+    },
+    "Most": {
+     "Satisfying": 11,
+     "Oddly": 1,
+     "Perfect": 3,
+     "Hypnotic": 2,
+     "Flawless": 1
+    },
+    "Satisfying": {
+     "Videos": 3,
+     "Slime": 2,
+     "Machines": 1,
+     "Fails": 1,
+     "Pressure": 1,
+     "Perfect": 1,
+     "Domino": 1,
+     "Paint": 1,
+     "Cake": 1
+    },
+    "Videos": {
+     "Ever": 14
+    },
+    "Ever": {
+     "</s>": 8,
+     "Reveals": 1,
+     "Sounds": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Best": {
+     "Pressure": 4,
+     "Domino": 4,
+     "Paint": 4,
+     "Videos": 3,
+     "Slime": 3,
+     "Perfect": 3,
+     "Cake": 3,
+     "</s>": 7
+    },
+    "Pressure": {
+     "Washing": 14
+    },
+    "Washing": {
+     "Reveals": 2,
+     "</s>": 7,
+     "Sounds": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Reveals": {
+     "</s>": 8
+    },
+    "Slime": {
+     "Sounds": 14
+    },
+    "Sounds": {
+     "</s>": 16,
+     "Reveals": 1,
+     "Sounds": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Perfect": {
+     "Fit": 1,
+     "Fits": 13,
+     "Pressure": 1,
+     "Slime": 1,
+     "Paint": 1
+    },
+    "Fit": {
+     "Moments": 1
+    },
+    "Moments": {
+     "</s>": 2
+    },
+    "Domino": {
+     "Runs": 14
+    },
+    "Runs": {
+     "</s>": 8,
+     "Reveals": 1,
+     "Sounds": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Machines": {
+     "</s>": 1
+    },
+    "Paint": {
+     "Mixing": 14
+    },
+    "Mixing": {
+     "Moments": 1,
+     "</s>": 7,
+     "Reveals": 1,
+     "Sounds": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Crunchiest": {
+     "ASMR": 1,
+     "Videos": 1,
+     "Pressure": 1,
+     "Slime": 1,
+     "Perfect": 1,
+     "Domino": 1,
+     "Paint": 1,
+     "Cake": 1
+    },
+    "ASMR": {
+     "Sounds": 1
+    },
+    "Cleanest": {
+     "Cake": 1
+    },
+    "Cake": {
+     "Cuts": 14
+    },
+    "Cuts": {
+     "</s>": 8,
+     "Reveals": 1,
+     "Sounds": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Oddly": {
+     "Satisfying": 1
+    },
+    "Fails": {
+     "</s>": 1
+    },
+    "Fits": {
+     "</s>": 7,
+     "Reveals": 1,
+     "Sounds": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Worst": {
+     "Videos": 1,
+     "Pressure": 1,
+     "Slime": 1,
+     "Perfect": 1,
+     "Domino": 1,
+     "Paint": 1,
+     "Cake": 1,
+     "to": 7
+    },
+    "Craziest": {
+     "Videos": 1,
+     "Pressure": 1,
+     "Slime": 1,
+     "Perfect": 1,
+     "Domino": 1,
+     "Paint": 1,
+     "Cake": 1
+    },
+    "Funniest": {
+     "Videos": 1,
+     "Pressure": 1,
+     "Slime": 1,
+     "Perfect": 1,
+     "Domino": 1,
+     "Paint": 1,
+     "Cake": 1
+    },
+    "Hypnotic": {
+     "Perfect": 1,
+     "Domino": 1
+    },
+    "Flawless": {
+     "Cake": 1
+    },
+    "Top": {
+     "10": 3,
+     "5": 2,
+     "7": 2
+    },
+    "10": {
+     "Videos": 1,
+     "Slime": 1,
+     "Domino": 1
+    },
+    "Ranked": {
+     "</s>": 7
+    },
+    "5": {
+     "Pressure": 1,
+     "Perfect": 1
+    },
+    "7": {
+     "Paint": 1,
+     "Cake": 1
+    },
+    "Tier": {
+     "List": 7
+    },
+    "List": {
+     "</s>": 7
+    },
+    "From": {
+     "Worst": 7
+    },
+    "to": {
+     "Best": 7
+    },
+    "Until": {
+     "#1": 7
+    },
+    "#1": {
+     "Breaks": 7
+    },
+    "Breaks": {
+     "the": 7
+    },
+    "Internet": {
+     "</s>": 7
+    }
+   },
+   "label_bigrams": {
+    "<s>": {
+     "Glass": 2,
+     "Soap": 4,
+     "Ice": 6,
+     "The": 14,
+     "Wood": 5,
+     "Frosting": 5,
+     "Marble": 2,
+     "Hydraulic": 2,
+     "Carpet": 3,
+     "Laser": 5,
+     "Paint": 5,
+     "Kinetic": 5,
+     "Domino": 5,
+     "Power": 3,
+     "Fit": 2,
+     "Mixing": 3,
+     "Slime": 1,
+     "Washing": 7,
+     "Cut": 2,
+     "Flawless": 6
+    },
+    "Glass": {
+     "blob": 2
+    },
+    "blob": {
+     "magic": 2
+    },
+    "magic": {
+     "</s>": 2
+    },
+    "Soap": {
+     "curl": 4
+    },
+    "curl": {
+     "shave": 4
+    },
+    "shave": {
+     "</s>": 4
+    },
+    "Ice": {
+     "crack": 6
+    },
+    "crack": {
+     "symphony": 6
+    },
+    "symphony": {
+     "</s>": 6
+    },
+    "The": {
+     "squeegee": 6,
+     "chalk": 1,
+     "perfect": 7
+    },
+    "squeegee": {
+     "finale": 6
+    },
+    "finale": {
+     "</s>": 6
+    },
+    "Wood": {
+     "lathe": 5
+    },
+    "lathe": {
+     "silk": 5
+    },
+    "silk": {
+     "</s>": 5
+    },
+    "Frosting": {
+     "robot": 5
+    },
+    "robot": {
+     "</s>": 5
+    },
+    "Marble": {
+     "run": 2
+    },
+    "run": {
+     "flawless": 2
+    },
+    "flawless": {
+     "</s>": 2
+    },
+    "Hydraulic": {
+     "crunch": 2
+    },
+    "crunch": {
+     "</s>": 2
+    },
+    "Carpet": {
+     "line": 3
+    },
+    "line": {
+     "therapy": 3
+    },
+    "therapy": {
+     "</s>": 9
+    },
+    "chalk": {
+     "snap": 1
+    },
+    "snap": {
+     "</s>": 1
+    },
+    "Laser": {
+     "level": 5
+    },
+    "level": {
+     "precision": 5
+    },
+    "precision": {
+     "</s>": 5
+    },
+    "Paint": {
+     "swirl": 5
+    },
+    "swirl": {
+     "hypnosis": 5
+    },
+    "hypnosis": {
+     "</s>": 5
+    },
+    "Kinetic": {
+     "sand": 5
+    },
+    "sand": {
+     "slice": 5
+    },
+    "slice": {
+     "</s>": 11
+    },
+    "perfect": {
+     "fit": 7
+    },
+    "fit": {
+     "</s>": 7
+    },
+    "Domino": {
+     "galaxy": 2,
+     "reveal": 3
+    },
+    "galaxy": {
+     "</s>": 2
+    },
+    "Power": {
+     "wash": 3
+    },
+    "wash": {
+     "reveal": 3
+    },
+    "reveal": {
+     "</s>": 9
+    },
+    "Fit": {
+     "reveal": 1,
+     "slice": 1
+    },
+    "Mixing": {
+     "reveal": 2,
+     "therapy": 1,
+     "</s>": 2
+    },
+    "Slime": {
+     "slice": 1,
+     "</s>": 1
+    },
+    "Washing": {
+     "slice": 3,
+     "therapy": 4
+    },
+    "Cut": {
+     "slice": 1,
+     "therapy": 1,
+     "</s>": 3
+    },
+    "Flawless": {
+     "Cut": 3,
+     "Mixing": 2,
+     "Slime": 1
+    }
+   },
+   "emoji_freq": {
+    "🔮": 2,
+    "🧴": 4,
+    "🧊": 6,
+    "🪟": 6,
+    "🪵": 5,
+    "🤖": 5,
+    "🔵": 2,
+    "🗜️": 2,
+    "🧹": 3,
+    "✏️": 1,
+    "📐": 5,
+    "🎨": 5,
+    "🏖️": 5,
+    "🧩": 6,
+    "🌌": 2,
+    "🧼": 3
+   },
+   "num_ranks_dist": {
+    "6": 7,
+    "5": 2,
+    "10": 1
+   },
+   "reveal_order_dist": {
+    "worst_to_best": 9,
+    "best_to_worst": 1
+   },
+   "accent_placement": {
+    "1|2": 1,
+    "2|1": 4,
+    "1|1": 2,
+    "2|0": 2,
+    "1|0": 1
+   },
+   "color_pos_freq": [
+    {
+     "gold": 10
+    },
+    {
+     "white": 10
+    },
+    {
+     "red": 10
+    }
+   ],
+   "duration_by_pos": {
+    "1": {
+     "mean": 5.3,
+     "std": 0.64,
+     "n": 10
+    },
+    "2": {
+     "mean": 4.6,
+     "std": 1.2,
+     "n": 10
+    },
+    "3": {
+     "mean": 3.8,
+     "std": 0.87,
+     "n": 10
+    },
+    "4": {
+     "mean": 4.3,
+     "std": 1.1,
+     "n": 10
+    },
+    "5": {
+     "mean": 4.8,
+     "std": 1.08,
+     "n": 10
+    },
+    "6": {
+     "mean": 4.12,
+     "std": 0.93,
+     "n": 8
+    },
+    "7": {
+     "mean": 5.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "8": {
+     "mean": 2.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "9": {
+     "mean": 3.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "10": {
+     "mean": 4.0,
+     "std": 0.0,
+     "n": 1
+    }
+   },
+   "train_labels": [
+    "Carpet line therapy",
+    "Domino galaxy",
+    "Frosting robot",
+    "Glass blob magic",
+    "Hydraulic crunch",
+    "Ice crack symphony",
+    "Kinetic sand slice",
+    "Laser level precision",
+    "Marble run flawless",
+    "Paint swirl hypnosis",
+    "Power wash reveal",
+    "Soap curl shave",
+    "The chalk snap",
+    "The perfect fit",
+    "The squeegee finale",
+    "Wood lathe silk"
+   ],
+   "train_titles": [
+    "ranking best paint mixing moments",
+    "ranking best pressure washing reveals",
+    "ranking crunchiest asmr sounds",
+    "ranking most oddly satisfying fails",
+    "ranking most satisfying machines",
+    "ranking most satisfying slime sounds",
+    "ranking perfect fit moments",
+    "ranking the best domino runs",
+    "ranking the cleanest cake cuts",
+    "ranking the most satisfying videos ever"
+   ]
+  },
+  "science": {
+   "title_bigrams": {
+    "<s>": {
+     "Ranking": 87,
+     "Top": 7,
+     "Experiments": 1,
+     "Chemical": 1,
+     "Physics": 1,
+     "Rocket": 1,
+     "Slow": 1,
+     "Magnet": 1,
+     "Dry": 1
+    },
+    "Ranking": {
+     "Craziest": 15,
+     "Best": 18,
+     "the": 16,
+     "Most": 15,
+     "Wildest": 1,
+     "Coolest": 1,
+     "Funniest": 7,
+     "Experiments": 2,
+     "Chemical": 2,
+     "Physics": 2,
+     "Rocket": 2,
+     "Slow": 2,
+     "Magnet": 2,
+     "Dry": 2
+    },
+    "Craziest": {
+     "Science": 8,
+     "Electricity": 1,
+     "Experiments": 1,
+     "Chemical": 1,
+     "Physics": 1,
+     "Rocket": 1,
+     "Slow": 1,
+     "Magnet": 1,
+     "Dry": 1
+    },
+    "Science": {
+     "Experiments": 2,
+     "Chemical": 1,
+     "Physics": 1,
+     "Rocket": 1,
+     "Slow": 1,
+     "Magnet": 1,
+     "Dry": 1
+    },
+    "Experiments": {
+     "</s>": 19,
+     "Reactions": 2,
+     "Ranked": 2,
+     "Tier": 2,
+     "From": 2,
+     "Until": 2
+    },
+    "Best": {
+     "Chemical": 4,
+     "DIY": 1,
+     "Dry": 4,
+     "Non-Newtonian": 1,
+     "Experiments": 3,
+     "Physics": 3,
+     "Rocket": 3,
+     "Slow": 3,
+     "Magnet": 3,
+     "</s>": 7
+    },
+    "Chemical": {
+     "Reactions": 14
+    },
+    "Reactions": {
+     "</s>": 16,
+     "Reactions": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "the": {
+     "Coolest": 1,
+     "Craziest": 1,
+     "Best": 7,
+     "Worst": 7,
+     "Internet": 7
+    },
+    "Coolest": {
+     "Physics": 1,
+     "Magnet": 1
+    },
+    "Physics": {
+     "Tricks": 14
+    },
+    "Tricks": {
+     "</s>": 18,
+     "Reactions": 2,
+     "Ranked": 2,
+     "Tier": 2,
+     "From": 2,
+     "Until": 2
+    },
+    "Most": {
+     "Explosive": 11,
+     "Impossible": 2,
+     "Mind": 1,
+     "Slow": 1
+    },
+    "Explosive": {
+     "Experiments": 2,
+     "Chemical": 1,
+     "Physics": 2,
+     "Rocket": 1,
+     "Slow": 2,
+     "Magnet": 1,
+     "Dry": 2
+    },
+    "DIY": {
+     "Rocket": 1
+    },
+    "Rocket": {
+     "Launches": 14
+    },
+    "Launches": {
+     "</s>": 9,
+     "Reactions": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Wildest": {
+     "Slow": 1
+    },
+    "Slow": {
+     "Motion": 14,
+     "Mo": 1
+    },
+    "Motion": {
+     "Moments": 14
+    },
+    "Moments": {
+     "</s>": 9,
+     "Reactions": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Magnet": {
+     "Tricks": 14
+    },
+    "Dry": {
+     "Ice": 14
+    },
+    "Ice": {
+     "Experiments": 14
+    },
+    "Electricity": {
+     "Arcs": 1
+    },
+    "Arcs": {
+     "</s>": 1
+    },
+    "Non-Newtonian": {
+     "Fluid": 1
+    },
+    "Fluid": {
+     "Tests": 1
+    },
+    "Tests": {
+     "</s>": 1
+    },
+    "Worst": {
+     "Experiments": 1,
+     "Chemical": 1,
+     "Physics": 1,
+     "Rocket": 1,
+     "Slow": 1,
+     "Magnet": 1,
+     "Dry": 1,
+     "to": 7
+    },
+    "Funniest": {
+     "Experiments": 1,
+     "Chemical": 1,
+     "Physics": 1,
+     "Rocket": 1,
+     "Slow": 1,
+     "Magnet": 1,
+     "Dry": 1
+    },
+    "Impossible": {
+     "Experiments": 1,
+     "Magnet": 1
+    },
+    "Mind": {
+     "Bending": 1
+    },
+    "Bending": {
+     "Chemical": 1
+    },
+    "Mo": {
+     "Rocket": 1
+    },
+    "Top": {
+     "5": 2,
+     "7": 4,
+     "10": 1
+    },
+    "5": {
+     "Experiments": 1,
+     "Dry": 1
+    },
+    "Ranked": {
+     "</s>": 7
+    },
+    "7": {
+     "Chemical": 1,
+     "Physics": 1,
+     "Rocket": 1,
+     "Slow": 1
+    },
+    "10": {
+     "Magnet": 1
+    },
+    "Tier": {
+     "List": 7
+    },
+    "List": {
+     "</s>": 7
+    },
+    "From": {
+     "Worst": 7
+    },
+    "to": {
+     "Best": 7
+    },
+    "Until": {
+     "#1": 7
+    },
+    "#1": {
+     "Breaks": 7
+    },
+    "Breaks": {
+     "the": 7
+    },
+    "Internet": {
+     "</s>": 7
+    }
+   },
+   "label_bigrams": {
+    "<s>": {
+     "Fire": 6,
+     "Bottle": 6,
+     "Elephant": 6,
+     "The": 10,
+     "Vacuum": 6,
+     "Gallium": 6,
+     "Slow-mo": 3,
+     "Hydraulic": 4,
+     "Sound": 4,
+     "Magnet": 1,
+     "Thermite": 5,
+     "Walking": 3,
+     "Mentos": 2,
+     "Dry": 3,
+     "Tesla": 1,
+     "Liquid": 2,
+     "Trick": 6,
+     "Experiment": 5,
+     "Chemical": 1,
+     "Physics": 1,
+     "50x": 2,
+     "100x": 3,
+     "10x": 1
+    },
+    "Fire": {
+     "tornado": 6
+    },
+    "tornado": {
+     "</s>": 6
+    },
+    "Bottle": {
+     "rocket": 6
+    },
+    "rocket": {
+     "overkill": 6
+    },
+    "overkill": {
+     "</s>": 6
+    },
+    "Elephant": {
+     "toothpaste": 6
+    },
+    "toothpaste": {
+     "</s>": 6
+    },
+    "The": {
+     "chain": 4,
+     "Experiment": 4,
+     "Chemical": 1,
+     "Launch": 1
+    },
+    "chain": {
+     "fountain": 4
+    },
+    "fountain": {
+     "</s>": 4
+    },
+    "Vacuum": {
+     "marshmallow": 6
+    },
+    "marshmallow": {
+     "</s>": 6
+    },
+    "Gallium": {
+     "spoon": 6
+    },
+    "spoon": {
+     "melt": 6
+    },
+    "melt": {
+     "</s>": 6
+    },
+    "Slow-mo": {
+     "balloon": 3
+    },
+    "balloon": {
+     "burst": 3
+    },
+    "burst": {
+     "</s>": 3
+    },
+    "Hydraulic": {
+     "watermelon": 4
+    },
+    "watermelon": {
+     "</s>": 4
+    },
+    "Sound": {
+     "wave": 4
+    },
+    "wave": {
+     "art": 4
+    },
+    "art": {
+     "</s>": 4
+    },
+    "Magnet": {
+     "levitation": 1
+    },
+    "levitation": {
+     "</s>": 1
+    },
+    "Thermite": {
+     "vs": 5
+    },
+    "vs": {
+     "ice": 5,
+     "Experiment": 4,
+     "Trick": 1,
+     "Launch": 1
+    },
+    "ice": {
+     "</s>": 5,
+     "scream": 3
+    },
+    "Walking": {
+     "on": 3
+    },
+    "on": {
+     "oobleck": 3
+    },
+    "oobleck": {
+     "</s>": 3
+    },
+    "Mentos": {
+     "volcano": 2
+    },
+    "volcano": {
+     "row": 2
+    },
+    "row": {
+     "</s>": 2
+    },
+    "Dry": {
+     "ice": 3
+    },
+    "scream": {
+     "</s>": 9
+    },
+    "Tesla": {
+     "coil": 1
+    },
+    "coil": {
+     "concert": 1
+    },
+    "concert": {
+     "</s>": 1
+    },
+    "Liquid": {
+     "nitrogen": 2
+    },
+    "nitrogen": {
+     "cloud": 2
+    },
+    "cloud": {
+     "</s>": 2
+    },
+    "Trick": {
+     "vs": 4,
+     "</s>": 1,
+     "scream": 2
+    },
+    "Experiment": {
+     "</s>": 4,
+     "vs": 1,
+     "moment": 4,
+     "scream": 4
+    },
+    "Launch": {
+     "</s>": 1,
+     "moment": 1
+    },
+    "Chemical": {
+     "vs": 1,
+     "moment": 1
+    },
+    "moment": {
+     "</s>": 6
+    },
+    "Physics": {
+     "broke": 1
+    },
+    "broke": {
+     "</s>": 1
+    },
+    "50x": {
+     "slow": 2
+    },
+    "slow": {
+     "motion": 6
+    },
+    "motion": {
+     "</s>": 6
+    },
+    "100x": {
+     "slow": 3
+    },
+    "10x": {
+     "slow": 1
+    }
+   },
+   "emoji_freq": {
+    "🌪️": 6,
+    "🚀": 6,
+    "🐘": 6,
+    "⛓️": 4,
+    "🍡": 6,
+    "🥄": 9,
+    "💧": 3,
+    "🍉": 4,
+    "🎵": 4,
+    "🧲": 1,
+    "🔥": 5,
+    "🏃": 3,
+    "🌋": 2,
+    "⚡": 1,
+    "☁️": 2
+   },
+   "num_ranks_dist": {
+    "6": 7,
+    "5": 2,
+    "10": 1
+   },
+   "reveal_order_dist": {
+    "worst_to_best": 8,
+    "best_to_worst": 2
+   },
+   "accent_placement": {
+    "1|0": 2,
+    "1|1": 3,
+    "2|0": 3,
+    "2|1": 2
+   },
+   "color_pos_freq": [
+    {
+     "gold": 10
+    },
+    {
+     "white": 10
+    },
+    {
+     "red": 10
+    }
+   ],
+   "duration_by_pos": {
+    "1": {
+     "mean": 5.2,
+     "std": 0.87,
+     "n": 10
+    },
+    "2": {
+     "mean": 3.8,
+     "std": 1.17,
+     "n": 10
+    },
+    "3": {
+     "mean": 3.8,
+     "std": 0.4,
+     "n": 10
+    },
+    "4": {
+     "mean": 3.7,
+     "std": 1.1,
+     "n": 10
+    },
+    "5": {
+     "mean": 4.4,
+     "std": 1.36,
+     "n": 10
+    },
+    "6": {
+     "mean": 4.5,
+     "std": 1.12,
+     "n": 8
+    },
+    "7": {
+     "mean": 5.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "8": {
+     "mean": 4.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "9": {
+     "mean": 2.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "10": {
+     "mean": 6.0,
+     "std": 0.0,
+     "n": 1
+    }
+   },
+   "train_labels": [
+    "Bottle rocket overkill",
+    "Dry ice scream",
+    "Elephant toothpaste",
+    "Fire tornado",
+    "Gallium spoon melt",
+    "Hydraulic watermelon",
+    "Liquid nitrogen cloud",
+    "Magnet levitation",
+    "Mentos volcano row",
+    "Slow-mo balloon burst",
+    "Sound wave art",
+    "Tesla coil concert",
+    "The chain fountain",
+    "Thermite vs ice",
+    "Vacuum marshmallow",
+    "Walking on oobleck"
+   ],
+   "train_titles": [
+    "ranking best chemical reactions",
+    "ranking best diy rocket launches",
+    "ranking best dry ice experiments",
+    "ranking best non-newtonian fluid tests",
+    "ranking coolest magnet tricks",
+    "ranking craziest science experiments",
+    "ranking most explosive experiments",
+    "ranking the coolest physics tricks",
+    "ranking the craziest electricity arcs",
+    "ranking wildest slow motion moments"
+   ]
+  },
+  "cars": {
+   "title_bigrams": {
+    "<s>": {
+     "Ranking": 98,
+     "Top": 8,
+     "Launches": 1,
+     "Drifts": 1,
+     "Exhausts": 1,
+     "Parking": 1,
+     "Burnouts": 1,
+     "Engine": 1,
+     "Police": 1,
+     "Car": 1
+    },
+    "Ranking": {
+     "Craziest": 18,
+     "Best": 19,
+     "Loudest": 9,
+     "the": 17,
+     "Fastest": 1,
+     "Most": 9,
+     "Wildest": 1,
+     "Funniest": 8,
+     "Launches": 2,
+     "Drifts": 2,
+     "Exhausts": 2,
+     "Parking": 2,
+     "Burnouts": 2,
+     "Engine": 2,
+     "Police": 2,
+     "Car": 2
+    },
+    "Craziest": {
+     "Car": 10,
+     "Truck": 1,
+     "Launches": 1,
+     "Drifts": 1,
+     "Exhausts": 1,
+     "Parking": 1,
+     "Burnouts": 1,
+     "Engine": 1,
+     "Police": 1
+    },
+    "Car": {
+     "Launches": 2,
+     "Mods": 14,
+     "Drifts": 1,
+     "Exhausts": 1,
+     "Parking": 1,
+     "Burnouts": 1,
+     "Engine": 1,
+     "Police": 1,
+     "Car": 1
+    },
+    "Launches": {
+     "</s>": 8,
+     "Ever": 1,
+     "Moments": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Best": {
+     "Drift": 1,
+     "Burnouts": 4,
+     "Car": 4,
+     "Launches": 3,
+     "Drifts": 3,
+     "Exhausts": 3,
+     "Parking": 3,
+     "Engine": 3,
+     "Police": 3,
+     "</s>": 8
+    },
+    "Drift": {
+     "Moments": 1
+    },
+    "Moments": {
+     "</s>": 10
+    },
+    "Loudest": {
+     "Exhausts": 2,
+     "Launches": 1,
+     "Drifts": 1,
+     "Parking": 1,
+     "Burnouts": 1,
+     "Engine": 1,
+     "Police": 1,
+     "Car": 1
+    },
+    "Exhausts": {
+     "Ever": 2,
+     "</s>": 7,
+     "Moments": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Ever": {
+     "</s>": 11
+    },
+    "the": {
+     "Worst": 9,
+     "Best": 8,
+     "Internet": 8
+    },
+    "Worst": {
+     "Parking": 2,
+     "Launches": 1,
+     "Drifts": 1,
+     "Exhausts": 1,
+     "Burnouts": 1,
+     "Engine": 1,
+     "Police": 1,
+     "Car": 1,
+     "to": 8
+    },
+    "Parking": {
+     "Fails": 14
+    },
+    "Fails": {
+     "</s>": 8,
+     "Ever": 1,
+     "Moments": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Fastest": {
+     "Street": 1,
+     "Launches": 1
+    },
+    "Street": {
+     "Cars": 1
+    },
+    "Cars": {
+     "</s>": 1
+    },
+    "Burnouts": {
+     "Ever": 2,
+     "</s>": 7,
+     "Moments": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Truck": {
+     "Moments": 1
+    },
+    "Most": {
+     "Satisfying": 1,
+     "Fastest": 1,
+     "Cleanest": 2,
+     "Illegal": 5
+    },
+    "Satisfying": {
+     "Engine": 1
+    },
+    "Engine": {
+     "Sounds": 14
+    },
+    "Sounds": {
+     "</s>": 8,
+     "Ever": 1,
+     "Moments": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Wildest": {
+     "Police": 1
+    },
+    "Police": {
+     "Chases": 14
+    },
+    "Chases": {
+     "</s>": 8,
+     "Ever": 1,
+     "Moments": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Mods": {
+     "Ever": 2,
+     "</s>": 7,
+     "Moments": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Drifts": {
+     "</s>": 7,
+     "Ever": 1,
+     "Moments": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Funniest": {
+     "Launches": 1,
+     "Drifts": 1,
+     "Exhausts": 1,
+     "Parking": 1,
+     "Burnouts": 1,
+     "Engine": 1,
+     "Police": 1,
+     "Car": 1
+    },
+    "Cleanest": {
+     "Drifts": 1,
+     "Burnouts": 1
+    },
+    "Illegal": {
+     "Sounding": 5
+    },
+    "Sounding": {
+     "Exhausts": 1,
+     "Parking": 1,
+     "Engine": 1,
+     "Police": 1,
+     "Car": 1
+    },
+    "Top": {
+     "10": 3,
+     "7": 4,
+     "5": 1
+    },
+    "10": {
+     "Launches": 1,
+     "Drifts": 1,
+     "Car": 1
+    },
+    "Ranked": {
+     "</s>": 8
+    },
+    "7": {
+     "Exhausts": 1,
+     "Burnouts": 1,
+     "Engine": 1,
+     "Police": 1
+    },
+    "5": {
+     "Parking": 1
+    },
+    "Tier": {
+     "List": 8
+    },
+    "List": {
+     "</s>": 8
+    },
+    "From": {
+     "Worst": 8
+    },
+    "to": {
+     "Best": 8
+    },
+    "Until": {
+     "#1": 8
+    },
+    "#1": {
+     "Breaks": 8
+    },
+    "Breaks": {
+     "the": 8
+    },
+    "Internet": {
+     "</s>": 8
+    }
+   },
+   "label_bigrams": {
+    "<s>": {
+     "Wheelie": 6,
+     "Parallel": 2,
+     "Snow": 4,
+     "Flame": 6,
+     "Mud": 1,
+     "Speed": 5,
+     "Trailer": 5,
+     "Launch": 6,
+     "Tow": 4,
+     "Dyno": 6,
+     "Granny": 4,
+     "Burnout": 5,
+     "The": 11,
+     "Valet": 2,
+     "Chase": 1,
+     "Drift": 1,
+     "Exhaust": 1,
+     "Engine": 1,
+     "Parking": 1
+    },
+    "Wheelie": {
+     "truck": 6
+    },
+    "truck": {
+     "</s>": 6,
+     "irony": 4
+    },
+    "Parallel": {
+     "parking": 2
+    },
+    "parking": {
+     "crime": 2
+    },
+    "crime": {
+     "</s>": 2
+    },
+    "Snow": {
+     "drift": 4
+    },
+    "drift": {
+     "ballet": 4
+    },
+    "ballet": {
+     "</s>": 4
+    },
+    "Flame": {
+     "spitter": 6
+    },
+    "spitter": {
+     "</s>": 6
+    },
+    "Mud": {
+     "pit": 1
+    },
+    "pit": {
+     "victory": 1
+    },
+    "victory": {
+     "</s>": 1
+    },
+    "Speed": {
+     "bump": 5
+    },
+    "bump": {
+     "betrayal": 5
+    },
+    "betrayal": {
+     "</s>": 11
+    },
+    "Trailer": {
+     "escape": 5
+    },
+    "escape": {
+     "artist": 5
+    },
+    "artist": {
+     "</s>": 5
+    },
+    "Launch": {
+     "control": 5,
+     "betrayal": 1
+    },
+    "control": {
+     "demon": 5
+    },
+    "demon": {
+     "</s>": 5
+    },
+    "Tow": {
+     "truck": 4
+    },
+    "irony": {
+     "</s>": 4
+    },
+    "Dyno": {
+     "pull": 6
+    },
+    "pull": {
+     "scream": 6
+    },
+    "scream": {
+     "</s>": 6
+    },
+    "Granny": {
+     "in": 4
+    },
+    "in": {
+     "the": 4
+    },
+    "the": {
+     "GT3": 4
+    },
+    "GT3": {
+     "</s>": 4
+    },
+    "Burnout": {
+     "ring": 5
+    },
+    "ring": {
+     "of": 5
+    },
+    "of": {
+     "fire": 5
+    },
+    "fire": {
+     "</s>": 5
+    },
+    "The": {
+     "wall": 6,
+     "perfect": 2,
+     "anti-lag": 3
+    },
+    "wall": {
+     "tap": 6
+    },
+    "tap": {
+     "</s>": 6
+    },
+    "perfect": {
+     "rev": 2
+    },
+    "rev": {
+     "match": 2
+    },
+    "match": {
+     "</s>": 2
+    },
+    "anti-lag": {
+     "bark": 3
+    },
+    "bark": {
+     "</s>": 3
+    },
+    "Valet": {
+     "nightmare": 2
+    },
+    "nightmare": {
+     "</s>": 2
+    },
+    "Chase": {
+     "betrayal": 1
+    },
+    "Drift": {
+     "betrayal": 1
+    },
+    "Exhaust": {
+     "betrayal": 1
+    },
+    "Engine": {
+     "betrayal": 1
+    },
+    "Parking": {
+     "betrayal": 1
+    }
+   },
+   "emoji_freq": {
+    "🛻": 6,
+    "🚗": 2,
+    "❄️": 4,
+    "🔥": 5,
+    "🟤": 1,
+    "🐢": 5,
+    "🎪": 5,
+    "🚦": 4,
+    "🪝": 4,
+    "📈": 6,
+    "👵": 4,
+    "⭕": 5,
+    "🧱": 5,
+    "🎼": 2,
+    "💥": 2,
+    "🎫": 2
+   },
+   "num_ranks_dist": {
+    "6": 7,
+    "5": 2,
+    "10": 1
+   },
+   "reveal_order_dist": {
+    "worst_to_best": 9,
+    "best_to_worst": 1
+   },
+   "accent_placement": {
+    "2|0": 5,
+    "1|2": 2,
+    "1|1": 1,
+    "1|0": 1,
+    "2|1": 1
+   },
+   "color_pos_freq": [
+    {
+     "gold": 10
+    },
+    {
+     "white": 10
+    },
+    {
+     "red": 10
+    }
+   ],
+   "duration_by_pos": {
+    "1": {
+     "mean": 5.2,
+     "std": 0.6,
+     "n": 10
+    },
+    "2": {
+     "mean": 3.4,
+     "std": 0.66,
+     "n": 10
+    },
+    "3": {
+     "mean": 4.3,
+     "std": 0.9,
+     "n": 10
+    },
+    "4": {
+     "mean": 4.5,
+     "std": 0.81,
+     "n": 10
+    },
+    "5": {
+     "mean": 4.2,
+     "std": 1.25,
+     "n": 10
+    },
+    "6": {
+     "mean": 4.25,
+     "std": 0.97,
+     "n": 8
+    },
+    "7": {
+     "mean": 2.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "8": {
+     "mean": 4.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "9": {
+     "mean": 6.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "10": {
+     "mean": 4.0,
+     "std": 0.0,
+     "n": 1
+    }
+   },
+   "train_labels": [
+    "Burnout ring of fire",
+    "Dyno pull scream",
+    "Flame spitter",
+    "Granny in the GT3",
+    "Launch control demon",
+    "Mud pit victory",
+    "Parallel parking crime",
+    "Snow drift ballet",
+    "Speed bump betrayal",
+    "The anti-lag bark",
+    "The perfect rev match",
+    "The wall tap",
+    "Tow truck irony",
+    "Trailer escape artist",
+    "Valet nightmare",
+    "Wheelie truck"
+   ],
+   "train_titles": [
+    "ranking best burnouts ever",
+    "ranking best car mods ever",
+    "ranking best drift moments",
+    "ranking craziest car launches",
+    "ranking craziest truck moments",
+    "ranking fastest street cars",
+    "ranking loudest exhausts ever",
+    "ranking most satisfying engine sounds",
+    "ranking the worst parking fails",
+    "ranking wildest police chases"
+   ]
+  },
+  "gym": {
+   "title_bigrams": {
+    "<s>": {
+     "Ranking": 87,
+     "Top": 7,
+     "Fails": 1,
+     "Strength": 1,
+     "Stereotypes": 1,
+     "Calisthenics": 1,
+     "Ego": 1,
+     "Transformations": 1,
+     "PR": 1
+    },
+    "Ranking": {
+     "the": 23,
+     "Craziest": 15,
+     "Best": 17,
+     "Most": 8,
+     "Funniest": 8,
+     "Wildest": 1,
+     "Strongest": 1,
+     "Fails": 2,
+     "Strength": 2,
+     "Stereotypes": 2,
+     "Calisthenics": 2,
+     "Ego": 2,
+     "Transformations": 2,
+     "PR": 2
+    },
+    "the": {
+     "Worst": 15,
+     "Most": 1,
+     "Best": 7,
+     "Internet": 7
+    },
+    "Worst": {
+     "Gym": 8,
+     "Fails": 1,
+     "Strength": 1,
+     "Stereotypes": 1,
+     "Calisthenics": 1,
+     "Ego": 1,
+     "Transformations": 1,
+     "PR": 1,
+     "to": 7
+    },
+    "Gym": {
+     "Fails": 2,
+     "Stereotypes": 2,
+     "Moments": 1,
+     "Strength": 1,
+     "Calisthenics": 1,
+     "Ego": 1,
+     "Transformations": 1,
+     "PR": 1
+    },
+    "Fails": {
+     "</s>": 9,
+     "Ever": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Craziest": {
+     "Feats": 8,
+     "Fails": 1,
+     "Strength": 1,
+     "Stereotypes": 1,
+     "Calisthenics": 1,
+     "Ego": 1,
+     "Transformations": 1,
+     "PR": 1
+    },
+    "Feats": {
+     "of": 8
+    },
+    "of": {
+     "Strength": 2,
+     "Fails": 1,
+     "Stereotypes": 1,
+     "Calisthenics": 1,
+     "Ego": 1,
+     "Transformations": 1,
+     "PR": 1
+    },
+    "Strength": {
+     "</s>": 9,
+     "Ever": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Best": {
+     "Gym": 1,
+     "Comeback": 1,
+     "PR": 4,
+     "Fails": 3,
+     "Strength": 3,
+     "Stereotypes": 3,
+     "Calisthenics": 3,
+     "Ego": 3,
+     "Transformations": 3,
+     "</s>": 7
+    },
+    "Stereotypes": {
+     "</s>": 9,
+     "Ever": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Most": {
+     "Impressive": 1,
+     "Chaotic": 3,
+     "Most": 2,
+     "Humbling": 2,
+     "Impossible": 1,
+     "Wildest": 1,
+     "Strongest": 1
+    },
+    "Impressive": {
+     "Calisthenics": 1
+    },
+    "Calisthenics": {
+     "</s>": 9,
+     "Ever": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Funniest": {
+     "Ego": 2,
+     "Fails": 1,
+     "Strength": 1,
+     "Stereotypes": 1,
+     "Calisthenics": 1,
+     "Transformations": 1,
+     "PR": 1
+    },
+    "Ego": {
+     "Lifts": 14
+    },
+    "Lifts": {
+     "</s>": 9,
+     "Ever": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Comeback": {
+     "Transformations": 1
+    },
+    "Transformations": {
+     "</s>": 9,
+     "Ever": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Wildest": {
+     "Home": 1,
+     "Stereotypes": 1
+    },
+    "Home": {
+     "Workouts": 1
+    },
+    "Workouts": {
+     "</s>": 1
+    },
+    "Strongest": {
+     "Old": 1,
+     "Calisthenics": 1
+    },
+    "Old": {
+     "Guys": 1
+    },
+    "Guys": {
+     "Ever": 1
+    },
+    "Ever": {
+     "</s>": 8
+    },
+    "PR": {
+     "Celebrations": 14
+    },
+    "Celebrations": {
+     "</s>": 9,
+     "Ever": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Chaotic": {
+     "Gym": 1,
+     "Ego": 1,
+     "PR": 1
+    },
+    "Moments": {
+     "</s>": 1
+    },
+    "Humbling": {
+     "Fails": 1,
+     "Transformations": 1
+    },
+    "Impossible": {
+     "Strength": 1
+    },
+    "Top": {
+     "7": 2,
+     "10": 4,
+     "5": 1
+    },
+    "7": {
+     "Fails": 1,
+     "Strength": 1
+    },
+    "Ranked": {
+     "</s>": 7
+    },
+    "10": {
+     "Stereotypes": 1,
+     "Calisthenics": 1,
+     "Ego": 1,
+     "PR": 1
+    },
+    "5": {
+     "Transformations": 1
+    },
+    "Tier": {
+     "List": 7
+    },
+    "List": {
+     "</s>": 7
+    },
+    "From": {
+     "Worst": 7
+    },
+    "to": {
+     "Best": 7
+    },
+    "Until": {
+     "#1": 7
+    },
+    "#1": {
+     "Breaks": 7
+    },
+    "Breaks": {
+     "the": 7
+    },
+    "Internet": {
+     "</s>": 7
+    }
+   },
+   "label_bigrams": {
+    "<s>": {
+     "Planche": 2,
+     "The": 9,
+     "Grandpa": 7,
+     "One": 5,
+     "Chalk": 8,
+     "Cable": 4,
+     "Kettlebell": 5,
+     "PR": 5,
+     "Treadmill": 4,
+     "Backflip": 3,
+     "Curls": 5,
+     "Yoga": 3,
+     "Ego": 5,
+     "Protein": 1,
+     "Transformation": 1,
+     "Calisthenic": 2,
+     "Stereotype": 1,
+     "Lift": 1,
+     "Strength": 1
+    },
+    "Planche": {
+     "of": 2
+    },
+    "of": {
+     "the": 8
+    },
+    "the": {
+     "gods": 8,
+     "squat": 5
+    },
+    "gods": {
+     "</s>": 8
+    },
+    "The": {
+     "human": 3,
+     "gym": 3,
+     "spotter": 3
+    },
+    "human": {
+     "flag": 3
+    },
+    "flag": {
+     "</s>": 3
+    },
+    "Grandpa": {
+     "reps": 7
+    },
+    "reps": {
+     "out": 7
+    },
+    "out": {
+     "</s>": 7
+    },
+    "One": {
+     "arm": 5
+    },
+    "arm": {
+     "wonder": 5
+    },
+    "wonder": {
+     "</s>": 5
+    },
+    "Chalk": {
+     "cloud": 8
+    },
+    "cloud": {
+     "entrance": 8
+    },
+    "entrance": {
+     "</s>": 8
+    },
+    "Cable": {
+     "machine": 4
+    },
+    "machine": {
+     "whip": 4
+    },
+    "whip": {
+     "</s>": 4
+    },
+    "Kettlebell": {
+     "juggling": 5
+    },
+    "juggling": {
+     "</s>": 5
+    },
+    "PR": {
+     "scream": 5,
+     "celebration": 3
+    },
+    "scream": {
+     "</s>": 5
+    },
+    "Treadmill": {
+     "superman": 4
+    },
+    "superman": {
+     "</s>": 4
+    },
+    "Backflip": {
+     "PR": 3
+    },
+    "celebration": {
+     "</s>": 3
+    },
+    "gym": {
+     "crab": 3
+    },
+    "crab": {
+     "walk": 3
+    },
+    "walk": {
+     "</s>": 3
+    },
+    "Curls": {
+     "in": 5
+    },
+    "in": {
+     "the": 5
+    },
+    "squat": {
+     "rack": 5
+    },
+    "rack": {
+     "</s>": 5
+    },
+    "spotter": {
+     "save": 3
+    },
+    "save": {
+     "</s>": 3
+    },
+    "Yoga": {
+     "ball": 3
+    },
+    "ball": {
+     "roulette": 3
+    },
+    "roulette": {
+     "</s>": 3
+    },
+    "Ego": {
+     "lift": 5
+    },
+    "lift": {
+     "disaster": 5
+    },
+    "disaster": {
+     "</s>": 5
+    },
+    "Protein": {
+     "shaker": 1
+    },
+    "shaker": {
+     "explosion": 1
+    },
+    "explosion": {
+     "</s>": 1
+    },
+    "Transformation": {
+     "of": 1
+    },
+    "Calisthenic": {
+     "of": 2
+    },
+    "Stereotype": {
+     "of": 1
+    },
+    "Lift": {
+     "of": 1
+    },
+    "Strength": {
+     "of": 1
+    }
+   },
+   "emoji_freq": {
+    "🕊️": 2,
+    "🚩": 3,
+    "👴": 6,
+    "💪": 5,
+    "🌫️": 8,
+    "🪢": 4,
+    "🤹": 5,
+    "📢": 4,
+    "🦸": 4,
+    "🤸": 3,
+    "🦀": 3,
+    "🙄": 5,
+    "🛟": 2,
+    "🎲": 3,
+    "😵": 4,
+    "🥤": 1
+   },
+   "num_ranks_dist": {
+    "6": 7,
+    "5": 2,
+    "10": 1
+   },
+   "reveal_order_dist": {
+    "worst_to_best": 10
+   },
+   "accent_placement": {
+    "2|0": 3,
+    "1|0": 4,
+    "2|1": 1,
+    "1|1": 1,
+    "1|2": 1
+   },
+   "color_pos_freq": [
+    {
+     "gold": 10
+    },
+    {
+     "white": 10
+    },
+    {
+     "red": 10
+    }
+   ],
+   "duration_by_pos": {
+    "1": {
+     "mean": 4.9,
+     "std": 0.83,
+     "n": 10
+    },
+    "2": {
+     "mean": 4.0,
+     "std": 1.0,
+     "n": 10
+    },
+    "3": {
+     "mean": 3.6,
+     "std": 1.11,
+     "n": 10
+    },
+    "4": {
+     "mean": 3.9,
+     "std": 1.22,
+     "n": 10
+    },
+    "5": {
+     "mean": 3.0,
+     "std": 1.0,
+     "n": 10
+    },
+    "6": {
+     "mean": 4.0,
+     "std": 1.32,
+     "n": 8
+    },
+    "7": {
+     "mean": 2.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "8": {
+     "mean": 6.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "9": {
+     "mean": 5.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "10": {
+     "mean": 4.0,
+     "std": 0.0,
+     "n": 1
+    }
+   },
+   "train_labels": [
+    "Backflip PR celebration",
+    "Cable machine whip",
+    "Chalk cloud entrance",
+    "Curls in the squat rack",
+    "Ego lift disaster",
+    "Grandpa reps out",
+    "Kettlebell juggling",
+    "One arm wonder",
+    "PR scream",
+    "Planche of the gods",
+    "Protein shaker explosion",
+    "The gym crab walk",
+    "The human flag",
+    "The spotter save",
+    "Treadmill superman",
+    "Yoga ball roulette"
+   ],
+   "train_titles": [
+    "ranking best comeback transformations",
+    "ranking best gym stereotypes",
+    "ranking best pr celebrations",
+    "ranking craziest feats of strength",
+    "ranking funniest ego lifts",
+    "ranking most impressive calisthenics",
+    "ranking strongest old guys ever",
+    "ranking the most chaotic gym moments",
+    "ranking the worst gym fails",
+    "ranking wildest home workouts"
+   ]
+  },
+  "extreme": {
+   "title_bigrams": {
+    "<s>": {
+     "Ranking": 87,
+     "Top": 7,
+     "Cliff": 1,
+     "Parkour": 1,
+     "Skydiving": 1,
+     "Downhill": 1,
+     "Skate": 1,
+     "Surf": 1,
+     "BASE": 1
+    },
+    "Ranking": {
+     "Craziest": 16,
+     "Best": 17,
+     "Wildest": 2,
+     "Insane": 1,
+     "Scariest": 1,
+     "Most": 15,
+     "the": 14,
+     "Funniest": 7,
+     "Cliff": 2,
+     "Parkour": 2,
+     "Skydiving": 2,
+     "Downhill": 2,
+     "Skate": 2,
+     "Surf": 2,
+     "BASE": 2
+    },
+    "Craziest": {
+     "Cliff": 3,
+     "Surf": 3,
+     "Parkour": 2,
+     "Skydiving": 2,
+     "Downhill": 2,
+     "Skate": 2,
+     "BASE": 2
+    },
+    "Cliff": {
+     "Jumps": 14
+    },
+    "Jumps": {
+     "</s>": 18,
+     "Ever": 2,
+     "Ranked": 2,
+     "Tier": 2,
+     "From": 2,
+     "Until": 2
+    },
+    "Best": {
+     "Parkour": 4,
+     "Skate": 4,
+     "Snowboard": 1,
+     "Cliff": 3,
+     "Skydiving": 3,
+     "Downhill": 3,
+     "Surf": 3,
+     "BASE": 3,
+     "</s>": 7
+    },
+    "Parkour": {
+     "Lines": 14
+    },
+    "Lines": {
+     "Ever": 2,
+     "</s>": 8,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Ever": {
+     "</s>": 9
+    },
+    "Wildest": {
+     "Skydiving": 1,
+     "BASE": 2,
+     "Surf": 1
+    },
+    "Skydiving": {
+     "Moments": 14
+    },
+    "Moments": {
+     "</s>": 9,
+     "Ever": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Insane": {
+     "Downhill": 1,
+     "Skydiving": 1
+    },
+    "Downhill": {
+     "Runs": 14
+    },
+    "Runs": {
+     "</s>": 9,
+     "Ever": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Skate": {
+     "Tricks": 14
+    },
+    "Tricks": {
+     "Ever": 2,
+     "</s>": 9,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Scariest": {
+     "Free": 1,
+     "Parkour": 1
+    },
+    "Free": {
+     "Solo": 1
+    },
+    "Solo": {
+     "Climbs": 1
+    },
+    "Climbs": {
+     "</s>": 1
+    },
+    "Surf": {
+     "Waves": 14
+    },
+    "Waves": {
+     "</s>": 9,
+     "Ever": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Snowboard": {
+     "Tricks": 1
+    },
+    "Most": {
+     "Fearless": 8,
+     "Smoothest": 3,
+     "Scariest": 1,
+     "Insane": 1,
+     "Wildest": 2
+    },
+    "Fearless": {
+     "Athletes": 1,
+     "Cliff": 1,
+     "Parkour": 1,
+     "Skydiving": 1,
+     "Downhill": 1,
+     "Skate": 1,
+     "Surf": 1,
+     "BASE": 1
+    },
+    "Athletes": {
+     "</s>": 1
+    },
+    "BASE": {
+     "Jumps": 14
+    },
+    "the": {
+     "Best": 7,
+     "Worst": 7,
+     "Internet": 7
+    },
+    "Worst": {
+     "Cliff": 1,
+     "Parkour": 1,
+     "Skydiving": 1,
+     "Downhill": 1,
+     "Skate": 1,
+     "Surf": 1,
+     "BASE": 1,
+     "to": 7
+    },
+    "Funniest": {
+     "Cliff": 1,
+     "Parkour": 1,
+     "Skydiving": 1,
+     "Downhill": 1,
+     "Skate": 1,
+     "Surf": 1,
+     "BASE": 1
+    },
+    "Smoothest": {
+     "Cliff": 1,
+     "Downhill": 1,
+     "Skate": 1
+    },
+    "Top": {
+     "5": 4,
+     "7": 2,
+     "10": 1
+    },
+    "5": {
+     "Cliff": 1,
+     "Skate": 1,
+     "Surf": 1,
+     "BASE": 1
+    },
+    "Ranked": {
+     "</s>": 7
+    },
+    "7": {
+     "Parkour": 1,
+     "Downhill": 1
+    },
+    "10": {
+     "Skydiving": 1
+    },
+    "Tier": {
+     "List": 7
+    },
+    "List": {
+     "</s>": 7
+    },
+    "From": {
+     "Worst": 7
+    },
+    "to": {
+     "Best": 7
+    },
+    "Until": {
+     "#1": 7
+    },
+    "#1": {
+     "Breaks": 7
+    },
+    "Breaks": {
+     "the": 7
+    },
+    "Internet": {
+     "</s>": 7
+    }
+   },
+   "label_bigrams": {
+    "<s>": {
+     "Kayak": 4,
+     "Train": 4,
+     "Triple": 5,
+     "Human": 4,
+     "Roof": 4,
+     "Backflip": 5,
+     "Wingsuit": 7,
+     "The": 21,
+     "Kickflip": 5,
+     "Slackline": 2,
+     "Pool": 4,
+     "Zero": 1,
+     "Wave": 5,
+     "No": 2,
+     "Line": 4,
+     "Jump": 5
+    },
+    "Kayak": {
+     "waterfall": 4
+    },
+    "waterfall": {
+     "drop": 4
+    },
+    "drop": {
+     "</s>": 14
+    },
+    "Train": {
+     "grind": 4
+    },
+    "grind": {
+     "exit": 4
+    },
+    "exit": {
+     "</s>": 4
+    },
+    "Triple": {
+     "cork": 5
+    },
+    "cork": {
+     "stomped": 5
+    },
+    "stomped": {
+     "</s>": 11
+    },
+    "Human": {
+     "slingshot": 4
+    },
+    "slingshot": {
+     "</s>": 4
+    },
+    "Roof": {
+     "gap": 4
+    },
+    "gap": {
+     "madness": 4
+    },
+    "madness": {
+     "</s>": 10
+    },
+    "Backflip": {
+     "over": 5
+    },
+    "over": {
+     "the": 5
+    },
+    "the": {
+     "road": 5,
+     "clouds": 2,
+     "decade": 2
+    },
+    "road": {
+     "</s>": 5
+    },
+    "Wingsuit": {
+     "canyon": 7
+    },
+    "canyon": {
+     "thread": 7
+    },
+    "thread": {
+     "</s>": 7
+    },
+    "The": {
+     "90": 4,
+     "ice": 6,
+     "near": 5,
+     "50": 2,
+     "10": 2,
+     "100": 1,
+     "5": 1
+    },
+    "90": {
+     "foot": 4
+    },
+    "foot": {
+     "drop": 10
+    },
+    "Kickflip": {
+     "down": 5
+    },
+    "down": {
+     "12": 5
+    },
+    "12": {
+     "</s>": 5
+    },
+    "Slackline": {
+     "in": 2
+    },
+    "in": {
+     "the": 2
+    },
+    "clouds": {
+     "</s>": 2
+    },
+    "ice": {
+     "couloir": 6
+    },
+    "couloir": {
+     "</s>": 6
+    },
+    "Pool": {
+     "vert": 4
+    },
+    "vert": {
+     "blast": 4
+    },
+    "blast": {
+     "</s>": 4
+    },
+    "Zero": {
+     "gravity": 1
+    },
+    "gravity": {
+     "moment": 1
+    },
+    "moment": {
+     "</s>": 1
+    },
+    "near": {
+     "miss": 5
+    },
+    "miss": {
+     "</s>": 5
+    },
+    "Wave": {
+     "of": 2,
+     "madness": 1,
+     "stomped": 2
+    },
+    "of": {
+     "the": 2
+    },
+    "decade": {
+     "</s>": 2
+    },
+    "No": {
+     "hands": 2
+    },
+    "hands": {
+     "no": 2
+    },
+    "no": {
+     "fear": 2
+    },
+    "fear": {
+     "</s>": 2
+    },
+    "50": {
+     "foot": 2
+    },
+    "10": {
+     "foot": 2
+    },
+    "100": {
+     "foot": 1
+    },
+    "5": {
+     "foot": 1
+    },
+    "Line": {
+     "madness": 3,
+     "stomped": 1
+    },
+    "Jump": {
+     "madness": 2,
+     "stomped": 3
+    }
+   },
+   "emoji_freq": {
+    "🛶": 4,
+    "🚉": 4,
+    "🌀": 5,
+    "🏹": 4,
+    "🏙️": 4,
+    "🛣️": 5,
+    "🪂": 7,
+    "😱": 4,
+    "🛹": 5,
+    "🌫️": 2,
+    "❄️": 6,
+    "🏊": 4,
+    "🌌": 1,
+    "😮‍💨": 4,
+    "🌊": 2,
+    "🧗": 1
+   },
+   "num_ranks_dist": {
+    "6": 7,
+    "5": 2,
+    "10": 1
+   },
+   "reveal_order_dist": {
+    "worst_to_best": 9,
+    "best_to_worst": 1
+   },
+   "accent_placement": {
+    "2|0": 2,
+    "1|2": 1,
+    "1|1": 5,
+    "2|1": 2
+   },
+   "color_pos_freq": [
+    {
+     "gold": 10
+    },
+    {
+     "white": 10
+    },
+    {
+     "red": 10
+    }
+   ],
+   "duration_by_pos": {
+    "1": {
+     "mean": 5.2,
+     "std": 0.75,
+     "n": 10
+    },
+    "2": {
+     "mean": 4.3,
+     "std": 1.27,
+     "n": 10
+    },
+    "3": {
+     "mean": 3.5,
+     "std": 0.81,
+     "n": 10
+    },
+    "4": {
+     "mean": 4.2,
+     "std": 0.98,
+     "n": 10
+    },
+    "5": {
+     "mean": 3.4,
+     "std": 1.2,
+     "n": 10
+    },
+    "6": {
+     "mean": 3.88,
+     "std": 1.27,
+     "n": 8
+    },
+    "7": {
+     "mean": 6.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "8": {
+     "mean": 4.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "9": {
+     "mean": 4.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "10": {
+     "mean": 5.0,
+     "std": 0.0,
+     "n": 1
+    }
+   },
+   "train_labels": [
+    "Backflip over the road",
+    "Human slingshot",
+    "Kayak waterfall drop",
+    "Kickflip down 12",
+    "No hands no fear",
+    "Pool vert blast",
+    "Roof gap madness",
+    "Slackline in the clouds",
+    "The 90 foot drop",
+    "The ice couloir",
+    "The near miss",
+    "Train grind exit",
+    "Triple cork stomped",
+    "Wave of the decade",
+    "Wingsuit canyon thread",
+    "Zero gravity moment"
+   ],
+   "train_titles": [
+    "ranking best parkour lines ever",
+    "ranking best skate tricks ever",
+    "ranking best snowboard tricks",
+    "ranking craziest cliff jumps",
+    "ranking craziest surf waves",
+    "ranking insane downhill runs",
+    "ranking most fearless athletes",
+    "ranking scariest free solo climbs",
+    "ranking wildest base jumps",
+    "ranking wildest skydiving moments"
+   ]
+  },
+  "school": {
+   "title_bigrams": {
+    "<s>": {
+     "Ranking": 87,
+     "Top": 7,
+     "Moments": 1,
+     "Senior": 1,
+     "Student": 1,
+     "Teacher": 1,
+     "Graduation": 1,
+     "Zoom": 1,
+     "Talent": 1
+    },
+    "Ranking": {
+     "Funniest": 17,
+     "Best": 18,
+     "Most": 15,
+     "Craziest": 8,
+     "the": 15,
+     "Moments": 2,
+     "Senior": 2,
+     "Student": 2,
+     "Teacher": 2,
+     "Graduation": 2,
+     "Zoom": 2,
+     "Talent": 2
+    },
+    "Funniest": {
+     "School": 8,
+     "Zoom": 2,
+     "Exam": 1,
+     "Moments": 1,
+     "Senior": 1,
+     "Student": 1,
+     "Teacher": 1,
+     "Graduation": 1,
+     "Talent": 1
+    },
+    "School": {
+     "Moments": 2,
+     "Bus": 1,
+     "Senior": 1,
+     "Student": 1,
+     "Teacher": 1,
+     "Graduation": 1,
+     "Zoom": 1,
+     "Talent": 1
+    },
+    "Moments": {
+     "</s>": 29,
+     "Ever": 3,
+     "Ranked": 3,
+     "Tier": 3,
+     "From": 3,
+     "Until": 3
+    },
+    "Best": {
+     "Senior": 4,
+     "Graduation": 4,
+     "Talent": 4,
+     "School": 1,
+     "Moments": 3,
+     "Student": 3,
+     "Teacher": 3,
+     "Zoom": 3,
+     "</s>": 7
+    },
+    "Senior": {
+     "Pranks": 14
+    },
+    "Pranks": {
+     "Ever": 2,
+     "</s>": 8,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Ever": {
+     "</s>": 8
+    },
+    "Most": {
+     "Relatable": 9,
+     "Chaotic": 1,
+     "Legendary": 2,
+     "Unhinged": 2,
+     "Awkward": 1
+    },
+    "Relatable": {
+     "Student": 2,
+     "Moments": 2,
+     "Senior": 1,
+     "Teacher": 1,
+     "Graduation": 1,
+     "Zoom": 1,
+     "Talent": 1
+    },
+    "Student": {
+     "Fails": 14
+    },
+    "Fails": {
+     "</s>": 18,
+     "Ever": 2,
+     "Ranked": 2,
+     "Tier": 2,
+     "From": 2,
+     "Until": 2
+    },
+    "Craziest": {
+     "Teacher": 2,
+     "Moments": 1,
+     "Senior": 1,
+     "Student": 1,
+     "Graduation": 1,
+     "Zoom": 1,
+     "Talent": 1
+    },
+    "Teacher": {
+     "Reactions": 14
+    },
+    "Reactions": {
+     "</s>": 9,
+     "Ever": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Graduation": {
+     "Fails": 14
+    },
+    "Zoom": {
+     "Class": 14
+    },
+    "Class": {
+     "Moments": 14
+    },
+    "Talent": {
+     "Show": 14
+    },
+    "Show": {
+     "Moments": 14
+    },
+    "the": {
+     "Wildest": 1,
+     "Best": 7,
+     "Worst": 7,
+     "Internet": 7
+    },
+    "Wildest": {
+     "Cafeteria": 1
+    },
+    "Cafeteria": {
+     "Moments": 1
+    },
+    "Exam": {
+     "Stories": 1
+    },
+    "Stories": {
+     "</s>": 1
+    },
+    "Bus": {
+     "Moments": 1
+    },
+    "Worst": {
+     "Moments": 1,
+     "Senior": 1,
+     "Student": 1,
+     "Teacher": 1,
+     "Graduation": 1,
+     "Zoom": 1,
+     "Talent": 1,
+     "to": 7
+    },
+    "Chaotic": {
+     "Senior": 1
+    },
+    "Legendary": {
+     "Student": 1,
+     "Teacher": 1
+    },
+    "Unhinged": {
+     "Graduation": 1,
+     "Zoom": 1
+    },
+    "Awkward": {
+     "Talent": 1
+    },
+    "Top": {
+     "5": 2,
+     "10": 2,
+     "7": 3
+    },
+    "5": {
+     "Moments": 1,
+     "Student": 1
+    },
+    "Ranked": {
+     "</s>": 7
+    },
+    "10": {
+     "Senior": 1,
+     "Zoom": 1
+    },
+    "7": {
+     "Teacher": 1,
+     "Graduation": 1,
+     "Talent": 1
+    },
+    "Tier": {
+     "List": 7
+    },
+    "List": {
+     "</s>": 7
+    },
+    "From": {
+     "Worst": 7
+    },
+    "to": {
+     "Best": 7
+    },
+    "Until": {
+     "#1": 7
+    },
+    "#1": {
+     "Breaks": 7
+    },
+    "Breaks": {
+     "the": 7
+    },
+    "Internet": {
+     "</s>": 7
+    }
+   },
+   "label_bigrams": {
+    "<s>": {
+     "Lunch": 4,
+     "Bus": 7,
+     "Pencil": 6,
+     "The": 22,
+     "Backpack": 2,
+     "Whiteboard": 4,
+     "Graduation": 7,
+     "Caught": 8,
+     "Talent": 3,
+     "Teacher": 7,
+     "Projector": 2,
+     "Balloon": 2,
+     "Prank": 1,
+     "Show": 1,
+     "Class": 1
+    },
+    "Lunch": {
+     "tray": 4
+    },
+    "tray": {
+     "domino": 4
+    },
+    "domino": {
+     "</s>": 4
+    },
+    "Bus": {
+     "window": 7
+    },
+    "window": {
+     "waterfall": 7
+    },
+    "waterfall": {
+     "</s>": 7
+    },
+    "Pencil": {
+     "drop": 6
+    },
+    "drop": {
+     "symphony": 6
+    },
+    "symphony": {
+     "</s>": 6
+    },
+    "The": {
+     "chair": 5,
+     "59.5%": 2,
+     "fire": 5,
+     "mic": 2,
+     "forged": 2,
+     "Show": 1,
+     "Student": 2,
+     "Class": 2,
+     "Teacher": 1
+    },
+    "chair": {
+     "squeak": 5
+    },
+    "squeak": {
+     "solo": 5
+    },
+    "solo": {
+     "</s>": 5
+    },
+    "Backpack": {
+     "down": 2
+    },
+    "down": {
+     "the": 2
+    },
+    "the": {
+     "stairs": 2
+    },
+    "stairs": {
+     "</s>": 2
+    },
+    "Whiteboard": {
+     "masterpiece": 4
+    },
+    "masterpiece": {
+     "</s>": 4
+    },
+    "59.5%": {
+     "negotiation": 2
+    },
+    "negotiation": {
+     "</s>": 2
+    },
+    "Graduation": {
+     "cap": 5,
+     "avalanche": 2
+    },
+    "cap": {
+     "frisbee": 5
+    },
+    "frisbee": {
+     "</s>": 5
+    },
+    "Caught": {
+     "sleeping": 8
+    },
+    "sleeping": {
+     "</s>": 8
+    },
+    "fire": {
+     "drill": 5
+    },
+    "drill": {
+     "timing": 5
+    },
+    "timing": {
+     "</s>": 11
+    },
+    "Talent": {
+     "show": 3
+    },
+    "show": {
+     "plot": 3
+    },
+    "plot": {
+     "twist": 3
+    },
+    "twist": {
+     "</s>": 3
+    },
+    "Teacher": {
+     "dunks": 6,
+     "timing": 1,
+     "avalanche": 1
+    },
+    "dunks": {
+     "back": 6
+    },
+    "back": {
+     "</s>": 6
+    },
+    "Projector": {
+     "jumpscare": 2
+    },
+    "jumpscare": {
+     "</s>": 2
+    },
+    "Balloon": {
+     "avalanche": 2
+    },
+    "avalanche": {
+     "</s>": 8
+    },
+    "mic": {
+     "was": 2
+    },
+    "was": {
+     "on": 2
+    },
+    "on": {
+     "</s>": 2
+    },
+    "forged": {
+     "sick": 2
+    },
+    "sick": {
+     "note": 2
+    },
+    "note": {
+     "</s>": 2
+    },
+    "Show": {
+     "timing": 1,
+     "avalanche": 1
+    },
+    "Student": {
+     "timing": 2
+    },
+    "Class": {
+     "timing": 2,
+     "avalanche": 1
+    },
+    "Prank": {
+     "avalanche": 1
+    }
+   },
+   "emoji_freq": {
+    "🥡": 4,
+    "🚌": 7,
+    "✏️": 6,
+    "🎺": 5,
+    "🎒": 2,
+    "🎨": 4,
+    "📊": 2,
+    "🎓": 5,
+    "😴": 7,
+    "🚨": 5,
+    "🎤": 3,
+    "🏀": 5,
+    "📽️": 2,
+    "🎈": 2,
+    "🎙️": 1,
+    "📝": 2
+   },
+   "num_ranks_dist": {
+    "6": 7,
+    "5": 2,
+    "10": 1
+   },
+   "reveal_order_dist": {
+    "worst_to_best": 10
+   },
+   "accent_placement": {
+    "2|0": 3,
+    "2|1": 4,
+    "1|1": 3
+   },
+   "color_pos_freq": [
+    {
+     "gold": 10
+    },
+    {
+     "white": 10
+    },
+    {
+     "red": 10
+    }
+   ],
+   "duration_by_pos": {
+    "1": {
+     "mean": 4.7,
+     "std": 0.64,
+     "n": 10
+    },
+    "2": {
+     "mean": 4.2,
+     "std": 1.08,
+     "n": 10
+    },
+    "3": {
+     "mean": 4.0,
+     "std": 1.0,
+     "n": 10
+    },
+    "4": {
+     "mean": 3.0,
+     "std": 0.89,
+     "n": 10
+    },
+    "5": {
+     "mean": 3.8,
+     "std": 1.25,
+     "n": 10
+    },
+    "6": {
+     "mean": 3.88,
+     "std": 1.54,
+     "n": 8
+    },
+    "7": {
+     "mean": 4.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "8": {
+     "mean": 4.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "9": {
+     "mean": 4.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "10": {
+     "mean": 3.0,
+     "std": 0.0,
+     "n": 1
+    }
+   },
+   "train_labels": [
+    "Backpack down the stairs",
+    "Balloon avalanche",
+    "Bus window waterfall",
+    "Caught sleeping",
+    "Graduation cap frisbee",
+    "Lunch tray domino",
+    "Pencil drop symphony",
+    "Projector jumpscare",
+    "Talent show plot twist",
+    "Teacher dunks back",
+    "The 59.5% negotiation",
+    "The chair squeak solo",
+    "The fire drill timing",
+    "The forged sick note",
+    "The mic was on",
+    "Whiteboard masterpiece"
+   ],
+   "train_titles": [
+    "ranking best graduation fails",
+    "ranking best school bus moments",
+    "ranking best senior pranks ever",
+    "ranking best talent show moments",
+    "ranking craziest teacher reactions",
+    "ranking funniest exam stories",
+    "ranking funniest school moments",
+    "ranking funniest zoom class moments",
+    "ranking most relatable student fails",
+    "ranking the wildest cafeteria moments"
+   ]
+  },
+  "wholesome": {
+   "title_bigrams": {
+    "<s>": {
+     "Ranking": 76,
+     "Top": 6,
+     "Moments": 1,
+     "Surprise": 1,
+     "Proposal": 1,
+     "Animal": 1,
+     "Kid": 1,
+     "Reunion": 1
+    },
+    "Ranking": {
+     "the": 19,
+     "Best": 17,
+     "Kindest": 1,
+     "Most": 7,
+     "Sweetest": 1,
+     "Moments": 9,
+     "Craziest": 6,
+     "Funniest": 6,
+     "Surprise": 2,
+     "Proposal": 2,
+     "Animal": 2,
+     "Kid": 2,
+     "Reunion": 2
+    },
+    "the": {
+     "Most": 7,
+     "Best": 6,
+     "Worst": 6,
+     "Internet": 6
+    },
+    "Most": {
+     "Wholesome": 8,
+     "Heartwarming": 1,
+     "Sweetest": 4,
+     "Tear": 1
+    },
+    "Wholesome": {
+     "Moments": 2,
+     "Surprise": 1,
+     "Proposal": 2,
+     "Animal": 1,
+     "Kid": 1,
+     "Reunion": 1
+    },
+    "Moments": {
+     "Ever": 14,
+     "</s>": 3,
+     "That": 7
+    },
+    "Ever": {
+     "</s>": 16,
+     "Ever": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Best": {
+     "Surprise": 4,
+     "Proposal": 4,
+     "Grandparent": 1,
+     "Teammate": 1,
+     "Reunion": 4,
+     "Moments": 3,
+     "Animal": 3,
+     "Kid": 3,
+     "</s>": 6
+    },
+    "Surprise": {
+     "Homecomings": 14
+    },
+    "Homecomings": {
+     "</s>": 9,
+     "Ever": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Kindest": {
+     "Stranger": 1
+    },
+    "Stranger": {
+     "Moments": 1
+    },
+    "Proposal": {
+     "Reactions": 14
+    },
+    "Reactions": {
+     "</s>": 18,
+     "Ever": 2,
+     "Ranked": 2,
+     "Tier": 2,
+     "From": 2,
+     "Until": 2
+    },
+    "Heartwarming": {
+     "Animal": 1
+    },
+    "Animal": {
+     "Rescues": 14
+    },
+    "Rescues": {
+     "</s>": 9,
+     "Ever": 1,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Grandparent": {
+     "Moments": 1
+    },
+    "Sweetest": {
+     "Kid": 1,
+     "Moments": 1,
+     "Surprise": 1,
+     "Animal": 1,
+     "Reunion": 1
+    },
+    "Kid": {
+     "Reactions": 14
+    },
+    "Teammate": {
+     "Moments": 1
+    },
+    "That": {
+     "Cured": 1,
+     "Moments": 1,
+     "Surprise": 1,
+     "Proposal": 1,
+     "Animal": 1,
+     "Kid": 1,
+     "Reunion": 1
+    },
+    "Cured": {
+     "Sadness": 1
+    },
+    "Sadness": {
+     "</s>": 1
+    },
+    "Reunion": {
+     "Videos": 14
+    },
+    "Videos": {
+     "Ever": 2,
+     "</s>": 8,
+     "Ranked": 1,
+     "Tier": 1,
+     "From": 1,
+     "Until": 1
+    },
+    "Worst": {
+     "Moments": 1,
+     "Surprise": 1,
+     "Proposal": 1,
+     "Animal": 1,
+     "Kid": 1,
+     "Reunion": 1,
+     "to": 6
+    },
+    "Craziest": {
+     "Moments": 1,
+     "Surprise": 1,
+     "Proposal": 1,
+     "Animal": 1,
+     "Kid": 1,
+     "Reunion": 1
+    },
+    "Funniest": {
+     "Moments": 1,
+     "Surprise": 1,
+     "Proposal": 1,
+     "Animal": 1,
+     "Kid": 1,
+     "Reunion": 1
+    },
+    "Tear": {
+     "Jerking": 1
+    },
+    "Jerking": {
+     "Kid": 1
+    },
+    "Top": {
+     "5": 3,
+     "10": 2,
+     "7": 1
+    },
+    "5": {
+     "Moments": 1,
+     "Animal": 1,
+     "Reunion": 1
+    },
+    "Ranked": {
+     "</s>": 6
+    },
+    "10": {
+     "Surprise": 1,
+     "Kid": 1
+    },
+    "7": {
+     "Proposal": 1
+    },
+    "Tier": {
+     "List": 6
+    },
+    "List": {
+     "</s>": 6
+    },
+    "From": {
+     "Worst": 6
+    },
+    "to": {
+     "Best": 6
+    },
+    "Until": {
+     "#1": 6
+    },
+    "#1": {
+     "Breaks": 6
+    },
+    "Breaks": {
+     "the": 6
+    },
+    "Internet": {
+     "</s>": 6
+    }
+   },
+   "label_bigrams": {
+    "<s>": {
+     "Dad": 4,
+     "Lost": 2,
+     "First": 3,
+     "Puppy": 5,
+     "Grandpa's": 4,
+     "Deaf": 5,
+     "The": 13,
+     "Cat": 3,
+     "Shelter": 6,
+     "Teacher's": 6,
+     "Rival": 5,
+     "Reunited": 8,
+     "Soldier": 3,
+     "Kid": 3,
+     "Proposal": 3,
+     "Homecoming": 1,
+     "Rescue": 2,
+     "Stranger": 1,
+     "Reunion": 1
+    },
+    "Dad": {
+     "learned": 4
+    },
+    "learned": {
+     "braids": 4
+    },
+    "braids": {
+     "</s>": 4
+    },
+    "Lost": {
+     "wallet": 2
+    },
+    "wallet": {
+     "returned": 2
+    },
+    "returned": {
+     "</s>": 2
+    },
+    "First": {
+     "home": 3
+    },
+    "home": {
+     "run": 3
+    },
+    "run": {
+     "</s>": 3
+    },
+    "Puppy": {
+     "surprise": 5
+    },
+    "surprise": {
+     "box": 5,
+     "</s>": 8
+    },
+    "box": {
+     "</s>": 5
+    },
+    "Grandpa's": {
+     "first": 4
+    },
+    "first": {
+     "gift": 4
+    },
+    "gift": {
+     "</s>": 4
+    },
+    "Deaf": {
+     "baby": 5
+    },
+    "baby": {
+     "hears": 5
+    },
+    "hears": {
+     "mom": 5
+    },
+    "mom": {
+     "</s>": 5
+    },
+    "The": {
+     "double": 6,
+     "100th": 6,
+     "whole": 1
+    },
+    "double": {
+     "proposal": 6
+    },
+    "proposal": {
+     "</s>": 6
+    },
+    "Cat": {
+     "found": 3
+    },
+    "found": {
+     "after": 3
+    },
+    "after": {
+     "flood": 3,
+     "10": 5,
+     "5": 3
+    },
+    "flood": {
+     "</s>": 3
+    },
+    "Shelter": {
+     "dog": 6
+    },
+    "dog": {
+     "chosen": 6
+    },
+    "chosen": {
+     "</s>": 11
+    },
+    "100th": {
+     "birthday": 6
+    },
+    "birthday": {
+     "</s>": 6
+    },
+    "Teacher's": {
+     "jacket": 6
+    },
+    "jacket": {
+     "fund": 6
+    },
+    "fund": {
+     "</s>": 6
+    },
+    "Rival": {
+     "helped": 5
+    },
+    "helped": {
+     "him": 5
+    },
+    "him": {
+     "up": 5
+    },
+    "up": {
+     "</s>": 5
+    },
+    "Reunited": {
+     "after": 8
+    },
+    "10": {
+     "years": 5
+    },
+    "years": {
+     "</s>": 8
+    },
+    "Soldier": {
+     "surprise": 3
+    },
+    "whole": {
+     "bus": 1
+    },
+    "bus": {
+     "sang": 1
+    },
+    "sang": {
+     "</s>": 1
+    },
+    "Kid": {
+     "surprise": 1,
+     "chosen": 2
+    },
+    "Proposal": {
+     "surprise": 2,
+     "chosen": 1
+    },
+    "Homecoming": {
+     "surprise": 1
+    },
+    "Rescue": {
+     "surprise": 1,
+     "chosen": 1
+    },
+    "Stranger": {
+     "paid": 1
+    },
+    "paid": {
+     "it": 1
+    },
+    "it": {
+     "all": 1
+    },
+    "all": {
+     "</s>": 1
+    },
+    "5": {
+     "years": 3
+    },
+    "Reunion": {
+     "chosen": 1
+    }
+   },
+   "emoji_freq": {
+    "🎀": 4,
+    "👛": 2,
+    "⚾": 3,
+    "🐶": 5,
+    "🎁": 4,
+    "🦻": 5,
+    "💍": 6,
+    "🐈": 3,
+    "🏠": 6,
+    "🎂": 6,
+    "🧥": 6,
+    "🤝": 5,
+    "✈️": 3,
+    "🥹": 3,
+    "🎶": 1
+   },
+   "num_ranks_dist": {
+    "6": 7,
+    "5": 2,
+    "10": 1
+   },
+   "reveal_order_dist": {
+    "worst_to_best": 9,
+    "best_to_worst": 1
+   },
+   "accent_placement": {
+    "1|2": 2,
+    "1|0": 2,
+    "2|0": 5,
+    "2|1": 1
+   },
+   "color_pos_freq": [
+    {
+     "gold": 10
+    },
+    {
+     "white": 10
+    },
+    {
+     "red": 10
+    }
+   ],
+   "duration_by_pos": {
+    "1": {
+     "mean": 5.1,
+     "std": 0.7,
+     "n": 10
+    },
+    "2": {
+     "mean": 4.6,
+     "std": 0.49,
+     "n": 10
+    },
+    "3": {
+     "mean": 4.3,
+     "std": 1.1,
+     "n": 10
+    },
+    "4": {
+     "mean": 3.6,
+     "std": 1.2,
+     "n": 10
+    },
+    "5": {
+     "mean": 3.6,
+     "std": 0.8,
+     "n": 10
+    },
+    "6": {
+     "mean": 3.75,
+     "std": 0.97,
+     "n": 8
+    },
+    "7": {
+     "mean": 5.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "8": {
+     "mean": 2.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "9": {
+     "mean": 5.0,
+     "std": 0.0,
+     "n": 1
+    },
+    "10": {
+     "mean": 5.0,
+     "std": 0.0,
+     "n": 1
+    }
+   },
+   "train_labels": [
+    "Cat found after flood",
+    "Dad learned braids",
+    "Deaf baby hears mom",
+    "First home run",
+    "Grandpa's first gift",
+    "Lost wallet returned",
+    "Puppy surprise box",
+    "Reunited after 10 years",
+    "Rival helped him up",
+    "Shelter dog chosen",
+    "Soldier surprise",
+    "Teacher's jacket fund",
+    "The 100th birthday",
+    "The double proposal",
+    "The whole bus sang"
+   ],
+   "train_titles": [
+    "ranking best grandparent moments",
+    "ranking best proposal reactions",
+    "ranking best reunion videos ever",
+    "ranking best surprise homecomings",
+    "ranking best teammate moments",
+    "ranking kindest stranger moments",
+    "ranking moments that cured sadness",
+    "ranking most heartwarming animal rescues",
+    "ranking sweetest kid reactions",
+    "ranking the most wholesome moments ever"
+   ]
+  }
+ },
+ "meta": {
+  "trained_on": {
+   "entries": 152,
+   "labels": 942,
+   "niches": [
+    "animals",
+    "cars",
+    "celebrity",
+    "extreme",
+    "fails",
+    "food",
+    "football",
+    "gaming",
+    "gym",
+    "memes",
+    "nba",
+    "satisfying",
+    "school",
+    "science",
+    "wholesome"
+   ]
+  },
+  "split_seed": 7,
+  "holdout_frac": 0.15,
+  "heldout_metrics": {
+   "heldout_entries": 30,
+   "heldout_labels": 173,
+   "label_perplexity": 45.0,
+   "title_perplexity": 19.2,
+   "emoji_coverage_pct": 99.4,
+   "num_ranks_coverage_pct": 90.0,
+   "gen_labels_sampled": 558,
+   "gen_label_len_valid_pct": 100.0,
+   "gen_label_novel_pct": 100.0,
+   "gen_label_verbatim_pct": 0.0,
+   "gen_emoji_valid_pct": 100.0,
+   "gen_titles_sampled": 90,
+   "gen_title_wellformed_pct": 100.0,
+   "gen_title_novel_pct": 97.8
+  },
+  "architecture": "per-niche interpolated bigram Markov chains (titles + labels) with global backoff, plus learned categorical distributions (emoji, num_ranks, reveal_order, number-color-per-position, accent placement) and per-position duration stats"
+ }
+}

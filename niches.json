@@ -1,0 +1,180 @@
+{
+  "description": "Niche catalog for ranking shorts: title templates ({X} = subject, accent word candidates marked), adjective banks, emoji sets, and label phrase patterns per niche.",
+  "global_title_templates": [
+    "Ranking Best {X}",
+    "Ranking the Best {X}",
+    "Ranking the Worst {X}",
+    "Ranking Craziest {X}",
+    "Ranking Funniest {X}",
+    "Ranking Most {ADJ} {X}",
+    "Top {N} {X} Ranked",
+    "{X} Tier List",
+    "Ranking {X} From Worst to Best",
+    "Ranking {X} Until #1 Breaks the Internet"
+  ],
+  "global_label_patterns": [
+    "The {noun} {verb-past}",
+    "{Noun} goes wrong",
+    "Bro {verb-past} {noun}",
+    "Instant {emotion}",
+    "{Adjective} {noun}",
+    "The {noun} of the year",
+    "{Noun} said no",
+    "Certified {noun}",
+    "He chose {noun}",
+    "{Onomatopoeia / exclamation}"
+  ],
+  "global_hashtags": ["#shorts", "#ranking", "#viral", "#fyp", "#top5"],
+  "niches": [
+    {
+      "name": "fails",
+      "display": "Fails / Instant Regret",
+      "title_templates": ["Ranking Best {X} Fails", "Ranking the Worst {X} Fails", "Ranking Most Painful {X} Moments"],
+      "subjects": ["Pool", "Trampoline", "Bike", "Water Slide", "Treadmill", "Wedding", "Skateboard", "Parkour", "Winter", "Ladder", "Backyard"],
+      "adjectives": ["painful", "funniest", "craziest", "worst", "unluckiest", "instant-regret"],
+      "emoji_set": ["😭", "💀", "😂", "☠️", "🥴", "😱", "🙈", "😵"],
+      "label_patterns": ["{Object} betrayed him", "{Move} goes wrong", "Instant regret", "The {object} won", "Bro forgot physics"],
+      "hashtags": ["#fails", "#funny", "#instantregret"]
+    },
+    {
+      "name": "football",
+      "display": "Football / Soccer",
+      "title_templates": ["Ranking Best Football {X}", "Ranking the Best {X} Ever", "Ranking Most Disrespectful {X}"],
+      "subjects": ["Fails", "Free Kicks", "Celebrations", "Saves", "Penalty Misses", "Skill Moves", "Last Minute Goals", "Solo Goals"],
+      "adjectives": ["disrespectful", "coldest", "craziest", "cleanest", "clutch"],
+      "emoji_set": ["⚽", "😭", "💀", "🔥", "🎯", "🧤", "🕺", "🚀"],
+      "label_patterns": ["Top bins", "Broken ankles", "Keeper had a nap", "{Move} disrespect", "Own goal horror"],
+      "hashtags": ["#football", "#soccer", "#footballshorts"]
+    },
+    {
+      "name": "nba",
+      "display": "NBA / Basketball",
+      "title_templates": ["Ranking Craziest NBA {X}", "Ranking Coldest {X}", "Ranking Best NBA {X} Ever"],
+      "subjects": ["Dunks", "Buzzer Beaters", "Crossovers", "Blocks", "Game Winners", "Trick Shots", "Celebrations"],
+      "adjectives": ["coldest", "disrespectful", "clutch", "craziest", "nastiest"],
+      "emoji_set": ["🏀", "😱", "🥶", "💀", "💰", "🌪️", "🤯"],
+      "label_patterns": ["Poster dunk", "Ankles gone", "Bro called game", "Sent to the shadow realm", "Clutch gene activated"],
+      "hashtags": ["#nba", "#basketball", "#hoops"]
+    },
+    {
+      "name": "food",
+      "display": "Food",
+      "title_templates": ["Ranking the Best {X}", "Ranking Craziest Food {X}", "Ranking the Most Satisfying {X}"],
+      "subjects": ["Fast Food Burgers", "Food Combos", "Cheese Pulls", "Street Food", "Spiciest Foods", "Cooking Fails", "Desserts", "Ramen Hacks"],
+      "adjectives": ["satisfying", "spiciest", "weirdest", "forbidden", "crispiest"],
+      "emoji_set": ["🧀", "🍔", "🌶️", "🍫", "🍜", "🔥", "🤢", "🎧"],
+      "label_patterns": ["{Food} heaven", "Crunch of the year", "The forbidden combo", "Spice level demon", "{Sauce} waterfall"],
+      "hashtags": ["#food", "#foodie", "#asmr"]
+    },
+    {
+      "name": "memes",
+      "display": "Memes / Random Internet",
+      "title_templates": ["Ranking the Funniest {X}", "Ranking Best {X} Moments", "Ranking Most Random {X} Ever"],
+      "subjects": ["Memes", "Reaction Videos", "Cursed Videos", "NPC Moments", "Kid Moments", "Caught In 4K Moments", "Unexpected Endings"],
+      "adjectives": ["cursed", "random", "unhinged", "funniest", "unexplainable"],
+      "emoji_set": ["😭", "💀", "📸", "🤖", "😈", "🤣", "❓", "🔊"],
+      "label_patterns": ["Caught in 4K", "Why is he like this", "He chose violence", "Certified NPC", "Main character energy", "Plot twist ending"],
+      "hashtags": ["#memes", "#funny", "#relatable"]
+    },
+    {
+      "name": "gaming",
+      "display": "Gaming",
+      "title_templates": ["Ranking Craziest Gaming {X}", "Ranking Best {GAME} {X}", "Ranking Luckiest {X} Moments"],
+      "subjects": ["Clutches", "Snipes", "Rage Quits", "Glitches", "Speedrun Saves", "1v5s", "Minecraft Builds", "GTA Stunts"],
+      "adjectives": ["luckiest", "coldest", "sweatiest", "200-IQ", "impossible"],
+      "emoji_set": ["🎮", "🥶", "🧠", "😡", "🍀", "🌀", "💥", "🥷"],
+      "label_patterns": ["1v5 clutch", "200 IQ play", "Rage quit speedrun", "Physics broke", "Zero HP escape"],
+      "hashtags": ["#gaming", "#clutch", "#gamingclips"]
+    },
+    {
+      "name": "animals",
+      "display": "Animals / Pets",
+      "title_templates": ["Ranking the Funniest {ANIMAL} Moments", "Ranking Best {ANIMAL} Fails", "Ranking the Most Dramatic {X}"],
+      "subjects": ["Cat Moments", "Dog Fails", "Dramatic Pets", "Zoomies", "Farm Animals", "Baby Animals", "Animal Reactions"],
+      "adjectives": ["dramatic", "chaotic", "guilty", "smartest", "cutest"],
+      "emoji_set": ["🐱", "🐶", "😾", "🎭", "🐐", "🦜", "🥺", "💨"],
+      "label_patterns": ["{Animal}.exe stopped", "The betrayal", "Zoomies unlocked", "The guilty look", "Heist accomplished"],
+      "hashtags": ["#animals", "#pets", "#funnyanimals"]
+    },
+    {
+      "name": "celebrity",
+      "display": "Celebrity / Pop Culture",
+      "title_templates": ["Ranking the Best Celebrity {X}", "Ranking Funniest {X} Moments", "Ranking Most Awkward {X}"],
+      "subjects": ["Clapbacks", "Interview Moments", "Red Carpet Moments", "Live TV Moments", "Fan Interactions", "Mic Drop Moments"],
+      "adjectives": ["awkward", "coldest", "iconic", "unscripted", "humble"],
+      "emoji_set": ["🎤", "👀", "😬", "📸", "🏆", "💎", "🕶️"],
+      "label_patterns": ["The clapback", "The stare down", "Bro forgot the lyrics", "The fake laugh", "Humble flex"],
+      "hashtags": ["#celebrity", "#popculture", "#viralmoments"]
+    },
+    {
+      "name": "satisfying",
+      "display": "Satisfying / ASMR",
+      "title_templates": ["Ranking the Most Satisfying {X}", "Ranking Best {X} Reveals", "Ranking Crunchiest {X} Sounds"],
+      "subjects": ["Videos Ever", "Pressure Washing", "Slime Sounds", "Perfect Fits", "Domino Runs", "Paint Mixing", "Cake Cuts"],
+      "adjectives": ["satisfying", "flawless", "hypnotic", "crunchy", "perfect"],
+      "emoji_set": ["🧼", "🧩", "🌌", "🎨", "🧊", "🗜️", "🔵"],
+      "label_patterns": ["The perfect fit", "{Process} reveal", "{Material} slice", "{Object} therapy", "Flawless {run}"],
+      "hashtags": ["#satisfying", "#oddlysatisfying", "#asmr"]
+    },
+    {
+      "name": "science",
+      "display": "Science / Experiments",
+      "title_templates": ["Ranking Craziest Science {X}", "Ranking Best {X} Reactions", "Ranking Most Explosive {X}"],
+      "subjects": ["Experiments", "Chemical Reactions", "Physics Tricks", "Rocket Launches", "Slow Motion Moments", "Magnet Tricks", "Dry Ice Experiments"],
+      "adjectives": ["explosive", "mind-bending", "forbidden", "slow-mo", "impossible"],
+      "emoji_set": ["⚡", "🌋", "🚀", "🧲", "☁️", "🔥", "🌪️", "🍉"],
+      "label_patterns": ["{Substance} vs {substance}", "The {effect} moment", "{Object} scream", "Physics broke", "{N}x slow motion"],
+      "hashtags": ["#science", "#experiment", "#satisfying"]
+    },
+    {
+      "name": "cars",
+      "display": "Cars / Motorsport",
+      "title_templates": ["Ranking Craziest Car {X}", "Ranking Loudest {X} Ever", "Ranking Best {X} Moments"],
+      "subjects": ["Launches", "Drifts", "Exhausts", "Parking Fails", "Burnouts", "Engine Sounds", "Police Chases", "Car Mods"],
+      "adjectives": ["loudest", "fastest", "cleanest", "illegal-sounding", "wildest"],
+      "emoji_set": ["🚗", "🔥", "💥", "🚦", "❄️", "📈", "🛻"],
+      "label_patterns": ["Launch control demon", "Flame spitter", "The wall tap", "The anti-lag bark", "{Vehicle} betrayal"],
+      "hashtags": ["#cars", "#carsoftiktok", "#jdm"]
+    },
+    {
+      "name": "gym",
+      "display": "Gym / Fitness",
+      "title_templates": ["Ranking the Worst Gym {X}", "Ranking Craziest Feats of {X}", "Ranking Best {X} Ever"],
+      "subjects": ["Fails", "Strength", "Stereotypes", "Calisthenics", "Ego Lifts", "Transformations", "PR Celebrations"],
+      "adjectives": ["strongest", "wildest", "most-humbling", "impossible", "chaotic"],
+      "emoji_set": ["💪", "😵", "🚩", "📢", "🤸", "🛟", "👴"],
+      "label_patterns": ["Ego lift disaster", "PR scream", "The spotter save", "{Move} of the gods", "Grandpa reps out"],
+      "hashtags": ["#gym", "#fitness", "#gymfails"]
+    },
+    {
+      "name": "extreme",
+      "display": "Extreme Sports",
+      "title_templates": ["Ranking Craziest {X}", "Ranking Best {X} Ever", "Ranking Most Fearless {X}"],
+      "subjects": ["Cliff Jumps", "Parkour Lines", "Skydiving Moments", "Downhill Runs", "Skate Tricks", "Surf Waves", "BASE Jumps"],
+      "adjectives": ["fearless", "insane", "scariest", "smoothest", "wildest"],
+      "emoji_set": ["😱", "🪂", "🛹", "🌊", "🧗", "🌀", "❄️"],
+      "label_patterns": ["The {N} foot drop", "{Gap} madness", "No hands no fear", "The near miss", "{Trick} stomped"],
+      "hashtags": ["#extremesports", "#adrenaline", "#parkour"]
+    },
+    {
+      "name": "school",
+      "display": "School / Student Life",
+      "title_templates": ["Ranking Funniest School {X}", "Ranking Best {X} Ever", "Ranking Most Relatable {X}"],
+      "subjects": ["Moments", "Senior Pranks", "Student Fails", "Teacher Reactions", "Graduation Fails", "Zoom Class Moments", "Talent Show Moments"],
+      "adjectives": ["relatable", "chaotic", "legendary", "awkward", "unhinged"],
+      "emoji_set": ["🎓", "😴", "🎈", "🚨", "📝", "🎤", "🎒"],
+      "label_patterns": ["Caught sleeping", "The {object} timing", "The mic was on", "{Object} avalanche", "Teacher dunks back"],
+      "hashtags": ["#school", "#relatable", "#studentlife"]
+    },
+    {
+      "name": "wholesome",
+      "display": "Wholesome / Heartwarming",
+      "title_templates": ["Ranking the Most Wholesome {X}", "Ranking Best {X} Ever", "Ranking Moments That {VERB}"],
+      "subjects": ["Moments Ever", "Surprise Homecomings", "Proposal Reactions", "Animal Rescues", "Kid Reactions", "Reunion Videos"],
+      "adjectives": ["wholesome", "heartwarming", "sweetest", "kindest", "tear-jerking"],
+      "emoji_set": ["🥹", "🐶", "💍", "🎁", "🤝", "🏠", "⚾"],
+      "label_patterns": ["{Person} surprise", "The whole {group} {verb-past}", "Stranger paid it all", "Reunited after {N} years", "{Pet} chosen"],
+      "hashtags": ["#wholesome", "#heartwarming", "#faithinhumanity"]
+    }
+  ]
+}

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ranking Shorts Maker</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="setup-mode">
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-logo">🏆</span>
+    <span class="brand-text">
+      <span class="brand-name">Ranking Shorts Maker</span>
+      <span class="brand-sub">Vertical editor · up to 120s · 1080p / 720p / 480p export</span>
+    </span>
+  </div>
+  <div class="row topbar-actions">
+    <span class="hint" id="project-status" style="margin:0"></span>
+    <button class="btn btn-ghost btn-small" id="btn-open-project" title="Open a saved .rankproj project file">📂 Open</button>
+    <button class="btn btn-ghost btn-small" id="btn-save-project" title="Save this whole project (clips, trims, boxes, audio) to a .rankproj file">💾 Save</button>
+    <button class="btn btn-ghost btn-icon" id="btn-undo" title="Undo (Ctrl/Cmd+Z)" disabled>↶</button>
+    <button class="btn btn-ghost btn-icon" id="btn-redo" title="Redo (Ctrl/Cmd+Shift+Z)" disabled>↷</button>
+    <button class="btn btn-ghost btn-icon" id="btn-settings" title="Settings (API keys)">⚙️</button>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- ============ SIDEBAR / CONTROLS ============ -->
+  <aside class="sidebar">
+
+    <!-- Project setup (acts as the setup screen initially) -->
+    <section class="panel" id="panel-project">
+      <button type="button" class="panel-head">
+        <span class="panel-badge">1</span>
+        <span class="panel-name">Project</span>
+        <span class="chev">▾</span>
+      </button>
+      <div class="panel-body">
+        <label class="field">
+          <span>Title</span>
+          <input type="text" id="inp-title" placeholder='e.g. "Ranking Aura Loss Moments"'>
+        </label>
+        <label class="field">
+          <span>Accent word(s)</span>
+          <input type="text" id="inp-accent" placeholder='e.g. "Aura Loss"'>
+        </label>
+        <label class="field">
+          <span>Number of ranks</span>
+          <select id="inp-numranks">
+            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+            <option selected>6</option><option>7</option><option>8</option>
+            <option>9</option><option>10</option>
+          </select>
+        </label>
+        <div class="btn-stack">
+          <button class="btn btn-primary btn-wide" id="btn-fullgen" title="Generate title, labels AND footage in one click">🎬 Generate full video</button>
+          <div class="row">
+            <button class="btn btn-ghost" id="btn-autogen" title="Fill title + labels only">✨ Auto-generate concept</button>
+            <button class="btn btn-ghost" id="btn-create">Create project →</button>
+          </div>
+        </div>
+        <div class="tool-card compact-card">
+          <div class="tool-card-title">AI generation options</div>
+          <div class="row compact-row">
+            <label class="mini-field">Label words
+              <select id="inp-word-limit">
+                <option value="0" selected>Auto</option>
+                <option value="1">1 word</option>
+                <option value="2">2 words</option>
+                <option value="3">3 words</option>
+                <option value="4">4 words</option>
+              </select>
+            </label>
+            <label class="mini-field">Emoji
+              <select id="inp-emoji-mode">
+                <option value="auto" selected>Auto</option>
+                <option value="one">Exactly 1</option>
+                <option value="none">No emoji</option>
+              </select>
+            </label>
+          </div>
+          <p class="hint" style="margin-bottom:0">These options only guide AI-generated labels. Your manually typed labels are never changed.</p>
+        </div>
+
+        <p class="hint" id="autogen-status"></p>
+      </div>
+    </section>
+
+    <!-- Ranks: clips + labels -->
+    <section class="panel editor-only" id="panel-ranks">
+      <button type="button" class="panel-head">
+        <span class="panel-badge">2</span>
+        <span class="panel-name">Clips &amp; labels</span>
+        <span class="chev">▾</span>
+      </button>
+      <div class="panel-body">
+        <div class="empty-state" id="empty-state">
+          <div class="empty-icon">🎬</div>
+          <strong>Clips are optional</strong>
+          <p>Ranks without a clip get an animated background. Add a video per rank to replace them.</p>
+        </div>
+        <div class="dropzone" id="dropzone">Drop video files here to auto-assign to ranks</div>
+        <div class="row">
+          <button class="btn btn-ghost btn-small" id="btn-find-clips" title="Search YouTube (Creative Commons), then Pexels/Pixabay stock, for every rank without a clip">🔎 Find clips automatically</button>
+          <button class="btn btn-ghost btn-small" id="btn-link-clip" title="Paste an Instagram / TikTok / YouTube / etc. link to import as a clip">🔗 Add clip from link</button>
+          <span class="hint hidden" id="pexels-note" style="margin-top:0">Stock footage: <b>Pexels</b></span>
+        </div>
+        <p class="hint" id="yt-note" style="margin-top:6px"></p>
+        <p class="hint" id="link-note" style="margin-top:0"></p>
+        <div class="total-bar">
+          <span class="hint" id="total-note" style="margin-top:0">⏱ Total <b>0.0s</b> / 120s</span>
+          <button class="btn btn-ghost btn-small hidden" id="btn-fit60" title="Proportionally shrink every clip so the whole video fits in 120 seconds">Fit into 120s</button>
+        </div>
+        <details id="attributions" class="attributions hidden">
+          <summary>Attributions (required for CC clips)</summary>
+          <div id="attribution-list" class="hint attr-list"></div>
+          <button class="btn btn-ghost btn-small" id="btn-copy-attr">📋 Copy attributions</button>
+          <p class="hint">Paste these credits into your video's description — required by the CC-BY license.</p>
+        </details>
+        <div id="ranks-list"></div>
+        <p class="hint tip">💡 Open a rank's <b>⚙ Adjust</b> to trim it, recolor it, or add <b>cover boxes</b> that hide part of the footage (blur or blend into the background).</p>
+      </div>
+    </section>
+
+    <!-- Playback order -->
+    <section class="panel editor-only collapsed" id="panel-order">
+      <button type="button" class="panel-head">
+        <span class="panel-badge">3</span>
+        <span class="panel-name">Playback order</span>
+        <span class="chev">▾</span>
+      </button>
+      <div class="panel-body">
+        <p class="hint" style="margin-top:0">Drag rows or use ↑ ↓ to reorder.</p>
+        <ul id="order-list" class="order-list"></ul>
+        <button class="btn btn-ghost btn-small" id="btn-reset-order">Reset to countdown (N → 1)</button>
+      </div>
+    </section>
+
+    <!-- Text style -->
+    <section class="panel editor-only collapsed" id="panel-text">
+      <button type="button" class="panel-head">
+        <span class="panel-badge">4</span>
+        <span class="panel-name">Text style &amp; size</span>
+        <span class="chev">▾</span>
+      </button>
+      <div class="panel-body">
+        <div id="title-colors" class="title-colors"></div>
+        <label class="field slider-field">
+          <span>Title size <b id="val-title-size">100%</b></span>
+          <input type="range" id="inp-title-size" min="50" max="200" value="100">
+        </label>
+        <label class="field slider-field">
+          <span>Side text size <b id="val-side-size">100%</b></span>
+          <input type="range" id="inp-side-size" min="50" max="200" value="100">
+        </label>
+        <label class="field check-field">
+          <input type="checkbox" id="inp-group-move"> Move ranks as one group
+        </label>
+
+        <div class="tool-card">
+          <div class="tool-card-title">Free text overlay</div>
+          <div class="row">
+            <button class="btn btn-primary btn-small" id="btn-add-text">＋ Add text</button>
+            <button class="btn btn-ghost btn-small" id="btn-delete-text" disabled>Delete selected</button>
+          </div>
+          <label class="field compact-field">
+            <span>Text</span>
+            <input type="text" id="inp-free-text" placeholder="Select or add a text layer" disabled>
+          </label>
+          <div class="row compact-row">
+            <label class="mini-field">Color <input type="color" id="inp-free-color" value="#ffffff" disabled></label>
+            <label class="mini-field">Size <input type="number" id="inp-free-size" min="20" max="220" value="64" disabled></label>
+            <label class="mini-field">Opacity <input type="range" id="inp-free-opacity" min="10" max="100" value="100" disabled></label>
+            <label class="mini-field">Font
+              <select id="inp-free-font" disabled>
+                <option value="system" selected>System bold</option>
+                <option value="impact">Impact</option>
+                <option value="serif">Serif</option>
+                <option value="mono">Monospace</option>
+              </select>
+            </label>
+            <label class="check-field mini-check"><input type="checkbox" id="inp-free-lock" disabled> Lock</label>
+          </div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-card-title">Position & alignment</div>
+          <div class="align-grid">
+            <button class="btn btn-ghost btn-small" id="btn-align-left">Left</button>
+            <button class="btn btn-ghost btn-small" id="btn-align-center">Center</button>
+            <button class="btn btn-ghost btn-small" id="btn-align-right">Right</button>
+            <button class="btn btn-ghost btn-small" id="btn-distribute-ranks">Distribute ranks</button>
+          </div>
+          <div class="row compact-row">
+            <label class="mini-field">X <input type="number" id="inp-pos-x" step="1" disabled></label>
+            <label class="mini-field">Y <input type="number" id="inp-pos-y" step="1" disabled></label>
+            <label class="check-field mini-check"><input type="checkbox" id="inp-selected-lock" disabled> Lock selected</label>
+            <button class="btn btn-ghost btn-small" id="btn-reset-selected" disabled>Reset selected</button>
+          </div>
+          <p class="hint" style="margin-bottom:0">Tip: drag text directly on the preview. Arrow keys nudge 2px; Shift+Arrow nudges 10px. Snapping helps with center/safe-zone alignment.</p>
+        </div>
+
+        <button class="btn btn-ghost btn-small" id="btn-reset-layout">Reset all layout positions</button>
+      </div>
+    </section>
+
+
+    <!-- Creative tools -->
+    <section class="panel editor-only collapsed" id="panel-tools">
+      <button type="button" class="panel-head">
+        <span class="panel-badge">5</span>
+        <span class="panel-name">Creative tools</span>
+        <span class="chev">▾</span>
+      </button>
+      <div class="panel-body">
+        <div class="tool-card">
+          <div class="tool-card-title">Watermark</div>
+          <label class="check-field"><input type="checkbox" id="inp-watermark-enabled"> Enable watermark</label>
+          <label class="field compact-field">
+            <span>Watermark text</span>
+            <input type="text" id="inp-watermark-text" placeholder="@yourhandle">
+          </label>
+          <div class="row compact-row">
+            <label class="mini-field">Color <input type="color" id="inp-watermark-color" value="#ffffff"></label>
+            <label class="mini-field">Size <input type="number" id="inp-watermark-size" min="18" max="140" value="42"></label>
+            <label class="mini-field">Opacity <input type="range" id="inp-watermark-opacity" min="5" max="100" value="35"></label>
+            <label class="mini-field">Font
+              <select id="inp-watermark-font">
+                <option value="system" selected>System bold</option>
+                <option value="impact">Impact</option>
+                <option value="serif">Serif</option>
+                <option value="mono">Monospace</option>
+              </select>
+            </label>
+            <label class="check-field mini-check"><input type="checkbox" id="inp-watermark-lock"> Lock</label>
+          </div>
+          <p class="hint" style="margin-bottom:0">Tip: turn it on, then drag the watermark directly on the preview and fine-tune its transparency here.</p>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-card-title">Hook, outro & style helpers</div>
+          <label class="check-field"><input type="checkbox" id="inp-hook-enabled"> Enable hook intro text</label>
+          <div class="row compact-row">
+            <input type="text" id="inp-hook-text" placeholder="Wait till #1…">
+            <button class="btn btn-ghost btn-small" id="btn-hook-generate">✨ Generate</button>
+          </div>
+          <label class="check-field" style="margin-top:8px"><input type="checkbox" id="inp-outro-enabled"> Enable outro / CTA</label>
+          <div class="row compact-row">
+            <input type="text" id="inp-outro-text" placeholder="Comment your ranking + follow for more">
+            <button class="btn btn-ghost btn-small" id="btn-outro-generate">✨ Generate</button>
+          </div>
+          <div class="row compact-row" style="margin-top:10px">
+            <label class="mini-field">Pacing
+              <select id="inp-pacing-mode">
+                <option value="fast">Fast</option>
+                <option value="balanced" selected>Balanced</option>
+                <option value="cinematic">Cinematic</option>
+              </select>
+            </label>
+            <button class="btn btn-ghost btn-small" id="btn-apply-pacing">⚡ Smart pacing</button>
+            <button class="btn btn-ghost btn-small" id="btn-viral-preset">🚀 Make it viral</button>
+            <button class="btn btn-ghost btn-small" id="btn-make-thumbnail">🖼 Thumbnail</button>
+          </div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-card-title">Project helpers</div>
+          <div class="row compact-row">
+            <label class="check-field"><input type="checkbox" id="inp-health-enabled" checked> Run health check before export</label>
+            <button class="btn btn-ghost btn-small" id="btn-run-health">Check now</button>
+            <label class="check-field"><input type="checkbox" id="inp-autosave-enabled" checked> Draft autosave</label>
+          </div>
+          <div id="health-report" class="health-report hint">No checks run yet.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Audio -->
+    <section class="panel editor-only collapsed" id="panel-audio">
+      <button type="button" class="panel-head">
+        <span class="panel-badge">6</span>
+        <span class="panel-name">Audio</span>
+        <span class="chev">▾</span>
+      </button>
+      <div class="panel-body">
+        <div class="row">
+          <button class="btn btn-ghost" id="btn-music">🎵 Add music</button>
+          <span class="hint" id="music-name" style="margin-top:0"></span>
+          <button class="btn btn-ghost btn-small hidden" id="btn-music-remove" title="Remove music">✕</button>
+        </div>
+        <label class="field slider-field" style="margin-top:10px">
+          <span>Music volume <b id="val-music-vol">70%</b></span>
+          <input type="range" id="inp-music-vol" min="0" max="100" value="70">
+        </label>
+        <label class="field check-field">
+          <input type="checkbox" id="inp-sfx" checked> Reveal sound effects
+        </label>
+        <label class="field slider-field">
+          <span>SFX volume <b id="val-sfx-vol">60%</b></span>
+          <input type="range" id="inp-sfx-vol" min="0" max="100" value="60">
+        </label>
+      </div>
+    </section>
+
+    <!-- Export -->
+    <section class="panel editor-only" id="panel-export">
+      <button type="button" class="panel-head">
+        <span class="panel-badge">7</span>
+        <span class="panel-name">Export</span>
+        <span class="chev">▾</span>
+      </button>
+      <div class="panel-body">
+        <p class="hint hidden" id="music-hint" style="margin-top:0">💡 Add music — your clips have no sound.</p>
+        <label class="field">
+          <span>Export quality</span>
+          <select id="export-quality">
+            <option value="1080p" selected>1080p — 1080×1920 — High quality</option>
+            <option value="720p">720p — 720×1280 — Standard</option>
+            <option value="480p">480p — 480×854 — Smaller file</option>
+          </select>
+        </label>
+        <button class="btn btn-primary btn-wide" id="btn-export">⬇ Export 1080p MP4</button>
+        <div class="progress hidden" id="export-progress"><div class="progress-bar" id="export-bar"></div></div>
+        <p class="hint" id="export-status"></p>
+      </div>
+    </section>
+  </aside>
+
+  <!-- ============ PREVIEW ============ -->
+  <main class="preview-col editor-only">
+    <div class="preview-frame">
+      <canvas id="canvas" width="1080" height="1920"></canvas>
+    </div>
+    <div class="preview-meta">
+      <span class="badge" id="edit-rank-badge">Previewing rank 1</span>
+    </div>
+    <div class="preview-controls">
+      <button class="btn btn-primary" id="btn-play">▶ Play preview</button>
+      <button class="btn btn-ghost" id="btn-stop" disabled>■ Stop</button>
+      <span class="hint" id="play-status"></span>
+    </div>
+  </main>
+
+</div>
+
+<!-- settings modal -->
+<div id="settings-modal" class="modal hidden">
+  <div class="modal-panel">
+    <h2>⚙️ Settings</h2>
+    <label class="field">
+      <span>Pexels API key <em class="soft">(<a href="https://www.pexels.com/api/" target="_blank" rel="noopener">get a free key</a>)</em></span>
+      <span class="key-row">
+        <input type="password" id="inp-pexels-key" placeholder="Paste key" autocomplete="off">
+        <button class="btn btn-ghost btn-small" id="btn-key-reveal" title="Show/hide key">👁</button>
+      </span>
+    </label>
+    <label class="field">
+      <span>Pixabay API key <em class="soft">(optional · <a href="https://pixabay.com/api/docs/" target="_blank" rel="noopener">get a free key</a>)</em></span>
+      <span class="key-row">
+        <input type="password" id="inp-pixabay-key" placeholder="Paste key" autocomplete="off">
+        <button class="btn btn-ghost btn-small" id="btn-pixkey-reveal" title="Show/hide key">👁</button>
+      </span>
+    </label>
+    <p class="hint">Keys are stored only in this browser. YouTube clips need no key — run <code>python3 server.py</code>.</p>
+    <button class="btn btn-primary" id="btn-settings-close">Close</button>
+  </div>
+</div>
+
+<!-- hidden media workspace -->
+<video id="player" playsinline preload="auto" style="display:none"></video>
+
+<script src="mp4-muxer.js"></script>
+<!-- optional private local config (API keys); the app runs fine without it -->
+<script src="config.local.js" onerror="void 0"></script>
+<script src="generator.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
