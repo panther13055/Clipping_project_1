@@ -1,5 +1,6 @@
 {
   "rewrites": [
+    { "source": "/social/:path*", "destination": "https://clipping-backend-production-d7a6.up.railway.app/social/:path*" },
     { "source": "/yt/:path*", "destination": "https://clipping-backend-production-d7a6.up.railway.app/yt/:path*" },
     { "source": "/media/:path*", "destination": "https://clipping-backend-production-d7a6.up.railway.app/media/:path*" },
     { "source": "/.cache/:path*", "destination": "https://clipping-backend-production-d7a6.up.railway.app/.cache/:path*" }
