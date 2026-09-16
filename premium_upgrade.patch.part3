@@ -1,0 +1,183 @@
+centColor,
++      titleStyle: state.titleStyle, titleWordColors: { ...(state.titleWordColors || {}) },
+       titleScale: state.titleScale, sideScale: state.sideScale, groupMove: state.groupMove,
+       ranks: state.ranks.map((r) => ({
+         label: r.label, labelFromUser: r.labelFromUser, color: r.color, labelColor: r.labelColor, sizeScale: r.sizeScale,
+@@ -2640,6 +2768,7 @@
+     restoring = true;
+     state.title = s.title; state.titleFromUser = s.titleFromUser; state.accent = s.accent; state.niche = s.niche; state.topic = s.topic;
+     state.numRanks = s.numRanks; state.titleColor = s.titleColor; state.accentColor = s.accentColor;
++    state.titleStyle = s.titleStyle || "viral"; state.titleWordColors = { ...(s.titleWordColors || {}) };
+     state.titleScale = s.titleScale; state.sideScale = s.sideScale; state.groupMove = s.groupMove;
+     state.ranks = s.ranks.map((r) => {
+       // clips are kept by reference across snapshots, so restore the trim
+@@ -2693,18 +2822,43 @@
+     $("inp-side-size").value = Math.round(state.sideScale * 100);
+     $("val-side-size").textContent = Math.round(state.sideScale * 100) + "%";
+     const gm = $("inp-group-move"); if (gm) gm.checked = state.groupMove;
++    const ts = $("inp-title-style"); if (ts) ts.value = state.titleStyle || "viral";
+     rebuildTitleColors();
++    rebuildTitleWordColors();
+   }
+   function rebuildTitleColors() {
+     const host = $("title-colors");
+     host.innerHTML = "";
+     host.appendChild(swatchRow("title", () => state.titleColor, (hex) => {
+-      state.titleColor = hex; scheduleCommit(); scheduleStatic();
++      state.titleColor = hex; rebuildTitleWordColors(); scheduleCommit(); scheduleStatic();
+     }));
+     host.appendChild(swatchRow("accent", () => state.accentColor, (hex) => {
+-      state.accentColor = hex; scheduleCommit(); scheduleStatic();
++      state.accentColor = hex; rebuildTitleWordColors(); scheduleCommit(); scheduleStatic();
+     }));
+   }
++  function rebuildTitleWordColors() {
++    const host = $("title-word-colors");
++    if (!host) return;
++    host.innerHTML = "";
++    const words = titleWords();
++    if (!words.length) {
++      const h = document.createElement("span"); h.className = "hint"; h.textContent = "Type a title to color individual words."; host.appendChild(h); return;
++    }
++    for (const w of words) {
++      const chip = document.createElement("label"); chip.className = "word-color-chip";
++      const txt = document.createElement("span"); txt.textContent = w.text; chip.appendChild(txt);
++      const pick = document.createElement("input"); pick.type = "color"; pick.value = effectiveTitleWordColor(w);
++      pick.title = `Color “${w.text}”`;
++      pick.addEventListener("input", () => { state.titleWordColors[w.index] = pick.value; scheduleCommit(); scheduleStatic(); });
++      chip.appendChild(pick); host.appendChild(chip);
++    }
++  }
++  function autoColorTitleWords() {
++    const palette = ["#f5c518", "#ffffff", "#169cff", "#ff416c", "#ff8c00", "#ffd43b", "#22d3ee", "#ffffff"];
++    state.titleWordColors = {};
++    titleWords().forEach((w, i) => { state.titleWordColors[w.index] = palette[i % palette.length]; });
++    rebuildTitleWordColors(); commitHistory(); renderStatic();
++  }
+ 
+   $("inp-title").addEventListener("input", (e) => {
+     state.title = e.target.value;
+@@ -2712,9 +2866,15 @@
+     state.titleFromUser = state.title.trim().length > 0;
+     // typing the title makes it the user's topic (drives stock search)
+     state.topic = state.title.trim() ? topicKeywords(state.title) : "";
++    const wc = {}; const n = state.title.split(/\s+/).filter(Boolean).length;
++    for (let i=0;i<n;i++) if (state.titleWordColors && state.titleWordColors[i]) wc[i]=state.titleWordColors[i];
++    state.titleWordColors = wc; rebuildTitleWordColors();
+     scheduleCommit(); scheduleStatic();
+   });
+-  $("inp-accent").addEventListener("input", (e) => { state.accent = e.target.value; scheduleCommit(); scheduleStatic(); });
++  $("inp-accent").addEventListener("input", (e) => { state.accent = e.target.value; rebuildTitleWordColors(); scheduleCommit(); scheduleStatic(); });
++  $("inp-title-style").addEventListener("change", (e) => { state.titleStyle = e.target.value || "viral"; scheduleCommit(); scheduleStatic(); });
++  $("btn-auto-title-colors").addEventListener("click", autoColorTitleWords);
++  $("btn-clear-title-colors").addEventListener("click", () => { state.titleWordColors = {}; rebuildTitleWordColors(); commitHistory(); renderStatic(); });
+   $("inp-word-limit").addEventListener("change", (e) => { state.aiOptions.wordLimit = Number(e.target.value) || 0; scheduleCommit(); });
+   $("inp-emoji-mode").addEventListener("change", (e) => { state.aiOptions.emojiMode = e.target.value || "auto"; scheduleCommit(); });
+   $("inp-watermark-enabled").addEventListener("change", (e) => { state.watermark.enabled = e.target.checked; commitHistory(); renderStatic(); updateSelectionControls(); });
+@@ -2758,6 +2918,16 @@
+   });
+   $("btn-fullgen").addEventListener("click", generateFullVideo);
+   $("btn-find-clips").addEventListener("click", () => sourceAllClips($("autogen-status")));
++  const sourcePicker = $("inp-clip-source");
++  if (sourcePicker) sourcePicker.addEventListener("change", () => {
++    const n = $("social-note");
++    if (!n) return;
++    n.textContent = sourcePicker.value === "auto"
++      ? "Auto mode tries public Instagram/TikTok results first, then YouTube CC and stock. Social clips are not license-cleared; only use footage you have rights to use."
++      : sourcePicker.value === "youtube" ? "YouTube mode uses Creative-Commons clips only."
++      : sourcePicker.value === "stock" ? "Stock mode uses configured Pexels/Pixabay sources only."
++      : `${sourcePicker.value === "instagram" ? "Instagram" : "TikTok"} mode tries public results only. These clips are not license-cleared; only use footage you have rights to use.`;
++  });
+   $("btn-link-clip").addEventListener("click", () => {
+     if (!ytAvailable) { $("link-note").textContent = "“Add clip from link” needs the local server. Run: python3 server.py"; return; }
+     // target the next empty rank, else ask which to replace
+--- v2base/clipping-main/index.html	2026-09-15 14:22:11.000000000 +0000
++++ textstyle_work/clipping-main/index.html	2026-09-16 09:36:55.576954833 +0000
+@@ -104,11 +104,21 @@
+         </div>
+         <div class="dropzone" id="dropzone">Drop video files here to auto-assign to ranks</div>
+         <div class="row">
+-          <button class="btn btn-ghost btn-small" id="btn-find-clips" title="Search YouTube (Creative Commons), then Pexels/Pixabay stock, for every rank without a clip">🔎 Find clips automatically</button>
++          <button class="btn btn-ghost btn-small" id="btn-find-clips" title="Search Instagram, TikTok, YouTube Creative Commons, then stock for every rank without a clip">🔎 Find clips automatically</button>
+           <button class="btn btn-ghost btn-small" id="btn-link-clip" title="Paste an Instagram / TikTok / YouTube / etc. link to import as a clip">🔗 Add clip from link</button>
++          <label class="mini-field source-picker">Sources
++            <select id="inp-clip-source">
++              <option value="auto" selected>Auto · IG → TikTok → YouTube → Stock</option>
++              <option value="instagram">Instagram only</option>
++              <option value="tiktok">TikTok only</option>
++              <option value="youtube">YouTube CC only</option>
++              <option value="stock">Stock only</option>
++            </select>
++          </label>
+           <span class="hint hidden" id="pexels-note" style="margin-top:0">Stock footage: <b>Pexels</b></span>
+         </div>
+         <p class="hint" id="yt-note" style="margin-top:6px"></p>
++        <p class="hint" id="social-note" style="margin-top:0">Auto mode tries public Instagram/TikTok results first, then YouTube CC and stock. Social clips are not license-cleared; only use footage you have rights to use.</p>
+         <p class="hint" id="link-note" style="margin-top:0"></p>
+         <div class="total-bar">
+           <span class="hint" id="total-note" style="margin-top:0">⏱ Total <b>0.0s</b> / 120s</span>
+@@ -148,6 +158,25 @@
+       </button>
+       <div class="panel-body">
+         <div id="title-colors" class="title-colors"></div>
++
++        <div class="tool-card">
++          <div class="tool-card-title">Title text style</div>
++          <div class="row compact-row">
++            <label class="mini-field">Preset
++              <select id="inp-title-style">
++                <option value="viral" selected>Viral outline</option>
++                <option value="impact">Heavy Impact</option>
++                <option value="shadow">Soft shadow</option>
++                <option value="classic">Classic</option>
++              </select>
++            </label>
++            <button class="btn btn-ghost btn-small" id="btn-auto-title-colors">🌈 Auto multicolor</button>
++            <button class="btn btn-ghost btn-small" id="btn-clear-title-colors">Reset word colors</button>
++          </div>
++          <p class="hint" style="margin:8px 0 6px">Color each title word separately. Great for Shorts-style yellow / white / blue / red titles.</p>
++          <div id="title-word-colors" class="word-color-editor"></div>
++        </div>
++
+         <label class="field slider-field">
+           <span>Title size <b id="val-title-size">100%</b></span>
+           <input type="range" id="inp-title-size" min="50" max="200" value="100">
+@@ -317,11 +346,14 @@
+         <label class="field">
+           <span>Export quality</span>
+           <select id="export-quality">
++            <option value="4K">4K — 2160×3840 — Ultra quality</option>
++            <option value="2K">2K — 1440×2560 — Very high quality</option>
+             <option value="1080p" selected>1080p — 1080×1920 — High quality</option>
+             <option value="720p">720p — 720×1280 — Standard</option>
+             <option value="480p">480p — 480×854 — Smaller file</option>
+           </select>
+         </label>
++        <p class="hint export-quality-note">2K/4K render text and graphics at higher resolution. Final detail still depends on the source clip quality and your browser/GPU.</p>
+         <button class="btn btn-primary btn-wide" id="btn-export">⬇ Export 1080p MP4</button>
+         <div class="progress hidden" id="export-progress"><div class="progress-bar" id="export-bar"></div></div>
+         <p class="hint" id="export-status"></p>
+--- v2base/clipping-main/style.css	2026-09-15 14:27:45.000000000 +0000
++++ textstyle_work/clipping-main/style.css	2026-09-16 09:36:55.577113182 +0000
+@@ -483,3 +483,21 @@
+ .compact-card { margin-top: 12px; }
+ .mini-field input[type="range"] { width: 110px; }
+ #panel-tools .row.compact-row input[type="text"] { flex: 1; min-width: 0; }
++.source-picker {
++  min-width: 250px;
++  margin-left: auto;
++}
++.source-picker select {
++  min-width: 250px;
++}
++@media (max-width: 900px) {
++  .source-picker { width: 100%; margin-left: 0; }
++  .source-picker select { width: 100%; min-width: 0; }
++}
++
++/* Multi-color Shorts title editor */
++.word-color-editor{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
++.word-color-chip{display:flex;align-items:center;gap:7px;padding:7px 9px;border:1px solid #2a3d59;border-radius:10px;background:rgba(7,15,28,.72);font-size:12px;font-weight:800;color:#dcecff;max-width:100%}
++.word-color-chip span{max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
++.word-color-chip input[type=color]{width:28px;height:24px;padding:0;border:0;background:transparent;cursor:pointer}
++.export-quality-note{margin-top:-2px;margin-bottom:10px;line-height:1.45}
