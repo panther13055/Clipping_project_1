@@ -1268,44 +1268,69 @@
     };
   }
 
-  function recorderFormatChoice() {
-    const candidates = [
-      ['video/mp4;codecs="avc1.42E01E,mp4a.40.2"', 'mp4'],
+  function recorderFormatChoice(profile) {
+    const preferWebm = profile && profile.width >= 4000;
+    const mp4 = [
       ['video/mp4', 'mp4'],
+      ['video/mp4;codecs="avc1.42E01E,mp4a.40.2"', 'mp4'],
+    ];
+    const webm = [
       ['video/webm;codecs=vp9,opus', 'webm'],
       ['video/webm;codecs=vp8,opus', 'webm'],
       ['video/webm', 'webm'],
     ];
+    const candidates = preferWebm ? [...webm, ...mp4] : [...mp4, ...webm];
     return candidates.find(([m]) => window.MediaRecorder && MediaRecorder.isTypeSupported(m)) || ['', 'webm'];
   }
 
+  // 2K/4K/8K use a synchronized two-pass pipeline:
+  // pass 1 records the full composition at a stable 1080p/30fps with audio;
+  // pass 2 only scales that already-synchronized file. Heavy high-res work can
+  // therefore repeat/drop a visual frame under load but can no longer alter
+  // media speed or make the audio clock drift away from the video clock.
   async function upscaleSyncedMaster(masterBlob, profile, quality) {
     if (!window.MediaRecorder) throw new Error('MediaRecorder is required for stable high-resolution export.');
     const srcUrl = URL.createObjectURL(masterBlob);
     const v = document.createElement('video');
-    v.playsInline = true; v.preload = 'auto'; v.src = srcUrl; v.volume = 0;
+    v.playsInline = true; v.preload = 'auto'; v.src = srcUrl; v.volume = 1;
     await new Promise((resolve, reject) => {
       const ok = () => { cleanup(); resolve(); };
       const bad = () => { cleanup(); reject(new Error('Could not load the synchronized master for high-resolution scaling.')); };
-      const cleanup = () => { v.removeEventListener('loadedmetadata', ok); v.removeEventListener('error', bad); };
-      v.addEventListener('loadedmetadata', ok); v.addEventListener('error', bad); v.load();
+      const cleanup = () => { v.removeEventListener('loadeddata', ok); v.removeEventListener('error', bad); };
+      v.addEventListener('loadeddata', ok); v.addEventListener('error', bad); v.load();
     });
 
     exportCanvas.width = profile.width; exportCanvas.height = profile.height;
     exportCtx.setTransform(1,0,0,1,0,0);
     exportCtx.imageSmoothingEnabled = true; exportCtx.imageSmoothingQuality = 'high';
     exportCtx.fillStyle = '#000'; exportCtx.fillRect(0,0,profile.width,profile.height);
+    try { exportCtx.drawImage(v, 0, 0, profile.width, profile.height); } catch (_) {}
 
     const fps = profile.fps || 30;
     const outStream = exportCanvas.captureStream(fps);
-    const capture = typeof v.captureStream === 'function' ? v.captureStream() : (typeof v.mozCaptureStream === 'function' ? v.mozCaptureStream() : null);
-    if (!capture) { URL.revokeObjectURL(srcUrl); throw new Error('This browser cannot capture synchronized master audio. Use current Chrome or Edge.'); }
-    capture.getAudioTracks().forEach((t) => outStream.addTrack(t));
 
-    const [mime, ext] = recorderFormatChoice();
+    // Route master audio into a MediaStreamDestination instead of recapturing
+    // the original live AudioContext graph. Audio and video now both originate
+    // from the SAME finished master file, so their timestamps cannot diverge.
+    if (!audioCtx) ensureAudioGraph();
+    if (audioCtx && audioCtx.state === 'suspended') await audioCtx.resume().catch(() => {});
+    const masterSource = audioCtx.createMediaElementSource(v);
+    const masterAudioDest = audioCtx.createMediaStreamDestination();
+    masterSource.connect(masterAudioDest); // intentionally not connected to speakers
+    masterAudioDest.stream.getAudioTracks().forEach((t) => outStream.addTrack(t));
+
+    const [mime, ext] = recorderFormatChoice(profile);
     const opts = { videoBitsPerSecond: profile.videoBitrate };
     if (mime) opts.mimeType = mime;
-    const rec = new MediaRecorder(outStream, opts), chunks = [];
+    let rec;
+    try { rec = new MediaRecorder(outStream, opts); }
+    catch (e) {
+      try { masterSource.disconnect(); } catch (_) {}
+      outStream.getTracks().forEach((t) => t.stop());
+      URL.revokeObjectURL(srcUrl);
+      throw new Error(`This browser/GPU cannot start ${quality} encoding: ${e.message || e}`);
+    }
+    const chunks = [];
     let recErr = null;
     rec.ondataavailable = (e) => { if (e.data && e.data.size) chunks.push(e.data); };
     rec.onerror = (e) => { recErr = e.error || new Error('High-resolution recorder failed.'); };
@@ -1340,7 +1365,7 @@
     progressTimer = setInterval(() => {
       const pct = v.duration ? Math.min(100, Math.max(0, (v.currentTime / v.duration) * 100)) : 0;
       $('export-bar').style.width = `${50 + Math.round(pct * 0.5)}%`;
-      $('export-status').textContent = `Pass 2/2 · scaling synchronized master to ${quality} · ${profile.width}×${profile.height} · ${fps}fps`;
+      $('export-status').textContent = `Pass 2/2 · synchronized ${quality} scaling · ${profile.width}×${profile.height} · ${fps}fps`;
     }, 250);
 
     try {
@@ -1349,7 +1374,7 @@
         v.addEventListener('ended', resolve, { once:true });
         v.addEventListener('error', () => reject(new Error('Master playback failed during high-resolution scaling.')), { once:true });
       });
-      await new Promise((r) => setTimeout(r, 120));
+      await new Promise((r) => setTimeout(r, 150));
     } finally {
       stopped = true;
       clearInterval(progressTimer);
@@ -1358,8 +1383,8 @@
       document.removeEventListener('visibilitychange', vis);
       if (rec.state !== 'inactive') rec.stop();
       await done;
+      try { masterSource.disconnect(); } catch (_) {}
       outStream.getTracks().forEach((t) => t.stop());
-      capture.getTracks().forEach((t) => t.stop());
       v.pause(); v.removeAttribute('src'); v.load();
       URL.revokeObjectURL(srcUrl);
     }
@@ -1387,11 +1412,13 @@
 
     let rec = null, seqErr = null, masterBlob = null;
     try {
+      // Prefer MediaRecorder: its canvas and audio tracks share the same real-time
+      // clock. The old WebCodecs path is retained only as a compatibility fallback.
       try { rec = startMediaRecorderPath(masterProfile); } catch (_) { rec = null; }
       if (!rec) rec = await startWebCodecsRecorder(masterProfile);
       if (!rec) throw new Error('No supported synchronized recorder is available in this browser.');
       $('export-status').textContent = highRes
-        ? `Pass 1/2 · recording synchronized 1080p master at 30fps · ${rec.label}`
+        ? `Pass 1/2 · creating synchronized 1080p master · 30fps · ${rec.label}`
         : `Exporting ${quality} · ${requested.width}×${requested.height} · ${requested.fps || 30}fps · ${rec.label}`;
       await runSequence((i, n) => {
         const pct = Math.round((i / Math.max(1,n)) * (highRes ? 50 : 100));
@@ -1414,7 +1441,7 @@
 
     $('btn-export').disabled = false; $('btn-play').disabled = false;
     if (seqErr) {
-      $('export-status').textContent = 'Export error: ' + (seqErr.message || seqErr) + (highRes && masterBlob && masterBlob.size ? ' · Retry 2K/4K or use 1080p if this GPU cannot encode the selected size.' : '');
+      $('export-status').textContent = 'Export error: ' + (seqErr.message || seqErr) + (highRes && masterBlob && masterBlob.size ? ' · Your synchronized master was created correctly; this device may not support the selected high-res encoder.' : '');
     } else if (!engine.stopFlag && finalBlob && finalBlob.size > 0) {
       $('export-bar').style.width = '100%';
       const a = document.createElement('a'), href = URL.createObjectURL(finalBlob);
@@ -1422,7 +1449,7 @@
       const base = state.title.replace(/[^\w]+/g, '-').replace(/^-+|-+$/g, '').toLowerCase() || 'ranking';
       a.download = `${base}-${quality}.${finalExt}`; a.click();
       setTimeout(() => URL.revokeObjectURL(href), 60_000);
-      $('export-status').textContent = `Saved ${quality} · ${requested.width}×${requested.height} · ${requested.fps || 30}fps · A/V locked to one synchronized master · ${(finalBlob.size / 1e6).toFixed(1)} MB .${finalExt}`;
+      $('export-status').textContent = `Saved ${quality} · ${requested.width}×${requested.height} · ${requested.fps || 30}fps · synchronized audio/video master · ${(finalBlob.size / 1e6).toFixed(1)} MB .${finalExt}`;
     }
     renderStatic();
   }
