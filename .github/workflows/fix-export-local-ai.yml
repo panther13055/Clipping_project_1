@@ -1,0 +1,288 @@
+name: Fix high-res export and Local AI
+
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-export-local-ai.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Patch export timing and Local AI
+        shell: python
+        run: |
+          from pathlib import Path
+
+          def rep(text, old, new, label, count=1):
+              if old not in text:
+                  raise SystemExit(f'Missing expected block: {label}')
+              return text.replace(old, new, count)
+
+          p = Path('app.js')
+          s = p.read_text(encoding='utf-8')
+
+          old = '''  const EXPORT_PROFILES = {
+            "8K":    { width: 4320, height: 7680, videoBitrate: 85_000_000, codec: "avc1.64003e" },
+            "4K":    { width: 2160, height: 3840, videoBitrate: 38_000_000, codec: "avc1.640033" },
+            "2K":    { width: 1440, height: 2560, videoBitrate: 20_000_000, codec: "avc1.640032" },
+            "1080p": { width: 1080, height: 1920, videoBitrate: 10_000_000, codec: "avc1.640028" },
+            "720p":  { width: 720,  height: 1280, videoBitrate: 5_000_000, codec: "avc1.64001f" },
+            "480p":  { width: 480,  height: 854,  videoBitrate: 2_500_000, codec: "avc1.4d401e" },
+          };'''.replace('          ', '')
+          new = '''  const EXPORT_PROFILES = {
+            // High-resolution export is intentionally capped at a sane render FPS.
+            // The encoded timeline still keeps real media time, so a slow GPU may
+            // drop/hold frames but will never speed the video up or desync audio.
+            "8K":    { width: 4320, height: 7680, videoBitrate: 85_000_000, codec: "avc1.64003e", fps: 24, renderFps: 24 },
+            "4K":    { width: 2160, height: 3840, videoBitrate: 38_000_000, codec: "avc1.640033", fps: 30, renderFps: 30 },
+            "2K":    { width: 1440, height: 2560, videoBitrate: 20_000_000, codec: "avc1.640032", fps: 30, renderFps: 30 },
+            "1080p": { width: 1080, height: 1920, videoBitrate: 10_000_000, codec: "avc1.640028", fps: 30, renderFps: 30 },
+            "720p":  { width: 720,  height: 1280, videoBitrate: 5_000_000, codec: "avc1.64001f", fps: 30, renderFps: 30 },
+            "480p":  { width: 480,  height: 854,  videoBitrate: 2_500_000, codec: "avc1.4d401e", fps: 30, renderFps: 30 },
+          };'''.replace('          ', '')
+          s = rep(s, old, new, 'export profiles')
+
+          old = '''    if (engine.recording && engine.exportProfile) {
+              const profile = engine.exportProfile;
+              if (exportCanvas.width !== profile.width || exportCanvas.height !== profile.height) {
+                exportCanvas.width = profile.width; exportCanvas.height = profile.height;
+              }
+              const sx = profile.width / W, sy = profile.height / H;
+              exportCtx.setTransform(sx, 0, 0, sy, 0, 0);
+              exportCtx.imageSmoothingEnabled = true; exportCtx.imageSmoothingQuality = "high";
+              renderFrameTo(exportCtx, bg, revealed, undefined, pos);
+              exportCtx.setTransform(1,0,0,1,0,0);
+              engine.exportFrameReady = true;
+            }'''.replace('            ', '')
+          new = '''    if (engine.recording && engine.exportProfile) {
+              const profile = engine.exportProfile;
+              const nowMs = performance.now();
+              const renderFps = profile.renderFps || profile.fps || 30;
+              const minGap = 1000 / Math.max(1, renderFps);
+              const due = !engine.exportFrameReady || !engine.exportLastRenderMs || (nowMs - engine.exportLastRenderMs) >= minGap - 1;
+              // 4K/8K canvases are very expensive. Rendering them on every 60 Hz
+              // preview RAF can starve the encoder/audio thread. Render only at the
+              // profile FPS; the recorder keeps proper timestamps and holds a frame
+              // when the machine cannot render another one in time.
+              if (due) {
+                if (exportCanvas.width !== profile.width || exportCanvas.height !== profile.height) {
+                  exportCanvas.width = profile.width; exportCanvas.height = profile.height;
+                }
+                const sx = profile.width / W, sy = profile.height / H;
+                exportCtx.setTransform(sx, 0, 0, sy, 0, 0);
+                exportCtx.imageSmoothingEnabled = true; exportCtx.imageSmoothingQuality = "high";
+                renderFrameTo(exportCtx, bg, revealed, undefined, pos);
+                exportCtx.setTransform(1,0,0,1,0,0);
+                engine.exportFrameReady = true;
+                engine.exportLastRenderMs = nowMs;
+              }
+            }'''.replace('            ', '')
+          s = rep(s, old, new, 'capped high-res rendering')
+
+          s = rep(s,
+              '    const vconf = { codec: profile.codec || "avc1.640028", width: profile.width, height: profile.height, bitrate: profile.videoBitrate, framerate: 30 };',
+              '    const vconf = { codec: profile.codec || "avc1.640028", width: profile.width, height: profile.height, bitrate: profile.videoBitrate, framerate: profile.fps || 30, latencyMode: "realtime", hardwareAcceleration: "prefer-hardware" };',
+              'WebCodecs config')
+
+          old = '''    let frameIdx = 0, timer = null;
+            const frameDurationUs = 1_000_000 / vconf.framerate;
+            const encodeFrame = () => {
+              if (engine.exportPaused || encErr || venc.state !== "configured") return;
+              copyEditorFrameToExportCanvas(profile);
+              const timestamp = Math.round(frameIdx * frameDurationUs);
+              const frame = new VideoFrame(exportCanvas, { timestamp, duration: Math.round(frameDurationUs) });
+              venc.encode(frame, { keyFrame: frameIdx % 60 === 0 });
+              frame.close(); frameIdx++;
+            };
+            const startTimer = () => { if (!timer) timer = setInterval(encodeFrame, 1000 / 30); };
+            const stopTimer = () => { if (timer) { clearInterval(timer); timer = null; } };
+            const visibilityHandler = () => {
+              if (!engine.recording) return;
+              if (document.hidden) { stopTimer(); setExportPaused(true); }
+              else { setExportPaused(false); startTimer(); }
+            };
+            document.addEventListener("visibilitychange", visibilityHandler);
+            startTimer();'''.replace('            ', '')
+          new = '''    let frameIdx = 0, timer = null;
+            let lastTimestampUs = -1;
+            let droppedFrames = 0;
+            const frameDurationUs = 1_000_000 / vconf.framerate;
+            const recorderStartedMs = performance.now();
+            let recorderPausedMs = 0, recorderPauseStartedMs = 0;
+            const recorderElapsedUs = () => {
+              const now = performance.now();
+              const livePause = recorderPauseStartedMs ? (now - recorderPauseStartedMs) : 0;
+              return Math.max(0, Math.round((now - recorderStartedMs - recorderPausedMs - livePause) * 1000));
+            };
+            const encodeFrame = (force = false) => {
+              if (engine.exportPaused || encErr || venc.state !== "configured") return;
+              let timestamp = recorderElapsedUs();
+              if (!force && lastTimestampUs >= 0 && timestamp - lastTimestampUs < frameDurationUs * 0.55) return;
+              // Never let an overloaded 4K/8K encoder build an unbounded queue.
+              // Dropping a frame is safe because timestamps use real elapsed media
+              // time; the previous frame is held instead of making video fast-forward.
+              if (!force && venc.encodeQueueSize > 3) { droppedFrames++; return; }
+              copyEditorFrameToExportCanvas(profile);
+              if (timestamp <= lastTimestampUs) timestamp = lastTimestampUs + Math.max(1, Math.round(frameDurationUs));
+              const frame = new VideoFrame(exportCanvas, { timestamp, duration: Math.round(frameDurationUs) });
+              venc.encode(frame, { keyFrame: frameIdx % Math.max(1, Math.round(vconf.framerate * 2)) === 0 });
+              frame.close();
+              lastTimestampUs = timestamp;
+              frameIdx++;
+            };
+            const startTimer = () => { if (!timer) timer = setInterval(() => encodeFrame(false), 1000 / vconf.framerate); };
+            const stopTimer = () => { if (timer) { clearInterval(timer); timer = null; } };
+            const visibilityHandler = () => {
+              if (!engine.recording) return;
+              if (document.hidden) {
+                stopTimer();
+                if (!recorderPauseStartedMs) recorderPauseStartedMs = performance.now();
+                setExportPaused(true);
+              } else {
+                if (recorderPauseStartedMs) recorderPausedMs += performance.now() - recorderPauseStartedMs;
+                recorderPauseStartedMs = 0;
+                setExportPaused(false);
+                startTimer();
+              }
+            };
+            document.addEventListener("visibilitychange", visibilityHandler);
+            encodeFrame(true);
+            startTimer();'''.replace('            ', '')
+          s = rep(s, old, new, 'real-time WebCodecs timestamps')
+
+          old = '''      async stop() {
+                stopTimer(); document.removeEventListener("visibilitychange", visibilityHandler);
+                if (engine.exportPaused) setExportPaused(false);
+                if (encErr) throw encErr;
+                await venc.flush();
+                if (aenc && aenc.state === "configured") {
+                  try { audioSource.disconnect(capNode); musicGain.disconnect(capNode); sfxGain.disconnect(capNode); capNode.disconnect(); capSink.disconnect(); } catch (_) {}
+                  capNode.onaudioprocess = null;
+                  const L = new Float32Array(pcmLen), R = new Float32Array(pcmLen); let o = 0;
+                  for (let k = 0; k < pcmL.length; k++) { L.set(pcmL[k], o); R.set(pcmR[k], o); o += pcmL[k].length; }
+                  const CH = 1024; let ts = 0;
+                  for (let off = 0; off < pcmLen; off += CH) {
+                    const n = Math.min(CH, pcmLen - off), data = new Float32Array(n * 2);
+                    data.set(L.subarray(off, off + n), 0); data.set(R.subarray(off, off + n), n);
+                    const ad = new AudioData({ format: "f32-planar", sampleRate, numberOfFrames: n, numberOfChannels: 2, timestamp: Math.round(ts), data });
+                    aenc.encode(ad); ad.close(); ts += (n / sampleRate) * 1e6;
+                  }
+                  await aenc.flush();
+                }
+                if (encErr) throw encErr;'''.replace('              ', '')
+          new = '''      async stop() {
+                if (!engine.exportPaused) encodeFrame(true);
+                stopTimer(); document.removeEventListener("visibilitychange", visibilityHandler);
+                if (engine.exportPaused) setExportPaused(false);
+                if (encErr) throw encErr;
+                await venc.flush();
+                const mediaDurationUs = Math.max(recorderElapsedUs(), lastTimestampUs >= 0 ? lastTimestampUs + Math.round(frameDurationUs) : 0);
+                if (aenc && aenc.state === "configured") {
+                  try { audioSource.disconnect(capNode); musicGain.disconnect(capNode); sfxGain.disconnect(capNode); capNode.disconnect(); capSink.disconnect(); } catch (_) {}
+                  capNode.onaudioprocess = null;
+                  // Force the AAC track to exactly the same media duration as video.
+                  // If the main thread was briefly overloaded, missing tail samples
+                  // are silence-padded rather than allowing A/V duration drift.
+                  const targetLen = Math.max(1, Math.round((mediaDurationUs / 1e6) * sampleRate));
+                  const L = new Float32Array(targetLen), R = new Float32Array(targetLen); let o = 0;
+                  for (let k = 0; k < pcmL.length && o < targetLen; k++) {
+                    const n = Math.min(pcmL[k].length, targetLen - o);
+                    L.set(pcmL[k].subarray(0, n), o); R.set(pcmR[k].subarray(0, n), o); o += n;
+                  }
+                  const CH = 1024; let ts = 0;
+                  for (let off = 0; off < targetLen; off += CH) {
+                    const n = Math.min(CH, targetLen - off), data = new Float32Array(n * 2);
+                    data.set(L.subarray(off, off + n), 0); data.set(R.subarray(off, off + n), n);
+                    const ad = new AudioData({ format: "f32-planar", sampleRate, numberOfFrames: n, numberOfChannels: 2, timestamp: Math.round(ts), data });
+                    aenc.encode(ad); ad.close(); ts += (n / sampleRate) * 1e6;
+                  }
+                  await aenc.flush();
+                }
+                engine.exportDroppedFrames = droppedFrames;
+                if (encErr) throw encErr;'''.replace('              ', '')
+          s = rep(s, old, new, 'audio/video duration lock')
+
+          s = rep(s, '    const stream = exportCanvas.captureStream(30);', '    const stream = exportCanvas.captureStream(profile.fps || 30);', 'MediaRecorder profile fps')
+          s = rep(s,
+              '    const startCopyLoop = () => { if (!copyTimer) copyTimer = setInterval(() => { if (!engine.exportPaused) copyEditorFrameToExportCanvas(profile); }, 1000 / 30); };',
+              '    const startCopyLoop = () => { if (!copyTimer) copyTimer = setInterval(() => { if (!engine.exportPaused) copyEditorFrameToExportCanvas(profile); }, 1000 / (profile.fps || 30)); };',
+              'MediaRecorder copy fps')
+          s = rep(s,
+              '    engine.exportProfile = profile; engine.exportFrameReady = false;',
+              '    engine.exportProfile = profile; engine.exportFrameReady = false; engine.exportLastRenderMs = 0; engine.exportDroppedFrames = 0;',
+              'export state reset')
+          s = rep(s,
+              '      $("export-status").textContent = `Saved ${quality} · ${(blob.size / 1e6).toFixed(1)} MB .${rec.ext}`;',
+              '      const dropped = engine.exportDroppedFrames || 0;\n      $("export-status").textContent = `Saved ${quality} · ${(blob.size / 1e6).toFixed(1)} MB .${rec.ext}` + (dropped ? ` · kept A/V sync while skipping ${dropped} overloaded frame tick(s)` : "");',
+              'export completion status')
+          p.write_text(s, encoding='utf-8')
+
+          p = Path('local_ai_server.py')
+          s = p.read_text(encoding='utf-8')
+          s = rep(s,
+              '        run([ffmpeg, "-y", "-i", str(cleaned), "-vsync", "0", str(frames / "%08d.png")])',
+              '        # Convert any VFR source to a constant frame cadence before AI\n        # processing so rebuilding the frames cannot change playback speed.\n        run([ffmpeg, "-y", "-i", str(cleaned), "-vf", f"fps={fps:.6f}", str(frames / "%08d.png")])',
+              'CFR frame extraction')
+          s = rep(s,
+              '        model = realesrgan_model(content)\n        cmd = [realesrgan, "-i", str(frames), "-o", str(up), "-n", model, "-s", str(scale), "-f", "png"]\n        # TTA improves detail but is much slower; reserve it for Max.\n        if tier == "max":\n            cmd.append("-x")\n        run(cmd)',
+              '        model = realesrgan_model(content)\n        exe_dir = Path(realesrgan).resolve().parent\n        model_dir = exe_dir / "models"\n        if not model_dir.exists():\n            raise RuntimeError(f"Real-ESRGAN models folder was not found next to the executable: {model_dir}")\n        cmd = [realesrgan, "-i", str(frames), "-o", str(up), "-m", str(model_dir), "-n", model, "-s", str(scale), "-j", "2:2:2", "-f", "png"]\n        # TTA can make short clips take many times longer. Keep Max practical by\n        # enabling TTA only when the creator explicitly opts in via env var.\n        if tier == "max" and os.environ.get("LOCAL_AI_TTA", "0") == "1":\n            cmd.append("-x")\n        run(cmd, cwd=exe_dir)',
+              'Real-ESRGAN models/cwd')
+          s = rep(s,
+              '        self.send_header("Access-Control-Allow-Headers", "Content-Type, X-Filename")\n        self.send_header("Access-Control-Expose-Headers", "X-Enhancer-Engine")',
+              '        self.send_header("Access-Control-Allow-Headers", "Content-Type, X-Filename")\n        # Chrome/Edge require this for an HTTPS site to talk to a localhost\n        # helper after the user grants Local Network Access.\n        self.send_header("Access-Control-Allow-Private-Network", "true")\n        self.send_header("Access-Control-Expose-Headers", "X-Enhancer-Engine, X-Processing-Seconds")',
+              'private network CORS')
+          p.write_text(s, encoding='utf-8')
+
+          p = Path('local_ai_bridge.js')
+          s = p.read_text(encoding='utf-8')
+          old = '''      const neural = !!d.realesrgan;
+                const msg = neural
+                  ? `✓ Local AI ready · Real-ESRGAN GPU engine found${d.ffmpeg ? " · FFmpeg ready" : ""}`
+                  : `Local helper connected, but Real-ESRGAN was not found. Enhancement will use the FFmpeg fallback until the free GPU engine is installed.`;
+                setStatus(msg, neural ? "good" : "");
+                return d;'''.replace('              ', '')
+          new = '''      const neural = !!d.realesrgan;
+                if (!d.ffmpeg || !d.ffprobe) {
+                  setStatus("Local helper is connected, but FFmpeg/ffprobe is missing. Run START_LOCAL_AI.bat again after installing FFmpeg.", "bad");
+                } else if (neural) {
+                  setStatus("✓ Local AI ready · Real-ESRGAN GPU engine found · FFmpeg ready", "good");
+                } else {
+                  setStatus("Local helper connected · FFmpeg ready · Real-ESRGAN not found, so only the non-AI fallback is available.");
+                }
+                return d;'''.replace('              ', '')
+          s = rep(s, old, new, 'Local AI diagnostics')
+          s = rep(s,
+              '    setStatus(`${s.tier === "max" ? "Local AI Max" : "Local AI Pro"} is processing on your PC… keep this tab open.`);',
+              '    setStatus(`${s.tier === "max" ? "Local AI Max" : "Local AI Pro"} is processing on your PC… Real-ESRGAN can take several minutes for 2×/4× clips. Keep this tab and the START_LOCAL_AI window open.`);',
+              'processing status text')
+          p.write_text(s, encoding='utf-8')
+
+      - name: Verify syntax
+        shell: bash
+        run: |
+          node --check app.js
+          node --check local_ai_bridge.js
+          python -m py_compile local_ai_server.py
+          grep -q 'Access-Control-Allow-Private-Network' local_ai_server.py
+          grep -q 'recorderElapsedUs' app.js
+          grep -q 'model_dir = exe_dir / "models"' local_ai_server.py
+
+      - name: Commit fixes
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app.js local_ai_server.py local_ai_bridge.js
+          git rm .github/workflows/fix-export-local-ai.yml
+          git commit -m "Fix high-resolution export sync and Local AI runtime"
+          git push
