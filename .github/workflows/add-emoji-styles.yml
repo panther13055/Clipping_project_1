@@ -1,0 +1,31 @@
+name: Add emoji picker styles
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/scripts/add_emoji_styles.py'
+      - '.github/workflows/add-emoji-styles.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply emoji style upgrade
+        run: python .github/scripts/add_emoji_styles.py
+      - name: Syntax check
+        run: node --check app.js
+      - name: Commit upgrade
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app.js style.css
+          git commit -m "Add Native Twemoji Noto emoji picker styles" || exit 0
+          git push
