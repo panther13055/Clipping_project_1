@@ -160,6 +160,28 @@
       <div class="panel-body">
         <div id="title-colors" class="title-colors"></div>
 
+        <div class="tool-card" id="video-layout-card">
+          <div class="tool-card-title">Layout &amp; video position</div>
+          <div class="row compact-row">
+            <label class="mini-field">Layout
+              <select id="inp-layout-mode">
+                <option value="classic" selected>Classic center video</option>
+                <option value="bottom">Ranks on top · video at bottom</option>
+                <option value="custom">Custom draggable video</option>
+              </select>
+            </label>
+            <button class="btn btn-primary btn-small" id="btn-video-bottom" type="button">↓ Move video to bottom</button>
+            <button class="btn btn-ghost btn-small" id="btn-video-reset" type="button">Reset video</button>
+          </div>
+          <div class="row compact-row" style="margin-top:8px">
+            <label class="mini-field">X <input type="number" id="inp-video-x" min="0" max="1080" step="1"></label>
+            <label class="mini-field">Y <input type="number" id="inp-video-y" min="0" max="1920" step="1"></label>
+            <label class="mini-field">Width <input type="number" id="inp-video-w" min="240" max="1080" step="1"></label>
+            <label class="mini-field">Height <input type="number" id="inp-video-h" min="240" max="1920" step="1"></label>
+          </div>
+          <p class="hint" style="margin:8px 0 0">Choose <b>Ranks on top · video at bottom</b>, then drag the sharp video directly on the preview. Drag the yellow bottom-right handle to resize it. The blurred copy stays behind the title/ranks.</p>
+        </div>
+
         <div class="tool-card">
           <div class="tool-card-title">Title text style</div>
           <div class="row compact-row">

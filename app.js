@@ -115,6 +115,8 @@
     topic: "",           // keywords from the USER'S title; drives stock search when set
     numRanks: 6,
     noRankMode: false,
+    layoutMode: "classic",
+    videoRect: { x: 0, y: 900, w: 1080, h: 900 },
     titleColor: "#ffffff",
     accentColor: NAMED.red,
     titleStyle: "viral",
@@ -269,6 +271,33 @@
   }
   const fontFor = (size, family = "system") => `900 ${size}px ${fontFamilyFor(family)}`;
 
+  function defaultVideoRect(mode = state.layoutMode || "classic") {
+    if (mode === "bottom") return { x: 0, y: 900, w: 1080, h: 900 };
+    if (mode === "custom") return { x: 60, y: 760, w: 960, h: 960 };
+    return { x: VID.x1, y: VID.y1, w: VID.x2 - VID.x1, h: VID.y2 - VID.y1 };
+  }
+  function normalizeVideoRect(rect) {
+    const base = defaultVideoRect(state.layoutMode);
+    const r = Object.assign({}, base, rect || {});
+    r.w = clamp(Number(r.w) || base.w, 240, W);
+    r.h = clamp(Number(r.h) || base.h, 240, H);
+    r.x = clamp(Number(r.x) || 0, 0, W - r.w);
+    r.y = clamp(Number(r.y) || 0, 0, H - r.h);
+    return r;
+  }
+  function layoutMetrics() {
+    const mode = state.layoutMode || "classic";
+    if (mode === "classic") return { vid: VID, title: TITLE_BOX, list: LIST_BOX };
+    const r = normalizeVideoRect(state.videoRect);
+    state.videoRect = { ...r };
+    const vid = { x1:r.x, y1:r.y, x2:r.x+r.w, y2:r.y+r.h };
+    return {
+      vid,
+      title: { x1:60, x2:W-60, y1:80, y2:270 },
+      list: { x1:60, x2:SAFE.x2, y1:300, y2:Math.max(520, Math.min(r.y - 45, 900)) },
+    };
+  }
+
   function titleStyleSpec(size) {
     const mode = state.titleStyle || "viral";
     if (mode === "impact") return { family:"impact", strokeW:Math.max(4,size*0.14), stroke:"#000000", shadowBlur:3, shadowY:4 };
@@ -298,13 +327,14 @@
 
   function drawTitle(c) {
     const words = titleWords();
-    const boxW = TITLE_BOX.x2 - TITLE_BOX.x1;
+    const TB = layoutMetrics().title;
+    const boxW = TB.x2 - TB.x1;
     let size = Math.round(92 * state.titleScale);
 
     // shrink-to-fit: the longest single word (plus its stroke bleed) must fit
     // the safe-box width, and the wrapped block must fit a height budget so a
     // long title can't push the rank list (or itself) out of the safe zone.
-    const heightBudget = TITLE_BOX.y2 - TITLE_BOX.y1;
+    const heightBudget = TB.y2 - TB.y1;
     let strokeW, lines;
     for (;;) {
       strokeW = titleStyleSpec(size).strokeW;
@@ -336,12 +366,12 @@
 
     // bottom-align the wrapped block inside the top bar (just above the video)
     const blockH = strokeW + size * 0.78 + (lines.length - 1) * size * 1.12 + size * 0.25;
-    const topY = TITLE_BOX.y2 - blockH;
+    const topY = TB.y2 - blockH;
     c.save();
     c.translate(off.dx, off.dy);
     let y = topY + strokeW / 2 + size * 0.78;
     for (const ln of lines) {
-      let x = TITLE_BOX.x1 + (boxW - ln.w) / 2; // centered within the title box
+      let x = TB.x1 + (boxW - ln.w) / 2; // centered within the title box
       for (const w of ln.words) {
         drawStyledTitleWord(c, w.text, x, y, size, effectiveTitleWordColor(w));
         x += c.measureText(w.text).width + space;
@@ -352,7 +382,7 @@
     const maxLineW = Math.max(0, ...lines.map((l) => l.w));
     hitBoxes.push({
       id: "title",
-      x: TITLE_BOX.x1 + (boxW - maxLineW) / 2 - strokeW / 2 + off.dx,
+      x: TB.x1 + (boxW - maxLineW) / 2 - strokeW / 2 + off.dx,
       y: topY + off.dy,
       w: maxLineW + strokeW,
       h: blockH,
@@ -370,7 +400,8 @@
   function drawRanks(c, revealed) {
     if (state.noRankMode) return;
     const n = state.numRanks;
-    const top = LIST_BOX.y1, bottom = LIST_BOX.y2;
+    const LB = layoutMetrics().list;
+    const top = LB.y1, bottom = LB.y2;
 
     // base size from the side-size slider, shrunk so all rows fit the band
     let size = Math.round(78 * state.sideScale);
@@ -392,7 +423,7 @@
       const rs = size * (r.sizeScale || 1);
       const font = fontFor(rs);
       const strokeW = Math.max(4, rs * 0.16);
-      const x = LIST_BOX.x1 + strokeW / 2;      // stroke bleed stays right of x=60
+      const x = LB.x1 + strokeW / 2;      // stroke bleed stays right of x=60
       c.save();
       c.translate(dx, dy);
       strokedText(c, pos + ".", x, y, font, toHex(r.color), strokeW, "left");
@@ -403,7 +434,7 @@
         const label = r.label.trim();
         if (label) {
           const lx = x + numW + rs * 0.3;
-          const maxW = LIST_BOX.x2 - strokeW / 2 - lx; // right clamp at x=888
+          const maxW = LB.x2 - strokeW / 2 - lx; // right clamp at x=888
           if (maxW > 24) {
             // auto-shrink a long label so it fits the width on its own; only
             // ellipsize if it's still too long at the smallest readable size
@@ -510,10 +541,10 @@
   // *contained* — shown whole as a centered strip, with the blurred background
   // filling above/below (the "blur fill" look). TALL/portrait clips *cover* the
   // band (fill it, minimal crop) since they already fit the vertical frame.
-  function drawVideoCover(c, video, crop) {
+  function drawVideoCover(c, video, crop, target = VID) {
     const vw = video.videoWidth, vh = video.videoHeight;
     if (!vw || !vh) return;
-    const bw = VID.x2 - VID.x1, bh = VID.y2 - VID.y1;
+    const bw = target.x2 - target.x1, bh = target.y2 - target.y1;
     const mode = (crop && crop.mode) || (((vw / vh) > (bw / bh)) ? "fit" : "fill");
     const base = mode === "fit" ? Math.min(bw / vw, bh / vh) : Math.max(bw / vw, bh / vh);
     const zoom = clamp((crop && Number(crop.zoom)) || 1, 1, 3);
@@ -523,7 +554,7 @@
     let oy = (bh - dh) / 2 + ((crop && Number(crop.y)) || 0);
     if (dw >= bw) ox = clamp(ox, bw - dw, 0); else ox = (bw - dw) / 2;
     if (dh >= bh) oy = clamp(oy, bh - dh, 0); else oy = (bh - dh) / 2;
-    c.drawImage(video, VID.x1 + ox, VID.y1 + oy, dw, dh);
+    c.drawImage(video, target.x1 + ox, target.y1 + oy, dw, dh);
   }
 
   // "Blur fill": fill the WHOLE 1080×1920 frame with a zoomed, blurred copy of
@@ -672,6 +703,8 @@
   function renderFrameTo(c, bg, revealed, ui, pos) {
     hitBoxes = [];
     if (pos == null) pos = editPos();
+    const LM = layoutMetrics();
+    const V = LM.vid;
     let blurReady = false;
     c.fillStyle = "#000";
     c.fillRect(0, 0, W, H);
@@ -679,7 +712,7 @@
       // procedural background: soft gradient clipped to the middle band, bars black
       c.save();
       c.beginPath();
-      c.rect(VID.x1, VID.y1, VID.x2 - VID.x1, VID.y2 - VID.y1);
+      c.rect(V.x1, V.y1, V.x2 - V.x1, V.y2 - V.y1);
       c.clip();
       drawProceduralBg(c, bg.proc, bg.t);
       c.restore();
@@ -691,14 +724,28 @@
       if (blurReady) { c.fillStyle = "rgba(0,0,0,0.22)"; c.fillRect(0, 0, W, H); }
       c.save();
       c.beginPath();
-      c.rect(VID.x1, VID.y1, VID.x2 - VID.x1, VID.y2 - VID.y1);
+      c.rect(V.x1, V.y1, V.x2 - V.x1, V.y2 - V.y1);
       c.clip();
       const clipCrop = (((state.ranks || [])[pos - 1] || {}).clip || {}).crop || null;
-      drawVideoCover(c, bg, clipCrop);
+      drawVideoCover(c, bg, clipCrop, V);
       c.restore();
     }
     // cover boxes hide part of THIS rank's footage; handles show only while editing
     drawCoverBoxes(c, blurReady, !engine.recording && !engine.running, pos);
+    if ((state.layoutMode || "classic") !== "classic") {
+      hitBoxes.push({ id:"videoRect", x:V.x1, y:V.y1, w:V.x2-V.x1, h:V.y2-V.y1 });
+      if (!engine.recording && !engine.running) {
+        const active = ui && ((ui.dragId === "videoRect") || (ui.selectedId === "videoRect"));
+        if (active) {
+          c.save();
+          c.setLineDash([12,10]); c.lineWidth=3; c.strokeStyle="rgba(91,214,255,.96)";
+          c.strokeRect(V.x1,V.y1,V.x2-V.x1,V.y2-V.y1);
+          c.setLineDash([]); c.fillStyle="rgba(245,197,24,.98)";
+          c.fillRect(V.x2-BOX_GRIP,V.y2-BOX_GRIP,BOX_GRIP,BOX_GRIP);
+          c.restore();
+        }
+      }
+    }
     drawTitle(c);
     drawRanks(c, revealed);
     drawFreeTexts(c);
@@ -708,7 +755,7 @@
     if (ui && (ui.dragId || ui.selectedId)) {
       c.save();
       const activeId = ui.dragId || ui.selectedId;
-      const guide = activeId === "title" ? TITLE_BOX : (activeId && activeId.startsWith("free:") ? SAFE : LIST_BOX);
+      const guide = activeId === "title" ? LM.title : (activeId === "videoRect" ? {x1:0,y1:0,x2:W,y2:H} : (activeId && activeId.startsWith("free:") ? SAFE : LM.list));
       if (ui.dragId) {
         c.setLineDash([18, 14]);
         c.lineWidth = 4;
@@ -720,8 +767,8 @@
       c.lineWidth = 2;
       c.strokeStyle = "rgba(255,255,255,.35)";
       c.beginPath();
-      c.moveTo(0, VID.y1); c.lineTo(W, VID.y1);
-      c.moveTo(0, VID.y2); c.lineTo(W, VID.y2);
+      c.moveTo(0, V.y1); c.lineTo(W, V.y1);
+      c.moveTo(0, V.y2); c.lineTo(W, V.y2);
       c.stroke();
       if (ui.guides && ui.guides.length) {
         c.setLineDash([8, 10]); c.lineWidth = 3; c.strokeStyle = "rgba(91,214,255,.95)";
@@ -1293,7 +1340,7 @@
         savedAt: new Date().toISOString(),
         state: {
           title: state.title, titleFromUser: state.titleFromUser, accent: state.accent,
-          niche: state.niche, topic: state.topic, numRanks: state.numRanks, noRankMode: !!state.noRankMode,
+          niche: state.niche, topic: state.topic, numRanks: state.numRanks, noRankMode: !!state.noRankMode, layoutMode: state.layoutMode || "classic", videoRect: { ...(state.videoRect || defaultVideoRect()) },
           titleColor: state.titleColor, accentColor: state.accentColor,
           titleStyle: state.titleStyle, titleWordColors: { ...(state.titleWordColors || {}) },
           titleScale: state.titleScale, sideScale: state.sideScale, groupMove: state.groupMove,
@@ -1365,6 +1412,8 @@
       state.accent = s.accent || ""; state.niche = s.niche || ""; state.topic = s.topic || "";
       state.numRanks = s.numRanks || (s.ranks ? s.ranks.length : 6);
       state.noRankMode = !!s.noRankMode;
+      state.layoutMode = s.layoutMode || "classic";
+      state.videoRect = normalizeVideoRect(s.videoRect || defaultVideoRect(state.layoutMode));
       state.titleColor = s.titleColor || "#ffffff"; state.accentColor = s.accentColor || NAMED.red;
       state.titleStyle = s.titleStyle || "viral"; state.titleWordColors = { ...(s.titleWordColors || {}) };
       state.titleScale = s.titleScale || 1; state.sideScale = s.sideScale || 1;
@@ -2774,7 +2823,7 @@
   function snapshot() {
     return {
       title: state.title, titleFromUser: state.titleFromUser, accent: state.accent, niche: state.niche, topic: state.topic,
-      numRanks: state.numRanks, noRankMode: !!state.noRankMode, titleColor: state.titleColor, accentColor: state.accentColor,
+      numRanks: state.numRanks, noRankMode: !!state.noRankMode, layoutMode: state.layoutMode || "classic", videoRect: { ...(state.videoRect || defaultVideoRect()) }, titleColor: state.titleColor, accentColor: state.accentColor,
       titleStyle: state.titleStyle, titleWordColors: { ...(state.titleWordColors || {}) },
       titleScale: state.titleScale, sideScale: state.sideScale, groupMove: state.groupMove,
       ranks: state.ranks.map((r) => ({
@@ -2822,7 +2871,7 @@
   function applySnapshot(s) {
     restoring = true;
     state.title = s.title; state.titleFromUser = s.titleFromUser; state.accent = s.accent; state.niche = s.niche; state.topic = s.topic;
-    state.numRanks = s.numRanks; state.noRankMode = !!s.noRankMode; state.titleColor = s.titleColor; state.accentColor = s.accentColor;
+    state.numRanks = s.numRanks; state.noRankMode = !!s.noRankMode; state.layoutMode = s.layoutMode || "classic"; state.videoRect = normalizeVideoRect(s.videoRect || defaultVideoRect(state.layoutMode)); state.titleColor = s.titleColor; state.accentColor = s.accentColor;
     state.titleStyle = s.titleStyle || "viral"; state.titleWordColors = { ...(s.titleWordColors || {}) };
     state.titleScale = s.titleScale; state.sideScale = s.sideScale; state.groupMove = s.groupMove;
     state.ranks = s.ranks.map((r) => {
@@ -2878,6 +2927,9 @@
     $("val-side-size").textContent = Math.round(state.sideScale * 100) + "%";
     const gm = $("inp-group-move"); if (gm) gm.checked = state.groupMove;
     const ts = $("inp-title-style"); if (ts) ts.value = state.titleStyle || "viral";
+    const lm = $("inp-layout-mode"); if (lm) lm.value = state.layoutMode || "classic";
+    const vr = normalizeVideoRect(state.videoRect || defaultVideoRect(state.layoutMode));
+    [["inp-video-x",vr.x],["inp-video-y",vr.y],["inp-video-w",vr.w],["inp-video-h",vr.h]].forEach(([id,v]) => { const el=$(id); if(el) el.value=Math.round(v); });
     rebuildTitleColors();
     rebuildTitleWordColors();
   }
@@ -2960,6 +3012,21 @@
     $("val-side-size").textContent = e.target.value + "%";
     scheduleCommit(); scheduleStatic();
   });
+  const layoutSel = $("inp-layout-mode");
+  if (layoutSel) layoutSel.addEventListener("change", (e) => {
+    state.layoutMode = e.target.value || "classic";
+    if (state.layoutMode !== "classic") state.videoRect = defaultVideoRect(state.layoutMode);
+    syncInputsFromState(); scheduleCommit(); scheduleStatic();
+  });
+  function syncVideoRectFromFields() {
+    const ids=["inp-video-x","inp-video-y","inp-video-w","inp-video-h"];
+    if (ids.some(id => !$(id))) return;
+    state.videoRect = normalizeVideoRect({x:Number($(ids[0]).value),y:Number($(ids[1]).value),w:Number($(ids[2]).value),h:Number($(ids[3]).value)});
+    syncInputsFromState(); scheduleCommit(); scheduleStatic();
+  }
+  ["inp-video-x","inp-video-y","inp-video-w","inp-video-h"].forEach(id => { const el=$(id); if(el) el.addEventListener("change", syncVideoRectFromFields); });
+  const vb=$("btn-video-bottom"); if(vb) vb.addEventListener("click",()=>{ state.layoutMode="bottom"; state.videoRect={x:0,y:900,w:1080,h:900}; syncInputsFromState(); commitHistory(); renderStatic(); });
+  const vrst=$("btn-video-reset"); if(vrst) vrst.addEventListener("click",()=>{ state.videoRect=defaultVideoRect(state.layoutMode); syncInputsFromState(); commitHistory(); renderStatic(); });
   $("btn-create").addEventListener("click", () => {
     document.body.classList.remove("setup-mode");
     renderRanksUI(); renderOrderUI(); renderStatic();
@@ -3005,6 +3072,8 @@
   });
   $("btn-reset-layout").addEventListener("click", () => {
     state.layout = { title: null, ranks: {}, ranksGroup: null };
+    state.videoRect = defaultVideoRect(state.layoutMode);
+    syncInputsFromState();
     scheduleCommit();
     renderStatic(); updateSelectionControls();
   });
@@ -3034,7 +3103,7 @@
     const rect = canvas.getBoundingClientRect();
     return { x: (e.clientX - rect.left) * (W / rect.width), y: (e.clientY - rect.top) * (H / rect.height) };
   }
-  const isTextId = (id) => id === "title" || id === "watermark" || id === "ranksGroup" || id.startsWith("rank") || id.startsWith("free:");
+  const isTextId = (id) => id === "title" || id === "watermark" || id === "ranksGroup" || id === "videoRect" || id.startsWith("rank") || id.startsWith("free:");
   const freeTextById = (id) => state.freeTexts.find((t) => "free:" + t.id === id) || null;
   function isLocked(id) {
     if (id === "title") return !!(state.locks && state.locks.title);
@@ -3044,7 +3113,7 @@
     return false;
   }
   function hitTest(p) {
-    const pri = (b) => (b.id.startsWith("free:") ? 0 : b.id.indexOf("rank") === 0 ? 1 : b.id === "title" ? 2 : 3);
+    const pri = (b) => (b.id.startsWith("free:") ? 0 : b.id.indexOf("rank") === 0 ? 1 : b.id === "title" ? 2 : b.id === "videoRect" ? 4 : 3);
     const ordered = [...hitBoxes].sort((a, b) => pri(a) - pri(b));
     return ordered.find((b) => {
       const pad = isTextId(b.id) ? 28 : 0; // generous text hit area
@@ -3068,13 +3137,15 @@
   function updateSelectionControls() {
     const id = selectedTextId, hb = id ? boxForDrag(id) : null;
     const xInp = $("inp-pos-x"), yInp = $("inp-pos-y"), reset = $("btn-reset-selected"), selLock = $("inp-selected-lock");
+    const vx=$("inp-video-x"), vy=$("inp-video-y"), vw=$("inp-video-w"), vh=$("inp-video-h");
     const free = id && id.startsWith("free:") ? freeTextById(id) : null;
     const ft = $("inp-free-text"), fc = $("inp-free-color"), fs = $("inp-free-size"), fo = $("inp-free-opacity"), ff = $("inp-free-font"), fl = $("inp-free-lock"), del = $("btn-delete-text");
     const has = !!(id && hb && isTextId(id) && id !== "ranksGroup");
     if (xInp) { xInp.disabled = !has; xInp.value = has ? Math.round(hb.x) : ""; }
     if (yInp) { yInp.disabled = !has; yInp.value = has ? Math.round(hb.y) : ""; }
     if (reset) reset.disabled = !has;
-    if (selLock) { selLock.disabled = !has; selLock.checked = has ? isLocked(id) : false; }
+    if (selLock) { selLock.disabled = !has || id === "videoRect"; selLock.checked = has && id !== "videoRect" ? isLocked(id) : false; }
+    if (vx&&vy&&vw&&vh) { const r=normalizeVideoRect(state.videoRect); vx.value=Math.round(r.x); vy.value=Math.round(r.y); vw.value=Math.round(r.w); vh.value=Math.round(r.h); }
     for (const el of [ft, fc, fs, fo, ff, fl, del]) if (el) el.disabled = !free;
     if (free) {
       ft.value = free.text; fc.value = toHex(free.color); fs.value = Math.round(free.size); if (fo) fo.value = Math.round((free.opacity || 1) * 100); if (ff) ff.value = free.fontFamily || "system"; fl.checked = !!free.locked;
@@ -3100,6 +3171,8 @@
     if (id === "watermark") {
       state.watermark.x = clamp((state.watermark.x || (W - 180)) + dx, 0, W);
       state.watermark.y = clamp((state.watermark.y || (H - 120)) + dy, 0, H);
+    } else if (id === "videoRect") {
+      const r=normalizeVideoRect(state.videoRect); r.x=clamp(r.x+dx,0,W-r.w); r.y=clamp(r.y+dy,0,H-r.h); state.videoRect=r;
     } else if (id.startsWith("free:")) {
       const t = freeTextById(id); if (!t) return;
       t.x = clamp(t.x + dx, 0, W); t.y = clamp(t.y + dy, 0, H);
@@ -3141,9 +3214,10 @@
     const p = canvasPoint(e), hb = hitTest(p);
     if (!hb) { if (!engine.running) selectText(null); return; }
     e.preventDefault();
-    if (hb.id.indexOf("box") === 0) {
+    if (hb.id.indexOf("box") === 0 || hb.id === "videoRect") {
       if (engine.running) return;
-      const bx = rankBoxes(editPos()).find((b) => b.id === hb.id); if (!bx) return;
+      if (hb.id === "videoRect") selectText("videoRect");
+      const bx = hb.id === "videoRect" ? (state.videoRect || (state.videoRect=defaultVideoRect(state.layoutMode))) : rankBoxes(editPos()).find((b) => b.id === hb.id); if (!bx) return;
       const resize = onBoxGrip(p, hb);
       drag = { id: hb.id, box: bx, mode: resize ? "resize" : "move", startX:p.x, startY:p.y, ox:bx.x, oy:bx.y, ow:bx.w, oh:bx.h };
       try { canvas.setPointerCapture(e.pointerId); } catch (_) {}
@@ -3165,9 +3239,15 @@
     const p = canvasPoint(e);
     if (drag && drag.box) {
       const dx = p.x-drag.startX, dy=p.y-drag.startY;
-      if (drag.mode === "resize") { drag.box.w=Math.max(24,drag.ow+dx); drag.box.h=Math.max(24,drag.oh+dy); }
-      else { drag.box.x=drag.ox+dx; drag.box.y=drag.oy+dy; }
-      renderStatic();
+      if (drag.id === "videoRect") {
+        if (drag.mode === "resize") { drag.box.w=Math.max(240,drag.ow+dx); drag.box.h=Math.max(240,drag.oh+dy); }
+        else { drag.box.x=drag.ox+dx; drag.box.y=drag.oy+dy; }
+        state.videoRect=normalizeVideoRect(drag.box);
+      } else {
+        if (drag.mode === "resize") { drag.box.w=Math.max(24,drag.ow+dx); drag.box.h=Math.max(24,drag.oh+dy); }
+        else { drag.box.x=drag.ox+dx; drag.box.y=drag.oy+dy; }
+      }
+      renderStatic(); updateSelectionControls();
     } else if (drag) {
       let d = snappedDelta(drag.id, drag.initialBox, p.x-drag.startX, p.y-drag.startY);
       if (drag.id === "watermark") {
@@ -3179,7 +3259,7 @@
       renderStatic(); updateSelectionControls();
     } else if (!engine.running) {
       const hb=hitTest(p);
-      canvas.style.cursor = hb ? (hb.id.indexOf("box")===0 && onBoxGrip(p,hb) ? "nwse-resize" : isLocked(hb.id) ? "not-allowed" : "grab") : "default";
+      canvas.style.cursor = hb ? (((hb.id.indexOf("box")===0 || hb.id === "videoRect") && onBoxGrip(p,hb)) ? "nwse-resize" : isLocked(hb.id) ? "not-allowed" : "grab") : "default";
     }
   });
   const endDrag = (e) => {
@@ -3222,6 +3302,7 @@
     const id=selectedTextId; if(!id) return;
     if(id==="title") state.layout.title=null;
     else if(id==="watermark") { state.watermark.x=W-180; state.watermark.y=H-120; }
+    else if(id==="videoRect") { state.videoRect=defaultVideoRect(state.layoutMode); }
     else if(id.startsWith("rank")) delete state.layout.ranks[Number(id.slice(4))];
     else if(id.startsWith("free:")){const t=freeTextById(id);if(t){t.x=W/2;t.y=H/2;}}
     commitHistory();renderStatic();updateSelectionControls();
