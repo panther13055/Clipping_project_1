@@ -548,3 +548,20 @@ input:focus, select:focus { border-color:#5bd6ff; box-shadow:0 0 0 3px rgba(91,2
 .premium-rank-preview { display:flex; align-items:center; gap:14px; margin-top:10px; padding:10px 12px; border:1px solid var(--panel-edge); border-radius:10px; background:#03060c; overflow:auto; }
 .premium-rank-preview.is-off { opacity:.48; }
 .premium-rank-sample { --premium-accent:#4f5dff; color:#fff; font:900 30px/1 -apple-system,"Segoe UI",Arial,sans-serif; letter-spacing:-1px; -webkit-text-stroke:3px var(--premium-accent); paint-order:stroke fill; filter:drop-shadow(0 0 1px #000) drop-shadow(1px 2px 0 #000) drop-shadow(-1px -1px 0 #000); min-width:34px; }
+
+
+/* ---- premium custom per-rank colors ---- */
+.premium-custom-editor { margin-top:10px; padding:11px; border:1px solid rgba(91,214,255,.23); border-radius:10px; background:rgba(3,7,14,.45); }
+.premium-custom-heading { font-size:12px; font-weight:900; letter-spacing:.45px; text-transform:uppercase; color:#8be9ff; }
+.premium-rank-targets { display:flex; gap:7px; flex-wrap:wrap; margin-bottom:10px; }
+.premium-rank-target { --rank-ring:#4f5dff; min-width:42px; height:38px; padding:0 8px; border-radius:9px; cursor:pointer; background:#05070d; color:#fff; font:900 18px/1 -apple-system,"Segoe UI",Arial,sans-serif; border:2px solid var(--rank-ring); box-shadow:0 0 0 1px #000,0 0 10px color-mix(in srgb,var(--rank-ring) 25%,transparent); }
+.premium-rank-target.active { outline:2px solid #fff; outline-offset:2px; transform:translateY(-1px); }
+.premium-custom-caption { color:var(--muted); font-size:12px; margin-bottom:7px; }
+.premium-custom-swatches { display:flex; flex-wrap:wrap; gap:7px; }
+.premium-custom-swatch { width:25px; height:25px; border-radius:50%; border:2px solid rgba(255,255,255,.16); cursor:pointer; box-shadow:0 1px 4px rgba(0,0,0,.55); }
+.premium-custom-swatch:hover { transform:scale(1.12); border-color:#fff; }
+.premium-custom-swatch.selected { border-color:#fff; box-shadow:0 0 0 2px #5bd6ff,0 2px 8px rgba(0,0,0,.7); }
+.premium-custom-actions { margin-top:10px; }
+.premium-native-picker { display:flex; align-items:center; gap:8px; }
+.premium-native-picker input[type="color"], #inp-premium-center-color, #inp-premium-outer-color { width:42px; height:34px; padding:2px; border:1px solid var(--panel-edge-2); border-radius:7px; background:var(--bg2); cursor:pointer; }
+.premium-rank-sample { color:var(--premium-center,#fff); filter:drop-shadow(0 0 1px var(--premium-outer,#000)) drop-shadow(1px 2px 0 var(--premium-outer,#000)) drop-shadow(-1px -1px 0 var(--premium-outer,#000)); }

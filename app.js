@@ -142,6 +142,9 @@
     rankNumberStyle: "standard",
     rankPremiumPalette: "reference",
     rankPremiumStrength: 100,
+    rankPremiumCustomColors: ["#4f5dff","#e6495f","#dfe5ff","#f5c518","#22c55e","#a855f7","#06b6d4","#ff8c00","#ff2e93","#ffffff"],
+    rankPremiumCenterColor: "#ffffff",
+    rankPremiumOuterColor: "#050505",
     titleScale: 1,
     sideScale: 1,
     // ranks[i] => rank position i+1
@@ -429,8 +432,13 @@
   };
   function premiumRankColor(pos) {
     const key = state.rankPremiumPalette || "reference";
+    const idx = Math.max(1, pos) - 1;
+    if (key === "custom") {
+      const custom = state.rankPremiumCustomColors || [];
+      return custom[idx] || PREMIUM_RANK_PALETTES.reference[idx % PREMIUM_RANK_PALETTES.reference.length];
+    }
     const pal = PREMIUM_RANK_PALETTES[key] || PREMIUM_RANK_PALETTES.reference;
-    return pal[(Math.max(1, pos) - 1) % pal.length];
+    return pal[idx % pal.length];
   }
   function drawPremiumRankNumber(c, text, x, y, font, size, pos, fallbackFill) {
     if ((state.rankNumberStyle || "standard") !== "premium") {
@@ -446,12 +454,12 @@
     c.lineJoin = "round"; c.miterLimit = 2;
     c.shadowColor = "rgba(0,0,0,.45)"; c.shadowBlur = Math.max(2, size * 0.035); c.shadowOffsetY = Math.max(1, size * 0.02);
     // Black outside border.
-    c.strokeStyle = "#050505"; c.lineWidth = outer; c.strokeText(text, x, y);
+    c.strokeStyle = state.rankPremiumOuterColor || "#050505"; c.lineWidth = outer; c.strokeText(text, x, y);
     // Coloured premium ring.
     c.shadowColor = "transparent";
     c.strokeStyle = accent; c.lineWidth = inner; c.strokeText(text, x, y);
     // Crisp white centre, as in the user's reference image.
-    c.fillStyle = "#ffffff"; c.fillText(text, x, y);
+    c.fillStyle = state.rankPremiumCenterColor || "#ffffff"; c.fillText(text, x, y);
     c.restore();
   }
 
@@ -1705,8 +1713,8 @@
           niche: state.niche, topic: state.topic, numRanks: state.numRanks, noRankMode: !!state.noRankMode, layoutMode: state.layoutMode || "classic", videoRect: { ...(state.videoRect || defaultVideoRect()) },
           titleColor: state.titleColor, accentColor: state.accentColor,
           titleStyle: state.titleStyle, titleWordColors: { ...(state.titleWordColors || {}) },
-          rankNumberStyle: state.rankNumberStyle || "standard", rankPremiumPalette: state.rankPremiumPalette || "reference", rankPremiumStrength: state.rankPremiumStrength || 100,
-      rankNumberStyle: state.rankNumberStyle || "standard", rankPremiumPalette: state.rankPremiumPalette || "reference", rankPremiumStrength: state.rankPremiumStrength || 100,
+          rankNumberStyle: state.rankNumberStyle || "standard", rankPremiumPalette: state.rankPremiumPalette || "reference", rankPremiumStrength: state.rankPremiumStrength || 100, rankPremiumCustomColors: (state.rankPremiumCustomColors || []).slice(), rankPremiumCenterColor: state.rankPremiumCenterColor || "#ffffff", rankPremiumOuterColor: state.rankPremiumOuterColor || "#050505",
+      rankNumberStyle: state.rankNumberStyle || "standard", rankPremiumPalette: state.rankPremiumPalette || "reference", rankPremiumStrength: state.rankPremiumStrength || 100, rankPremiumCustomColors: (state.rankPremiumCustomColors || []).slice(), rankPremiumCenterColor: state.rankPremiumCenterColor || "#ffffff", rankPremiumOuterColor: state.rankPremiumOuterColor || "#050505",
           titleScale: state.titleScale, sideScale: state.sideScale, groupMove: state.groupMove,
           editRank: state.editRank, order: state.order.slice(),
           layout: JSON.parse(JSON.stringify(state.layout)),
@@ -1800,8 +1808,8 @@
       state.videoRect = normalizeVideoRect(s.videoRect || defaultVideoRect(state.layoutMode));
       state.titleColor = s.titleColor || "#ffffff"; state.accentColor = s.accentColor || NAMED.red;
       state.titleStyle = s.titleStyle || "viral"; state.titleWordColors = { ...(s.titleWordColors || {}) };
-      state.rankNumberStyle = s.rankNumberStyle || "standard"; state.rankPremiumPalette = s.rankPremiumPalette || "reference"; state.rankPremiumStrength = Number(s.rankPremiumStrength) || 100;
-    state.rankNumberStyle = s.rankNumberStyle || "standard"; state.rankPremiumPalette = s.rankPremiumPalette || "reference"; state.rankPremiumStrength = Number(s.rankPremiumStrength) || 100;
+      state.rankNumberStyle = s.rankNumberStyle || "standard"; state.rankPremiumPalette = s.rankPremiumPalette || "reference"; state.rankPremiumStrength = Number(s.rankPremiumStrength) || 100; state.rankPremiumCustomColors = (s.rankPremiumCustomColors || ["#4f5dff","#e6495f","#dfe5ff","#f5c518","#22c55e","#a855f7","#06b6d4","#ff8c00","#ff2e93","#ffffff"]).slice(); state.rankPremiumCenterColor = s.rankPremiumCenterColor || "#ffffff"; state.rankPremiumOuterColor = s.rankPremiumOuterColor || "#050505";
+    state.rankNumberStyle = s.rankNumberStyle || "standard"; state.rankPremiumPalette = s.rankPremiumPalette || "reference"; state.rankPremiumStrength = Number(s.rankPremiumStrength) || 100; state.rankPremiumCustomColors = (s.rankPremiumCustomColors || ["#4f5dff","#e6495f","#dfe5ff","#f5c518","#22c55e","#a855f7","#06b6d4","#ff8c00","#ff2e93","#ffffff"]).slice(); state.rankPremiumCenterColor = s.rankPremiumCenterColor || "#ffffff"; state.rankPremiumOuterColor = s.rankPremiumOuterColor || "#050505";
       state.titleScale = s.titleScale || 1; state.sideScale = s.sideScale || 1;
       state.groupMove = !!s.groupMove; state.editRank = s.editRank || 1;
       state.order = (s.order && s.order.length) ? s.order.slice() : [];
@@ -3467,6 +3475,8 @@
     const pre = $("inp-premium-ranks"); if (pre) pre.checked = (state.rankNumberStyle || "standard") === "premium";
     const prp = $("inp-premium-rank-palette"); if (prp) prp.value = state.rankPremiumPalette || "reference";
     const prs = $("inp-premium-rank-strength"); if (prs) { prs.value = String(state.rankPremiumStrength || 100); const rd=$("val-premium-rank-strength"); if(rd) rd.textContent = String(state.rankPremiumStrength || 100) + "%"; }
+    const pcc=$("inp-premium-center-color"); if(pcc) pcc.value=state.rankPremiumCenterColor || "#ffffff";
+    const poc=$("inp-premium-outer-color"); if(poc) poc.value=state.rankPremiumOuterColor || "#050505";
     syncPremiumRankPreview();
     const lm = $("inp-layout-mode"); if (lm) lm.value = state.layoutMode || "classic";
     const vr = normalizeVideoRect(state.videoRect || defaultVideoRect(state.layoutMode));
@@ -3520,16 +3530,84 @@
     scheduleCommit(); scheduleStatic();
   });
   $("inp-accent").addEventListener("input", (e) => { state.accent = e.target.value; rebuildTitleWordColors(); scheduleCommit(); scheduleStatic(); });
+  let premiumCustomEditPos = 1;
+  const PREMIUM_CUSTOM_SWATCHES = [
+    "#4f5dff","#315cff","#2563eb","#38bdf8","#22d3ee","#06b6d4","#00e5ff","#67e8f9",
+    "#e6495f","#ef4444","#dc2626","#be123c","#ff2e93","#ff4fa3","#ec4899","#d946ef",
+    "#7c3aed","#8b5cf6","#a855f7","#c026d3","#39ff14","#22c55e","#10b981","#84cc16",
+    "#f5c518","#ffee32","#ffd166","#f59e0b","#ff8c00","#f97316","#fb923c","#d97706",
+    "#ffffff","#e2e8f0","#cbd5e1","#94a3b8","#64748b","#334155","#111827","#000000"
+  ];
+  function ensurePremiumCustomColors() {
+    const base = PREMIUM_RANK_PALETTES.reference;
+    const arr = (state.rankPremiumCustomColors || []).slice();
+    for (let i=0;i<Math.max(10,state.numRanks);i++) if (!arr[i]) arr[i]=base[i % base.length];
+    state.rankPremiumCustomColors = arr;
+    premiumCustomEditPos = clamp(premiumCustomEditPos,1,state.numRanks || 1);
+    return arr;
+  }
+  function rebuildPremiumCustomEditor() {
+    const host = $("premium-custom-rank-colors");
+    const box = $("premium-custom-editor");
+    if (!host || !box) return;
+    const customMode = (state.rankPremiumPalette || "reference") === "custom";
+    box.classList.toggle("hidden", !customMode);
+    const colors = ensurePremiumCustomColors();
+    host.innerHTML = "";
+
+    const targets = document.createElement("div"); targets.className = "premium-rank-targets";
+    for (let pos=1; pos<=state.numRanks; pos++) {
+      const b=document.createElement("button"); b.type="button"; b.className="premium-rank-target" + (pos===premiumCustomEditPos ? " active" : "");
+      b.textContent=pos+"."; b.style.setProperty("--rank-ring", colors[pos-1]);
+      b.title=`Edit premium color for rank ${pos}`;
+      b.addEventListener("click",()=>{ premiumCustomEditPos=pos; rebuildPremiumCustomEditor(); });
+      targets.appendChild(b);
+    }
+    host.appendChild(targets);
+
+    const title=document.createElement("div"); title.className="premium-custom-caption"; title.innerHTML=`Choose ring color for <b>Rank ${premiumCustomEditPos}</b>`; host.appendChild(title);
+    const palette=document.createElement("div"); palette.className="premium-custom-swatches";
+    PREMIUM_CUSTOM_SWATCHES.forEach((hex)=>{
+      const b=document.createElement("button"); b.type="button"; b.className="premium-custom-swatch"; b.style.background=hex; b.title=hex;
+      if (String(colors[premiumCustomEditPos-1]).toLowerCase()===hex.toLowerCase()) b.classList.add("selected");
+      b.addEventListener("click",()=>{ colors[premiumCustomEditPos-1]=hex; state.rankPremiumCustomColors=colors; syncPremiumRankPreview(); rebuildPremiumCustomEditor(); scheduleCommit(); scheduleStatic(); });
+      palette.appendChild(b);
+    });
+    host.appendChild(palette);
+
+    const row=document.createElement("div"); row.className="row compact-row premium-custom-actions";
+    const pickLabel=document.createElement("label"); pickLabel.className="mini-field premium-native-picker"; pickLabel.append("Any custom color ");
+    const pick=document.createElement("input"); pick.type="color"; pick.value=colors[premiumCustomEditPos-1] || "#4f5dff";
+    pick.addEventListener("input",()=>{ colors[premiumCustomEditPos-1]=pick.value; state.rankPremiumCustomColors=colors; syncPremiumRankPreview(); scheduleCommit(); scheduleStatic(); });
+    pickLabel.appendChild(pick); row.appendChild(pickLabel);
+    const same=document.createElement("button"); same.type="button"; same.className="btn btn-ghost btn-small"; same.textContent="Apply this color to all";
+    same.addEventListener("click",()=>{ const c=colors[premiumCustomEditPos-1]; for(let i=0;i<state.numRanks;i++) colors[i]=c; state.rankPremiumCustomColors=colors; rebuildPremiumCustomEditor(); syncPremiumRankPreview(); commitHistory(); renderStatic(); }); row.appendChild(same);
+    const rainbow=document.createElement("button"); rainbow.type="button"; rainbow.className="btn btn-ghost btn-small"; rainbow.textContent="🌈 Rainbow ranks";
+    rainbow.addEventListener("click",()=>{ const r=["#4f5dff","#e6495f","#22d3ee","#f5c518","#22c55e","#a855f7","#ff8c00","#ff2e93","#06b6d4","#ffffff"]; for(let i=0;i<state.numRanks;i++) colors[i]=r[i%r.length]; state.rankPremiumCustomColors=colors; rebuildPremiumCustomEditor(); syncPremiumRankPreview(); commitHistory(); renderStatic(); }); row.appendChild(rainbow);
+    host.appendChild(row);
+  }
   function syncPremiumRankPreview() {
     const host = $("premium-rank-preview");
     if (!host) return;
-    const pal = PREMIUM_RANK_PALETTES[state.rankPremiumPalette || "reference"] || PREMIUM_RANK_PALETTES.reference;
-    [...host.querySelectorAll(".premium-rank-sample")].forEach((el, i) => el.style.setProperty("--premium-accent", pal[i % pal.length]));
+    host.innerHTML="";
+    const max=Math.min(10,state.numRanks || 5);
+    for(let pos=1;pos<=max;pos++) {
+      const el=document.createElement("span"); el.className="premium-rank-sample"; el.textContent=pos+".";
+      el.style.setProperty("--premium-accent", premiumRankColor(pos));
+      el.style.setProperty("--premium-center", state.rankPremiumCenterColor || "#ffffff");
+      el.style.setProperty("--premium-outer", state.rankPremiumOuterColor || "#050505");
+      host.appendChild(el);
+    }
     host.classList.toggle("is-off", (state.rankNumberStyle || "standard") !== "premium");
+    const cc=$("inp-premium-center-color"); if(cc) cc.value=state.rankPremiumCenterColor || "#ffffff";
+    const oc=$("inp-premium-outer-color"); if(oc) oc.value=state.rankPremiumOuterColor || "#050505";
+    rebuildPremiumCustomEditor();
   }
   $("inp-title-style").addEventListener("change", (e) => { state.titleStyle = e.target.value || "viral"; scheduleCommit(); scheduleStatic(); });
   const premiumRanks = $("inp-premium-ranks"); if (premiumRanks) premiumRanks.addEventListener("change", (e) => { state.rankNumberStyle = e.target.checked ? "premium" : "standard"; syncPremiumRankPreview(); commitHistory(); renderStatic(); });
-  const premiumPalette = $("inp-premium-rank-palette"); if (premiumPalette) premiumPalette.addEventListener("change", (e) => { state.rankPremiumPalette = e.target.value || "reference"; syncPremiumRankPreview(); commitHistory(); renderStatic(); });
+  const premiumPalette = $("inp-premium-rank-palette"); if (premiumPalette) premiumPalette.addEventListener("change", (e) => { state.rankPremiumPalette = e.target.value || "reference"; ensurePremiumCustomColors(); syncPremiumRankPreview(); commitHistory(); renderStatic(); });
+  const premiumCenter = $("inp-premium-center-color"); if (premiumCenter) premiumCenter.addEventListener("input", (e) => { state.rankPremiumCenterColor=e.target.value || "#ffffff"; syncPremiumRankPreview(); scheduleCommit(); scheduleStatic(); });
+  const premiumOuter = $("inp-premium-outer-color"); if (premiumOuter) premiumOuter.addEventListener("input", (e) => { state.rankPremiumOuterColor=e.target.value || "#050505"; syncPremiumRankPreview(); scheduleCommit(); scheduleStatic(); });
   const premiumStrength = $("inp-premium-rank-strength"); if (premiumStrength) premiumStrength.addEventListener("input", (e) => { state.rankPremiumStrength = clamp(Number(e.target.value) || 100, 60, 170); const rd=$("val-premium-rank-strength"); if(rd) rd.textContent = Math.round(state.rankPremiumStrength) + "%"; scheduleCommit(); scheduleStatic(); });
 
   $("btn-auto-title-colors").addEventListener("click", autoColorTitleWords);
@@ -3552,6 +3630,7 @@
   $("inp-autosave-enabled").addEventListener("change", (e) => { state.features.autosave = e.target.checked; scheduleCommit(); if (state.features.autosave) scheduleAutosave(); });
   $("inp-numranks").addEventListener("change", (e) => {
     setNumRanks(parseInt(e.target.value, 10));
+    ensurePremiumCustomColors(); rebuildPremiumCustomEditor(); syncPremiumRankPreview();
     renderRanksUI(); renderOrderUI(); scheduleCommit(); scheduleStatic();
   });
   $("inp-title-size").addEventListener("input", (e) => {

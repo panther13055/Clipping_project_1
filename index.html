@@ -212,14 +212,22 @@
                 <option value="medals">Gold / Silver / Bronze</option>
                 <option value="candy">Candy pop</option>
                 <option value="fireice">Fire & Ice</option>
+                <option value="custom">Custom · choose each rank</option>
               </select>
             </label>
             <label class="mini-field" style="flex:1 1 220px">Outline strength <b id="val-premium-rank-strength">100%</b>
               <input type="range" id="inp-premium-rank-strength" min="60" max="170" value="100">
             </label>
           </div>
-          <div class="premium-rank-preview" id="premium-rank-preview" aria-label="Premium rank style preview">
-            <span class="premium-rank-sample">1.</span><span class="premium-rank-sample">2.</span><span class="premium-rank-sample">3.</span><span class="premium-rank-sample">4.</span><span class="premium-rank-sample">5.</span>
+          <div class="premium-rank-preview" id="premium-rank-preview" aria-label="Premium rank style preview"></div>
+          <div class="row compact-row" style="margin-top:10px">
+            <label class="mini-field">Centre fill <input type="color" id="inp-premium-center-color" value="#ffffff"></label>
+            <label class="mini-field">Outer edge <input type="color" id="inp-premium-outer-color" value="#050505"></label>
+          </div>
+          <div class="premium-custom-editor hidden" id="premium-custom-editor">
+            <div class="premium-custom-heading">🎨 Custom premium colors</div>
+            <p class="hint" style="margin:4px 0 8px">Pick any rank, then choose from lots of premium colors or use the custom color picker.</p>
+            <div id="premium-custom-rank-colors"></div>
           </div>
         </div>
 
