@@ -62,16 +62,24 @@
 
 
   const EXPORT_PROFILES = {
-    "1080p": { width: 1080, height: 1920, videoBitrate: 10_000_000 },
-    "720p":  { width: 720,  height: 1280, videoBitrate: 5_000_000 },
-    "480p":  { width: 480,  height: 854,  videoBitrate: 2_500_000 },
+    "4K":    { width: 2160, height: 3840, videoBitrate: 38_000_000, codec: "avc1.640033" },
+    "2K":    { width: 1440, height: 2560, videoBitrate: 20_000_000, codec: "avc1.640032" },
+    "1080p": { width: 1080, height: 1920, videoBitrate: 10_000_000, codec: "avc1.640028" },
+    "720p":  { width: 720,  height: 1280, videoBitrate: 5_000_000, codec: "avc1.64001f" },
+    "480p":  { width: 480,  height: 854,  videoBitrate: 2_500_000, codec: "avc1.4d401e" },
   };
   const exportCanvas = document.createElement("canvas");
   const exportCtx = exportCanvas.getContext("2d", { alpha: false });
   function copyEditorFrameToExportCanvas(profile) {
     if (exportCanvas.width !== profile.width || exportCanvas.height !== profile.height) {
       exportCanvas.width = profile.width; exportCanvas.height = profile.height;
+      if (typeof engine !== "undefined") engine.exportFrameReady = false;
     }
+    // During export drawFrame() renders the composition directly into the
+    // high-resolution backing canvas. This fallback is only for the initial
+    // frame before playback starts or browsers that skip a render tick.
+    if (typeof engine !== "undefined" && engine.recording && engine.exportFrameReady) return;
+    exportCtx.setTransform(1,0,0,1,0,0);
     exportCtx.imageSmoothingEnabled = true;
     exportCtx.imageSmoothingQuality = "high";
     exportCtx.clearRect(0, 0, profile.width, profile.height);
@@ -105,6 +113,8 @@
     numRanks: 6,
     titleColor: "#ffffff",
     accentColor: NAMED.red,
+    titleStyle: "viral",
+    titleWordColors: {},
     titleScale: 1,
     sideScale: 1,
     // ranks[i] => rank position i+1
@@ -242,7 +252,7 @@
         if (ok) for (let j = 0; j < accent.length; j++) flags[i + j] = true;
       }
     }
-    return words.map((w, i) => ({ text: w, red: flags[i] }));
+    return words.map((w, i) => ({ text: w, red: flags[i], index: i }));
   }
 
   function fontFamilyFor(name) {
@@ -252,6 +262,33 @@
     return '-apple-system, "Segoe UI", Arial, sans-serif';
   }
   const fontFor = (size, family = "system") => `900 ${size}px ${fontFamilyFor(family)}`;
+
+  function titleStyleSpec(size) {
+    const mode = state.titleStyle || "viral";
+    if (mode === "impact") return { family:"impact", strokeW:Math.max(4,size*0.14), stroke:"#000000", shadowBlur:3, shadowY:4 };
+    if (mode === "shadow") return { family:"system", strokeW:Math.max(3,size*0.09), stroke:"#000000", shadowBlur:16, shadowY:8 };
+    if (mode === "classic") return { family:"system", strokeW:Math.max(4,size*0.18), stroke:null, shadowBlur:0, shadowY:0 };
+    // Viral outline — close to common Shorts/TikTok ranking typography.
+    return { family:"system", strokeW:Math.max(5,size*0.14), stroke:"#000000", shadowBlur:4, shadowY:4 };
+  }
+  function drawStyledTitleWord(c, text, x, y, size, fill) {
+    const spec = titleStyleSpec(size);
+    const font = fontFor(size, spec.family);
+    c.save();
+    c.font = font; c.textAlign = "left"; c.textBaseline = "alphabetic";
+    c.lineJoin = "round"; c.miterLimit = 2;
+    c.strokeStyle = spec.stroke || strokeColorFor(fill);
+    c.lineWidth = spec.strokeW;
+    if (spec.shadowBlur) { c.shadowColor = "rgba(0,0,0,.7)"; c.shadowBlur = spec.shadowBlur; c.shadowOffsetY = spec.shadowY; }
+    c.strokeText(text, x, y);
+    c.fillStyle = fill;
+    c.fillText(text, x, y);
+    c.restore();
+  }
+  function effectiveTitleWordColor(word) {
+    const custom = state.titleWordColors && state.titleWordColors[word.index];
+    return toHex(custom || (word.red ? state.accentColor : state.titleColor));
+  }
 
   function drawTitle(c) {
     const words = titleWords();
@@ -264,8 +301,8 @@
     const heightBudget = TITLE_BOX.y2 - TITLE_BOX.y1;
     let strokeW, lines;
     for (;;) {
-      strokeW = Math.max(4, size * 0.18);
-      c.font = fontFor(size);
+      strokeW = titleStyleSpec(size).strokeW;
+      c.font = fontFor(size, titleStyleSpec(size).family);
       const widest = Math.max(0, ...words.map((w) => c.measureText(w.text).width));
       if (widest + strokeW > boxW && size > 24) { size -= 4; continue; }
 
@@ -286,7 +323,8 @@
       if (blockH <= heightBudget || size <= 24) break;
       size -= 4;
     }
-    const font = fontFor(size);
+    const font = fontFor(size, titleStyleSpec(size).family);
+    c.font = font;
     const space = c.measureText(" ").width;
     const off = state.layout.title || { dx: 0, dy: 0 };
 
@@ -299,7 +337,7 @@
     for (const ln of lines) {
       let x = TITLE_BOX.x1 + (boxW - ln.w) / 2; // centered within the title box
       for (const w of ln.words) {
-        strokedText(c, w.text, x, y, font, w.red ? toHex(state.accentColor) : toHex(state.titleColor), strokeW, "left");
+        drawStyledTitleWord(c, w.text, x, y, size, effectiveTitleWordColor(w));
         x += c.measureText(w.text).width + space;
       }
       y += size * 1.12;
@@ -624,77 +662,93 @@
   // ui (PREVIEW ONLY — export never passes it): { dragId } shows the
   // safe-zone rectangle and highlights the dragged element red when it
   // leaves the safe zone (warn, don't block — user placement wins).
-  function drawFrame(bg, revealed, ui, pos) {
+  function renderFrameTo(c, bg, revealed, ui, pos) {
     hitBoxes = [];
     if (pos == null) pos = editPos();
     let blurReady = false;
-    ctx.fillStyle = "#000";
-    ctx.fillRect(0, 0, W, H);
+    c.fillStyle = "#000";
+    c.fillRect(0, 0, W, H);
     if (bg && bg.proc != null) {
       // procedural background: soft gradient clipped to the middle band, bars black
-      ctx.save();
-      ctx.beginPath();
-      ctx.rect(VID.x1, VID.y1, VID.x2 - VID.x1, VID.y2 - VID.y1);
-      ctx.clip();
-      drawProceduralBg(ctx, bg.proc, bg.t);
-      ctx.restore();
+      c.save();
+      c.beginPath();
+      c.rect(VID.x1, VID.y1, VID.x2 - VID.x1, VID.y2 - VID.y1);
+      c.clip();
+      drawProceduralBg(c, bg.proc, bg.t);
+      c.restore();
     } else if (bg) {
       // video: blurred zoomed copy fills the whole frame (incl. the bars), a
       // gentle scrim keeps the title/ranks readable, then the sharp aspect-
       // correct clip is drawn in the middle band on top.
-      blurReady = drawBlurBackground(ctx, bg);
-      if (blurReady) { ctx.fillStyle = "rgba(0,0,0,0.22)"; ctx.fillRect(0, 0, W, H); }
-      ctx.save();
-      ctx.beginPath();
-      ctx.rect(VID.x1, VID.y1, VID.x2 - VID.x1, VID.y2 - VID.y1);
-      ctx.clip();
+      blurReady = drawBlurBackground(c, bg);
+      if (blurReady) { c.fillStyle = "rgba(0,0,0,0.22)"; c.fillRect(0, 0, W, H); }
+      c.save();
+      c.beginPath();
+      c.rect(VID.x1, VID.y1, VID.x2 - VID.x1, VID.y2 - VID.y1);
+      c.clip();
       const clipCrop = (((state.ranks || [])[pos - 1] || {}).clip || {}).crop || null;
-      drawVideoCover(ctx, bg, clipCrop);
-      ctx.restore();
+      drawVideoCover(c, bg, clipCrop);
+      c.restore();
     }
     // cover boxes hide part of THIS rank's footage; handles show only while editing
-    drawCoverBoxes(ctx, blurReady, !engine.recording && !engine.running, pos);
-    drawTitle(ctx);
-    drawRanks(ctx, revealed);
-    drawFreeTexts(ctx);
-    drawWatermark(ctx);
-    drawSequencePrompts(ctx);
+    drawCoverBoxes(c, blurReady, !engine.recording && !engine.running, pos);
+    drawTitle(c);
+    drawRanks(c, revealed);
+    drawFreeTexts(c);
+    drawWatermark(c);
+    drawSequencePrompts(c);
 
     if (ui && (ui.dragId || ui.selectedId)) {
-      ctx.save();
+      c.save();
       const activeId = ui.dragId || ui.selectedId;
       const guide = activeId === "title" ? TITLE_BOX : (activeId && activeId.startsWith("free:") ? SAFE : LIST_BOX);
       if (ui.dragId) {
-        ctx.setLineDash([18, 14]);
-        ctx.lineWidth = 4;
-        ctx.strokeStyle = "rgba(91,214,255,.9)";
-        ctx.strokeRect(guide.x1, guide.y1, guide.x2 - guide.x1, guide.y2 - guide.y1);
+        c.setLineDash([18, 14]);
+        c.lineWidth = 4;
+        c.strokeStyle = "rgba(91,214,255,.9)";
+        c.strokeRect(guide.x1, guide.y1, guide.x2 - guide.x1, guide.y2 - guide.y1);
       }
       // letterbox edges, so the user can see the bar boundaries while placing
-      ctx.setLineDash([6, 10]);
-      ctx.lineWidth = 2;
-      ctx.strokeStyle = "rgba(255,255,255,.35)";
-      ctx.beginPath();
-      ctx.moveTo(0, VID.y1); ctx.lineTo(W, VID.y1);
-      ctx.moveTo(0, VID.y2); ctx.lineTo(W, VID.y2);
-      ctx.stroke();
+      c.setLineDash([6, 10]);
+      c.lineWidth = 2;
+      c.strokeStyle = "rgba(255,255,255,.35)";
+      c.beginPath();
+      c.moveTo(0, VID.y1); c.lineTo(W, VID.y1);
+      c.moveTo(0, VID.y2); c.lineTo(W, VID.y2);
+      c.stroke();
       if (ui.guides && ui.guides.length) {
-        ctx.setLineDash([8, 10]); ctx.lineWidth = 3; ctx.strokeStyle = "rgba(91,214,255,.95)";
+        c.setLineDash([8, 10]); c.lineWidth = 3; c.strokeStyle = "rgba(91,214,255,.95)";
         for (const g of ui.guides) {
-          ctx.beginPath();
-          if (g.axis === "x") { ctx.moveTo(g.value, 0); ctx.lineTo(g.value, H); }
-          else { ctx.moveTo(0, g.value); ctx.lineTo(W, g.value); }
-          ctx.stroke();
+          c.beginPath();
+          if (g.axis === "x") { c.moveTo(g.value, 0); c.lineTo(g.value, H); }
+          else { c.moveTo(0, g.value); c.lineTo(W, g.value); }
+          c.stroke();
         }
       }
       const b = boxForDrag(activeId);
       if (b) {
-        ctx.setLineDash([10, 8]);
-        ctx.lineWidth = 4;
-        ctx.strokeStyle = ui.dragId && outsideBox(b, guide) ? "rgba(255,93,108,.95)" : "rgba(255,255,255,.8)";
-        ctx.strokeRect(b.x - 10, b.y - 10, b.w + 20, b.h + 20);
+        c.setLineDash([10, 8]);
+        c.lineWidth = 4;
+        c.strokeStyle = ui.dragId && outsideBox(b, guide) ? "rgba(255,93,108,.95)" : "rgba(255,255,255,.8)";
+        c.strokeRect(b.x - 10, b.y - 10, b.w + 20, b.h + 20);
       }
-      ctx.restore();
+      c.restore();
+    }
+  }
+
+  function drawFrame(bg, revealed, ui, pos) {
+    renderFrameTo(ctx, bg, revealed, ui, pos);
+    if (engine.recording && engine.exportProfile) {
+      const profile = engine.exportProfile;
+      if (exportCanvas.width !== profile.width || exportCanvas.height !== profile.height) {
+        exportCanvas.width = profile.width; exportCanvas.height = profile.height;
+      }
+      const sx = profile.width / W, sy = profile.height / H;
+      exportCtx.setTransform(sx, 0, 0, sy, 0, 0);
+      exportCtx.imageSmoothingEnabled = true; exportCtx.imageSmoothingQuality = "high";
+      renderFrameTo(exportCtx, bg, revealed, undefined, pos);
+      exportCtx.setTransform(1,0,0,1,0,0);
+      engine.exportFrameReady = true;
     }
   }
 
@@ -978,7 +1032,7 @@
   async function startWebCodecsRecorder(profile) {
     if (!window.VideoEncoder || !window.Mp4Muxer) return null;
     copyEditorFrameToExportCanvas(profile);
-    const vconf = { codec: "avc1.640028", width: profile.width, height: profile.height, bitrate: profile.videoBitrate, framerate: 30 };
+    const vconf = { codec: profile.codec || "avc1.640028", width: profile.width, height: profile.height, bitrate: profile.videoBitrate, framerate: 30 };
     const vsup = await VideoEncoder.isConfigSupported(vconf).catch(() => null);
     if (!vsup || !vsup.supported) return null;
 
@@ -1122,6 +1176,7 @@
     const quality = $("export-quality") ? $("export-quality").value : "1080p";
     const profile = EXPORT_PROFILES[quality] || EXPORT_PROFILES["1080p"];
     engine.running = true; engine.recording = true; engine.stopFlag = false;
+    engine.exportProfile = profile; engine.exportFrameReady = false;
     engine.pauseAccumMs = 0; engine.pauseStarted = 0; engine.exportPaused = false;
     $("btn-export").disabled = true; $("btn-play").disabled = true;
     $("export-progress").classList.remove("hidden"); $("export-bar").style.width = "0%";
@@ -1138,6 +1193,7 @@
     let blob = null;
     try { blob = await rec.stop(); } catch (e) { seqErr = seqErr || e; }
     engine.running = false; engine.recording = false; engine.exportPaused = false;
+    engine.exportProfile = null; engine.exportFrameReady = false;
     $("btn-export").disabled = false; $("btn-play").disabled = false;
 
     if (seqErr) {
@@ -1187,6 +1243,7 @@
           title: state.title, titleFromUser: state.titleFromUser, accent: state.accent,
           niche: state.niche, topic: state.topic, numRanks: state.numRanks,
           titleColor: state.titleColor, accentColor: state.accentColor,
+          titleStyle: state.titleStyle, titleWordColors: { ...(state.titleWordColors || {}) },
           titleScale: state.titleScale, sideScale: state.sideScale, groupMove: state.groupMove,
           editRank: state.editRank, order: state.order.slice(),
           layout: JSON.parse(JSON.stringify(state.layout)),
@@ -1256,6 +1313,7 @@
       state.accent = s.accent || ""; state.niche = s.niche || ""; state.topic = s.topic || "";
       state.numRanks = s.numRanks || (s.ranks ? s.ranks.length : 6);
       state.titleColor = s.titleColor || "#ffffff"; state.accentColor = s.accentColor || NAMED.red;
+      state.titleStyle = s.titleStyle || "viral"; state.titleWordColors = { ...(s.titleWordColors || {}) };
       state.titleScale = s.titleScale || 1; state.sideScale = s.sideScale || 1;
       state.groupMove = !!s.groupMove; state.editRank = s.editRank || 1;
       state.order = (s.order && s.order.length) ? s.order.slice() : [];
@@ -2237,6 +2295,22 @@
     return results;
   }
 
+
+  // Best-effort public Instagram/TikTok discovery. Search itself is handled by
+  // the helper backend; the returned public URL is then imported through the
+  // same safe allow-listed /media/import endpoint used by “Add clip from link”.
+  const socialSearchCache = new Map();
+  async function socialSearch(source, query) {
+    const key = source + "|" + query.toLowerCase();
+    if (socialSearchCache.has(key)) return socialSearchCache.get(key);
+    const url = "social/search?source=" + encodeURIComponent(source) + "&q=" + encodeURIComponent(query) + "&max=10";
+    const res = await fetch(url);
+    const data = res.ok ? await res.json() : { results: [] };
+    const results = data.results || [];
+    socialSearchCache.set(key, results);
+    return results;
+  }
+
   // Download a specific SECTION [start, end] of a CC video as an mp4 clip.
   async function ytDownloadSection(hit, start, end) {
     const dl = await fetch("yt/download", {
@@ -2265,13 +2339,13 @@
   // ---- Import a clip from a pasted LINK (Instagram / TikTok / YouTube / …) ----
   // These are NOT license-cleared (copyrighted); labelled as such everywhere.
   const SITE_LABELS = { instagram: "Instagram", tiktok: "TikTok", youtube: "YouTube",
-    twitter: "Twitter/X", facebook: "Facebook", vimeo: "Vimeo" };
+    pexels: "Pexels", pixabay: "Pixabay", twitter: "Twitter/X", facebook: "Facebook", vimeo: "Vimeo" };
   function siteLabel(s) {
     s = (s || "").toLowerCase();
     for (const k in SITE_LABELS) if (s.includes(k)) return SITE_LABELS[k];
     return "Link";
   }
-  async function mediaImportLink(url, pos, start, end) {
+  async function mediaImportLink(url, pos, start, end, sourceOverride) {
     const res = await fetch("media/import", {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ url, start, end }),
@@ -2285,7 +2359,7 @@
     const blob = await (await fetch(info.url)).blob();
     const file = new File([blob], "link-" + Date.now() + ".mp4", { type: "video/mp4" });
     const who = info.uploader ? "@" + info.uploader : (info.title || "clip");
-    assignClip(pos, file, "link", who + " · " + siteLabel(info.extractor));
+    assignClip(pos, file, sourceOverride || "link", who + " · " + siteLabel(info.extractor));
     state.ranks[pos - 1].clip.attribution = {
       source: "link", site: info.extractor, title: info.title,
       uploader: info.uploader, url: info.webpage_url, licenseCleared: false,
@@ -2315,6 +2389,39 @@
       note("Couldn't import that link: " + e.message +
         (/instagram/i.test(url) ? " — Instagram often blocks downloads unless you're logged in; try another link." : ""));
     }
+  }
+
+  const usedSocialUrls = new Set();
+  async function sourceRankSocial(i, source, query, say) {
+    if (!ytAvailable) return null; // same helper backend powers public social import
+    const pos = i + 1;
+    let results = [];
+    try {
+      say(`Rank #${pos}: searching ${source === "instagram" ? "Instagram" : "TikTok"}…`);
+      results = await socialSearch(source, query);
+    } catch (_) { return null; }
+    for (const hit of results) {
+      if (!hit || !hit.url || usedSocialUrls.has(hit.url)) continue;
+      usedSocialUrls.add(hit.url);
+      try {
+        say(`Rank #${pos}: importing ${source === "instagram" ? "Instagram" : "TikTok"} clip…`);
+        const info = await mediaImportLink(hit.url, pos, undefined, undefined, source);
+        const clip = state.ranks[i].clip;
+        if (clip) {
+          clip.attribution = Object.assign({}, clip.attribution || {}, {
+            source, site: source, title: info.title || hit.title || "clip",
+            uploader: info.uploader || "", url: info.webpage_url || hit.url,
+            licenseCleared: false,
+          });
+          applyDerivedLabel(pos, info.title || hit.title || "");
+        }
+        return source;
+      } catch (_) {
+        // Social platforms frequently block datacenter requests or require
+        // login. Try the next public result rather than hanging the workflow.
+      }
+    }
+    return null;
   }
 
   // Context-driven YouTube query variants for one rank. Leads with the topic +
@@ -2492,17 +2599,15 @@
     return 0;
   }
 
-  // Fill every clipless rank, YouTube-FIRST (that's what the user wants; stock
-  // is a last resort). Three ordered passes:
-  //   1. Per-rank distinct YouTube video (own real title → own on-video label).
-  //   2. Compilation: slice ONE long on-topic YouTube video across the ranks
-  //      still empty — keeps everything on-topic and from YouTube.
-  //   3. Stock (Pexels/Pixabay), ONLY for whatever is still empty, and always
-  //      a DIFFERENT clip per rank (usedStock) so nothing repeats.
+  // Fill every clipless rank with a user-selectable source strategy. Auto mode
+  // prioritizes public Instagram results, then TikTok, then YouTube CC, then
+  // stock, and finally generated backgrounds. Social imports are explicitly
+  // marked not-license-cleared and may fail when a platform requires login.
   async function sourceAllClips(statusEl) {
     const say = (t) => { if (statusEl) statusEl.textContent = t; };
+    const sourcePref = ($("inp-clip-source") && $("inp-clip-source").value) || "auto";
     if (!ytAvailable && !getPexelsKey() && !getPixabayKey()) {
-      say("No footage sources — ranks without clips use generated backgrounds. Run python3 server.py or add a key in ⚙️ Settings.");
+      say("No online footage sources are available. Ranks without clips use generated backgrounds.");
       return;
     }
     const buildQ = (r) => (state.topic
@@ -2510,26 +2615,44 @@
       : [r.query || stripEmoji(r.label), state.niche || stripEmoji(state.accent)]
     ).filter(Boolean).join(" ") || topicKeywords(state.title) || "abstract";
 
-    // PASS 1 — per-rank distinct YouTube
-    if (ytAvailable) {
+    usedSocialUrls.clear();
+
+    // PASS 0 — social-first discovery/import. One public result per rank, no URL reuse.
+    const socialSources = sourcePref === "instagram" ? ["instagram"]
+      : sourcePref === "tiktok" ? ["tiktok"]
+      : sourcePref === "auto" ? ["instagram", "tiktok"] : [];
+    for (const source of socialSources) {
+      for (let i = 0; i < state.numRanks; i++) {
+        const r = state.ranks[i];
+        if (r.clip) continue;
+        r.sourcing = "loading"; renderRanksUI();
+        const src = await sourceRankSocial(i, source, buildQ(r), say);
+        r.sourcing = src ? null : null;
+        renderRanksUI(); renderStatic();
+      }
+    }
+
+    // PASS 1 — per-rank distinct YouTube Creative Commons.
+    if (ytAvailable && (sourcePref === "auto" || sourcePref === "youtube")) {
       for (let i = 0; i < state.numRanks; i++) {
         const r = state.ranks[i];
         if (r.clip) continue;
         r.sourcing = "loading"; renderRanksUI();
         await sourceRankYouTube(i, buildQ(r), say);
-        r.sourcing = null; // ranks still empty are picked up by later passes
+        r.sourcing = null;
         renderRanksUI(); renderStatic();
-        await sleep(300);
       }
     }
-    // PASS 2 — compilation-slice one on-topic YouTube video across the rest
-    if (ytAvailable && state.ranks.some((r) => !r.clip)) {
-      say("Looking for one on-topic compilation to slice across the rest…");
+
+    // PASS 2 — compilation fallback is useful only in Auto / YouTube modes.
+    if (ytAvailable && (sourcePref === "auto" || sourcePref === "youtube") && state.ranks.some((r) => !r.clip)) {
+      say("Looking for one on-topic YouTube compilation to slice across the rest…");
       try { await tryCompilationFill(say); } catch (_) {}
       renderRanksUI(); renderStatic();
     }
-    // PASS 3 — stock, only for what's still empty, never repeating a clip
-    if (getPexelsKey() || getPixabayKey()) {
+
+    // PASS 3 — stock fallback in Auto, or exclusively when Stock is selected.
+    if ((sourcePref === "auto" || sourcePref === "stock") && (getPexelsKey() || getPixabayKey())) {
       const usedStock = new Set();
       for (let i = 0; i < state.numRanks; i++) {
         const r = state.ranks[i];
@@ -2538,18 +2661,21 @@
         const src = await sourceRankStock(i, buildQ(r), say, usedStock);
         r.sourcing = src ? null : "failed";
         renderRanksUI(); renderStatic();
-        await sleep(300);
       }
     }
+
     state.ranks.forEach((r) => { if (!r.clip && r.sourcing === "loading") r.sourcing = "failed"; });
     renderRanksUI(); renderStatic();
     updateIdlePoster();
+    const counts = {};
+    state.ranks.forEach((r) => { if (r.clip) counts[r.clip.source || "clip"] = (counts[r.clip.source || "clip"] || 0) + 1; });
     const filledCount = state.ranks.filter((r) => r.clip).length;
-    const ytCount = state.ranks.filter((r) => r.clip && r.clip.source === "youtube").length;
     const empty = state.numRanks - filledCount;
-    say(`Footage ready: ${filledCount} clip(s) (${ytCount} from YouTube)` +
-        (empty ? `, ${empty} rank(s) use generated backgrounds.` : "."));
+    const parts = Object.entries(counts).map(([k,v]) => `${v} ${siteLabel(k)}`).join(", ");
+    say(`Footage ready: ${filledCount} clip(s)` + (parts ? ` · ${parts}` : "") +
+        (empty ? ` · ${empty} rank(s) use generated backgrounds.` : "."));
   }
+
 
   // One click -> complete watchable video: concept + footage.
   async function generateFullVideo() {
@@ -2560,6 +2686,7 @@
       // user's own uploads) and clear the search cache so new footage is pulled
       state.ranks.forEach((r) => { if (r.clip && r.clip.source && r.clip.source !== "user") r.clip = null; });
       ytSearchCache.clear();
+      socialSearchCache.clear();
       const ok = await autoGenerate();
       document.body.classList.remove("setup-mode");
       renderRanksUI(); renderOrderUI(); updateIdlePoster(); renderStatic();
@@ -2593,6 +2720,7 @@
     return {
       title: state.title, titleFromUser: state.titleFromUser, accent: state.accent, niche: state.niche, topic: state.topic,
       numRanks: state.numRanks, titleColor: state.titleColor, accentColor: state.accentColor,
+      titleStyle: state.titleStyle, titleWordColors: { ...(state.titleWordColors || {}) },
       titleScale: state.titleScale, sideScale: state.sideScale, groupMove: state.groupMove,
       ranks: state.ranks.map((r) => ({
         label: r.label, labelFromUser: r.labelFromUser, color: r.color, labelColor: r.labelColor, sizeScale: r.sizeScale,
@@ -2640,6 +2768,7 @@
     restoring = true;
     state.title = s.title; state.titleFromUser = s.titleFromUser; state.accent = s.accent; state.niche = s.niche; state.topic = s.topic;
     state.numRanks = s.numRanks; state.titleColor = s.titleColor; state.accentColor = s.accentColor;
+    state.titleStyle = s.titleStyle || "viral"; state.titleWordColors = { ...(s.titleWordColors || {}) };
     state.titleScale = s.titleScale; state.sideScale = s.sideScale; state.groupMove = s.groupMove;
     state.ranks = s.ranks.map((r) => {
       // clips are kept by reference across snapshots, so restore the trim
@@ -2693,17 +2822,42 @@
     $("inp-side-size").value = Math.round(state.sideScale * 100);
     $("val-side-size").textContent = Math.round(state.sideScale * 100) + "%";
     const gm = $("inp-group-move"); if (gm) gm.checked = state.groupMove;
+    const ts = $("inp-title-style"); if (ts) ts.value = state.titleStyle || "viral";
     rebuildTitleColors();
+    rebuildTitleWordColors();
   }
   function rebuildTitleColors() {
     const host = $("title-colors");
     host.innerHTML = "";
     host.appendChild(swatchRow("title", () => state.titleColor, (hex) => {
-      state.titleColor = hex; scheduleCommit(); scheduleStatic();
+      state.titleColor = hex; rebuildTitleWordColors(); scheduleCommit(); scheduleStatic();
     }));
     host.appendChild(swatchRow("accent", () => state.accentColor, (hex) => {
-      state.accentColor = hex; scheduleCommit(); scheduleStatic();
+      state.accentColor = hex; rebuildTitleWordColors(); scheduleCommit(); scheduleStatic();
     }));
+  }
+  function rebuildTitleWordColors() {
+    const host = $("title-word-colors");
+    if (!host) return;
+    host.innerHTML = "";
+    const words = titleWords();
+    if (!words.length) {
+      const h = document.createElement("span"); h.className = "hint"; h.textContent = "Type a title to color individual words."; host.appendChild(h); return;
+    }
+    for (const w of words) {
+      const chip = document.createElement("label"); chip.className = "word-color-chip";
+      const txt = document.createElement("span"); txt.textContent = w.text; chip.appendChild(txt);
+      const pick = document.createElement("input"); pick.type = "color"; pick.value = effectiveTitleWordColor(w);
+      pick.title = `Color “${w.text}”`;
+      pick.addEventListener("input", () => { state.titleWordColors[w.index] = pick.value; scheduleCommit(); scheduleStatic(); });
+      chip.appendChild(pick); host.appendChild(chip);
+    }
+  }
+  function autoColorTitleWords() {
+    const palette = ["#f5c518", "#ffffff", "#169cff", "#ff416c", "#ff8c00", "#ffd43b", "#22d3ee", "#ffffff"];
+    state.titleWordColors = {};
+    titleWords().forEach((w, i) => { state.titleWordColors[w.index] = palette[i % palette.length]; });
+    rebuildTitleWordColors(); commitHistory(); renderStatic();
   }
 
   $("inp-title").addEventListener("input", (e) => {
@@ -2712,9 +2866,15 @@
     state.titleFromUser = state.title.trim().length > 0;
     // typing the title makes it the user's topic (drives stock search)
     state.topic = state.title.trim() ? topicKeywords(state.title) : "";
+    const wc = {}; const n = state.title.split(/\s+/).filter(Boolean).length;
+    for (let i=0;i<n;i++) if (state.titleWordColors && state.titleWordColors[i]) wc[i]=state.titleWordColors[i];
+    state.titleWordColors = wc; rebuildTitleWordColors();
     scheduleCommit(); scheduleStatic();
   });
-  $("inp-accent").addEventListener("input", (e) => { state.accent = e.target.value; scheduleCommit(); scheduleStatic(); });
+  $("inp-accent").addEventListener("input", (e) => { state.accent = e.target.value; rebuildTitleWordColors(); scheduleCommit(); scheduleStatic(); });
+  $("inp-title-style").addEventListener("change", (e) => { state.titleStyle = e.target.value || "viral"; scheduleCommit(); scheduleStatic(); });
+  $("btn-auto-title-colors").addEventListener("click", autoColorTitleWords);
+  $("btn-clear-title-colors").addEventListener("click", () => { state.titleWordColors = {}; rebuildTitleWordColors(); commitHistory(); renderStatic(); });
   $("inp-word-limit").addEventListener("change", (e) => { state.aiOptions.wordLimit = Number(e.target.value) || 0; scheduleCommit(); });
   $("inp-emoji-mode").addEventListener("change", (e) => { state.aiOptions.emojiMode = e.target.value || "auto"; scheduleCommit(); });
   $("inp-watermark-enabled").addEventListener("change", (e) => { state.watermark.enabled = e.target.checked; commitHistory(); renderStatic(); updateSelectionControls(); });
@@ -2758,6 +2918,16 @@
   });
   $("btn-fullgen").addEventListener("click", generateFullVideo);
   $("btn-find-clips").addEventListener("click", () => sourceAllClips($("autogen-status")));
+  const sourcePicker = $("inp-clip-source");
+  if (sourcePicker) sourcePicker.addEventListener("change", () => {
+    const n = $("social-note");
+    if (!n) return;
+    n.textContent = sourcePicker.value === "auto"
+      ? "Auto mode tries public Instagram/TikTok results first, then YouTube CC and stock. Social clips are not license-cleared; only use footage you have rights to use."
+      : sourcePicker.value === "youtube" ? "YouTube mode uses Creative-Commons clips only."
+      : sourcePicker.value === "stock" ? "Stock mode uses configured Pexels/Pixabay sources only."
+      : `${sourcePicker.value === "instagram" ? "Instagram" : "TikTok"} mode tries public results only. These clips are not license-cleared; only use footage you have rights to use.`;
+  });
   $("btn-link-clip").addEventListener("click", () => {
     if (!ytAvailable) { $("link-note").textContent = "“Add clip from link” needs the local server. Run: python3 server.py"; return; }
     // target the next empty rank, else ask which to replace
