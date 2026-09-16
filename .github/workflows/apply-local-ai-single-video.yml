@@ -1,0 +1,235 @@
+name: Apply Local AI and single-video mode
+
+on:
+  push:
+    paths:
+      - '.github/workflows/apply-local-ai-single-video.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply-upgrade:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Patch editor
+        shell: python
+        run: |
+          from pathlib import Path
+
+          def must_replace(text, old, new, count=1, label="replacement"):
+              if old not in text:
+                  raise SystemExit(f"Missing expected text for {label}")
+              return text.replace(old, new, count)
+
+          # ---------------- index.html
+          p = Path("index.html")
+          h = p.read_text(encoding="utf-8")
+          h = must_replace(
+              h,
+              '<span class="brand-sub">Vertical editor · up to 120s · 1080p / 720p / 480p export</span>',
+              '<span class="brand-sub">Vertical editor · up to 120s · 1080p / 2K / 4K / 8K export</span>',
+              label="brand quality text",
+          )
+          h = must_replace(
+              h,
+              '<select id="inp-numranks">\n            <option>1</option>',
+              '<select id="inp-numranks">\n            <option value="0">None · single video</option>\n            <option>1</option>',
+              label="None rank option",
+          )
+          h = must_replace(
+              h,
+              '<select id="export-quality">\n            <option value="4K">',
+              '<select id="export-quality">\n            <option value="8K">8K — 4320×7680 — Extreme · powerful GPU recommended</option>\n            <option value="4K">',
+              label="8K option",
+          )
+          h = must_replace(
+              h,
+              '2K/4K render text and graphics at higher resolution. Final detail still depends on the source clip quality and your browser/GPU.',
+              '2K/4K/8K render text and graphics at higher resolution. 8K is extremely GPU/RAM intensive. AI upscale can improve perceived detail, but output resolution does not turn a poor source into native-camera 8K.',
+              label="quality note",
+          )
+          h = must_replace(
+              h,
+              '<script src="app.js"></script>\n</body>',
+              '<script src="app.js"></script>\n<script src="local_ai_bridge.js"></script>\n</body>',
+              label="local AI bridge script",
+          )
+          p.write_text(h, encoding="utf-8")
+
+          # ---------------- app.js
+          p = Path("app.js")
+          s = p.read_text(encoding="utf-8")
+          s = must_replace(
+              s,
+              '  const EXPORT_PROFILES = {\n    "4K":',
+              '  const EXPORT_PROFILES = {\n    "8K":    { width: 4320, height: 7680, videoBitrate: 85_000_000, codec: "avc1.64003e" },\n    "4K":',
+              label="8K profile",
+          )
+          s = must_replace(
+              s,
+              '    numRanks: 6,\n    titleColor:',
+              '    numRanks: 6,\n    noRankMode: false,\n    titleColor:',
+              label="no-rank state",
+          )
+          old_set = '''  function setNumRanks(n) {
+            n = Math.max(1, Math.min(10, n));
+            while (state.ranks.length < n) state.ranks.push(makeRank(state.ranks.length + 1));
+            state.ranks.length = n;
+            state.numRanks = n;
+            if (state.editRank > n) state.editRank = 1;
+            resetOrder();
+          }'''.replace("          ", "")
+          new_set = '''  function setNumRanks(n) {
+            const noRank = Number(n) === 0;
+            n = noRank ? 1 : Math.max(1, Math.min(10, n));
+            state.noRankMode = noRank;
+            while (state.ranks.length < n) state.ranks.push(makeRank(state.ranks.length + 1));
+            state.ranks.length = n;
+            state.numRanks = n;
+            if (state.editRank > n) state.editRank = 1;
+            resetOrder();
+          }'''.replace("          ", "")
+          s = must_replace(s, old_set, new_set, label="setNumRanks single-video behavior")
+          s = must_replace(
+              s,
+              '  function drawRanks(c, revealed) {\n    const n = state.numRanks;',
+              '  function drawRanks(c, revealed) {\n    if (state.noRankMode) return;\n    const n = state.numRanks;',
+              label="hide ranks on canvas",
+          )
+          s = must_replace(
+              s,
+              '    $("inp-numranks").value = String(state.numRanks);',
+              '    $("inp-numranks").value = state.noRankMode ? "0" : String(state.numRanks);',
+              label="sync None select",
+          )
+          s = must_replace(
+              s,
+              '      numRanks: state.numRanks, titleColor: state.titleColor, accentColor: state.accentColor,',
+              '      numRanks: state.numRanks, noRankMode: !!state.noRankMode, titleColor: state.titleColor, accentColor: state.accentColor,',
+              label="history snapshot no-rank",
+          )
+          s = must_replace(
+              s,
+              '    state.numRanks = s.numRanks; state.titleColor = s.titleColor; state.accentColor = s.accentColor;',
+              '    state.numRanks = s.numRanks; state.noRankMode = !!s.noRankMode; state.titleColor = s.titleColor; state.accentColor = s.accentColor;',
+              label="history restore no-rank",
+          )
+          s = must_replace(
+              s,
+              '          niche: state.niche, topic: state.topic, numRanks: state.numRanks,\n          titleColor:',
+              '          niche: state.niche, topic: state.topic, numRanks: state.numRanks, noRankMode: !!state.noRankMode,\n          titleColor:',
+              label="project save no-rank",
+          )
+          s = must_replace(
+              s,
+              '      state.numRanks = s.numRanks || (s.ranks ? s.ranks.length : 6);\n      state.titleColor =',
+              '      state.numRanks = s.numRanks || (s.ranks ? s.ranks.length : 6);\n      state.noRankMode = !!s.noRankMode;\n      state.titleColor =',
+              label="project load no-rank",
+          )
+          s = must_replace(
+              s,
+              '    if (b) b.textContent = "Previewing rank " + editPos();',
+              '    if (b) b.textContent = state.noRankMode ? "Single video preview · no ranks" : "Previewing rank " + editPos();',
+              label="single-video preview badge",
+          )
+          s = must_replace(
+              s,
+              '      row.className = "rank-row" + (pos === editPos() ? " focused" : "");',
+              '      row.className = "rank-row" + (pos === editPos() ? " focused" : "") + (state.noRankMode ? " single-video-row" : "");',
+              label="single-video sidebar row class",
+          )
+          s = must_replace(
+              s,
+              '      num.textContent = pos + ".";',
+              '      num.textContent = state.noRankMode ? "" : pos + ".";',
+              label="hide sidebar rank number",
+          )
+          s = must_replace(
+              s,
+              '    const list = $("ranks-list");\n    list.innerHTML = "";',
+              '    const list = $("ranks-list");\n    list.innerHTML = "";\n    const orderPanel = $("panel-order");\n    if (orderPanel) orderPanel.classList.toggle("hidden", !!state.noRankMode);',
+              label="hide order panel in no-rank mode",
+          )
+
+          bridge = r'''
+
+          // Public bridge for the optional FREE local AI helper. The editor keeps
+          // its internal state private; this exposes only the currently selected
+          // clip and a safe replacement method.
+          window.RankingAppBridge = {
+            async getCurrentClipFile() {
+              const pos = editPos();
+              const r = state.ranks[pos - 1];
+              if (!r || !r.clip || !r.clip.url) return null;
+              const resp = await fetch(r.clip.url);
+              if (!resp.ok) return null;
+              const blob = await resp.blob();
+              return new File([blob], r.clip.name || "clip.mp4", { type: blob.type || "video/mp4" });
+            },
+            async replaceCurrentClip(file, displayName) {
+              const pos = editPos();
+              if (!file) return false;
+              assignClip(pos, file, "user", displayName || file.name || "Local AI enhanced clip");
+              return true;
+            },
+            isNoRankMode() { return !!state.noRankMode; },
+            currentPosition() { return editPos(); },
+          };
+          '''
+          marker = '\n})();\n'
+          if 'window.RankingAppBridge = {' not in s:
+              idx = s.rfind(marker)
+              if idx < 0:
+                  raise SystemExit("Could not find app.js closing IIFE")
+              s = s[:idx] + bridge + s[idx:]
+          p.write_text(s, encoding="utf-8")
+
+          # ---------------- style.css
+          p = Path("style.css")
+          css = p.read_text(encoding="utf-8")
+          add = r'''
+
+          /* Single-video (Number of ranks: None) */
+          .single-video-row .rank-num,
+          .single-video-row .label-row { display: none !important; }
+          .single-video-row { grid-template-columns: 86px minmax(0,1fr); }
+          #panel-local-ai .panel-badge { font-size: 14px; }
+          #panel-local-ai .panel-body { overflow: visible; }
+          '''
+          if 'Single-video (Number of ranks: None)' not in css:
+              css += add
+          p.write_text(css, encoding="utf-8")
+
+      - name: Verify
+        shell: bash
+        run: |
+          node --check app.js
+          node --check local_ai_bridge.js
+          python -m py_compile local_ai_server.py
+          python - <<'PY'
+          from pathlib import Path
+          h=Path('index.html').read_text()
+          j=Path('app.js').read_text()
+          for token in ['None · single video','4320×7680','local_ai_bridge.js']:
+              assert token in h, token
+          for token in ['noRankMode','width: 4320','RankingAppBridge']:
+              assert token in j, token
+          print('Local AI + single-video upgrade verified')
+          PY
+
+      - name: Commit upgrade
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app.js index.html style.css local_ai_bridge.js local_ai_server.py
+          git rm .github/workflows/apply-local-ai-single-video.yml
+          git commit -m "Add free Local AI enhancer, 8K export and no-rank mode"
+          git push
