@@ -13,7 +13,7 @@
     <span class="brand-logo">🏆</span>
     <span class="brand-text">
       <span class="brand-name">Ranking Shorts Maker</span>
-      <span class="brand-sub">Vertical editor · up to 120s · 1080p / 720p / 480p export</span>
+      <span class="brand-sub">Vertical editor · up to 120s · 1080p / 2K / 4K / 8K export</span>
     </span>
   </div>
   <div class="row topbar-actions">
@@ -50,6 +50,7 @@
         <label class="field">
           <span>Number of ranks</span>
           <select id="inp-numranks">
+            <option value="0">None · single video</option>
             <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
             <option selected>6</option><option>7</option><option>8</option>
             <option>9</option><option>10</option>
@@ -346,6 +347,7 @@
         <label class="field">
           <span>Export quality</span>
           <select id="export-quality">
+            <option value="8K">8K — 4320×7680 — Extreme · powerful GPU recommended</option>
             <option value="4K">4K — 2160×3840 — Ultra quality</option>
             <option value="2K">2K — 1440×2560 — Very high quality</option>
             <option value="1080p" selected>1080p — 1080×1920 — High quality</option>
@@ -353,7 +355,7 @@
             <option value="480p">480p — 480×854 — Smaller file</option>
           </select>
         </label>
-        <p class="hint export-quality-note">2K/4K render text and graphics at higher resolution. Final detail still depends on the source clip quality and your browser/GPU.</p>
+        <p class="hint export-quality-note">2K/4K/8K render text and graphics at higher resolution. 8K is extremely GPU/RAM intensive. AI upscale can improve perceived detail, but output resolution does not turn a poor source into native-camera 8K.</p>
         <button class="btn btn-primary btn-wide" id="btn-export">⬇ Export 1080p MP4</button>
         <div class="progress hidden" id="export-progress"><div class="progress-bar" id="export-bar"></div></div>
         <p class="hint" id="export-status"></p>
@@ -409,5 +411,6 @@
 <script src="config.local.js" onerror="void 0"></script>
 <script src="generator.js"></script>
 <script src="app.js"></script>
+<script src="local_ai_bridge.js"></script>
 </body>
 </html>

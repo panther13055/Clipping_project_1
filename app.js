@@ -62,6 +62,7 @@
 
 
   const EXPORT_PROFILES = {
+    "8K":    { width: 4320, height: 7680, videoBitrate: 85_000_000, codec: "avc1.64003e" },
     "4K":    { width: 2160, height: 3840, videoBitrate: 38_000_000, codec: "avc1.640033" },
     "2K":    { width: 1440, height: 2560, videoBitrate: 20_000_000, codec: "avc1.640032" },
     "1080p": { width: 1080, height: 1920, videoBitrate: 10_000_000, codec: "avc1.640028" },
@@ -111,6 +112,7 @@
     niche: "",           // topic hint from the generator concept (for stock search + palettes)
     topic: "",           // keywords from the USER'S title; drives stock search when set
     numRanks: 6,
+    noRankMode: false,
     titleColor: "#ffffff",
     accentColor: NAMED.red,
     titleStyle: "viral",
@@ -204,7 +206,9 @@
   }
 
   function setNumRanks(n) {
-    n = Math.max(1, Math.min(10, n));
+    const noRank = Number(n) === 0;
+    n = noRank ? 1 : Math.max(1, Math.min(10, n));
+    state.noRankMode = noRank;
     while (state.ranks.length < n) state.ranks.push(makeRank(state.ranks.length + 1));
     state.ranks.length = n;
     state.numRanks = n;
@@ -362,6 +366,7 @@
   }
 
   function drawRanks(c, revealed) {
+    if (state.noRankMode) return;
     const n = state.numRanks;
     const top = LIST_BOX.y1, bottom = LIST_BOX.y2;
 
@@ -1241,7 +1246,7 @@
         savedAt: new Date().toISOString(),
         state: {
           title: state.title, titleFromUser: state.titleFromUser, accent: state.accent,
-          niche: state.niche, topic: state.topic, numRanks: state.numRanks,
+          niche: state.niche, topic: state.topic, numRanks: state.numRanks, noRankMode: !!state.noRankMode,
           titleColor: state.titleColor, accentColor: state.accentColor,
           titleStyle: state.titleStyle, titleWordColors: { ...(state.titleWordColors || {}) },
           titleScale: state.titleScale, sideScale: state.sideScale, groupMove: state.groupMove,
@@ -1312,6 +1317,7 @@
       state.title = s.title || ""; state.titleFromUser = !!s.titleFromUser;
       state.accent = s.accent || ""; state.niche = s.niche || ""; state.topic = s.topic || "";
       state.numRanks = s.numRanks || (s.ranks ? s.ranks.length : 6);
+      state.noRankMode = !!s.noRankMode;
       state.titleColor = s.titleColor || "#ffffff"; state.accentColor = s.accentColor || NAMED.red;
       state.titleStyle = s.titleStyle || "viral"; state.titleWordColors = { ...(s.titleWordColors || {}) };
       state.titleScale = s.titleScale || 1; state.sideScale = s.sideScale || 1;
@@ -1742,7 +1748,7 @@
   const advOpen = new Set();
   function updateEditBadge() {
     const b = $("edit-rank-badge");
-    if (b) b.textContent = "Previewing rank " + editPos();
+    if (b) b.textContent = state.noRankMode ? "Single video preview · no ranks" : "Previewing rank " + editPos();
   }
   function setEditRank(pos) {
     state.editRank = clamp(pos, 1, state.ranks.length || 1);
@@ -1846,6 +1852,8 @@
     closeEmojiPanel();
     const list = $("ranks-list");
     list.innerHTML = "";
+    const orderPanel = $("panel-order");
+    if (orderPanel) orderPanel.classList.toggle("hidden", !!state.noRankMode);
     $("empty-state").classList.toggle("hidden", clipsAssigned() > 0);
     $("pexels-note").classList.toggle("hidden", !state.ranks.some((r) => r.clip && r.clip.source === "pexels"));
     updateMusicHint();
@@ -1853,12 +1861,12 @@
     state.ranks.forEach((r, i) => {
       const pos = i + 1;
       const row = document.createElement("div");
-      row.className = "rank-row" + (pos === editPos() ? " focused" : "");
+      row.className = "rank-row" + (pos === editPos() ? " focused" : "") + (state.noRankMode ? " single-video-row" : "");
 
       const num = document.createElement("div");
       num.className = "rank-num";
       num.style.color = toHex(r.color);
-      num.textContent = pos + ".";
+      num.textContent = state.noRankMode ? "" : pos + ".";
       row.appendChild(num);
 
       // thumbnail / clip picker
@@ -2719,7 +2727,7 @@
   function snapshot() {
     return {
       title: state.title, titleFromUser: state.titleFromUser, accent: state.accent, niche: state.niche, topic: state.topic,
-      numRanks: state.numRanks, titleColor: state.titleColor, accentColor: state.accentColor,
+      numRanks: state.numRanks, noRankMode: !!state.noRankMode, titleColor: state.titleColor, accentColor: state.accentColor,
       titleStyle: state.titleStyle, titleWordColors: { ...(state.titleWordColors || {}) },
       titleScale: state.titleScale, sideScale: state.sideScale, groupMove: state.groupMove,
       ranks: state.ranks.map((r) => ({
@@ -2767,7 +2775,7 @@
   function applySnapshot(s) {
     restoring = true;
     state.title = s.title; state.titleFromUser = s.titleFromUser; state.accent = s.accent; state.niche = s.niche; state.topic = s.topic;
-    state.numRanks = s.numRanks; state.titleColor = s.titleColor; state.accentColor = s.accentColor;
+    state.numRanks = s.numRanks; state.noRankMode = !!s.noRankMode; state.titleColor = s.titleColor; state.accentColor = s.accentColor;
     state.titleStyle = s.titleStyle || "viral"; state.titleWordColors = { ...(s.titleWordColors || {}) };
     state.titleScale = s.titleScale; state.sideScale = s.sideScale; state.groupMove = s.groupMove;
     state.ranks = s.ranks.map((r) => {
@@ -2816,7 +2824,7 @@
   function syncInputsFromState() {
     $("inp-title").value = state.title;
     $("inp-accent").value = state.accent;
-    $("inp-numranks").value = String(state.numRanks);
+    $("inp-numranks").value = state.noRankMode ? "0" : String(state.numRanks);
     $("inp-title-size").value = Math.round(state.titleScale * 100);
     $("val-title-size").textContent = Math.round(state.titleScale * 100) + "%";
     $("inp-side-size").value = Math.round(state.sideScale * 100);
@@ -3447,4 +3455,26 @@
   renderStatic();
   commitHistory(); // seed the undo history with the initial state
   detectHelper(); // async; enables YouTube-CC sourcing when server.py serves us
+
+  // Minimal bridge for the optional FREE local AI helper.
+  window.RankingAppBridge = {
+    async getCurrentClipFile() {
+      const pos = editPos();
+      const r = state.ranks[pos - 1];
+      if (!r || !r.clip || !r.clip.url) return null;
+      const resp = await fetch(r.clip.url);
+      if (!resp.ok) return null;
+      const blob = await resp.blob();
+      return new File([blob], r.clip.name || "clip.mp4", { type: blob.type || "video/mp4" });
+    },
+    async replaceCurrentClip(file, displayName) {
+      const pos = editPos();
+      if (!file) return false;
+      assignClip(pos, file, "user", displayName || file.name || "Local AI enhanced clip");
+      return true;
+    },
+    isNoRankMode() { return !!state.noRankMode; },
+    currentPosition() { return editPos(); },
+  };
+
 })();
