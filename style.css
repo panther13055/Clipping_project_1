@@ -509,3 +509,12 @@ input:focus, select:focus { border-color:#5bd6ff; box-shadow:0 0 0 3px rgba(91,2
 .single-video-row { grid-template-columns: 86px minmax(0,1fr); }
 #panel-local-ai .panel-badge { font-size: 14px; }
 #panel-local-ai .panel-body { overflow: visible; }
+
+
+/* Emoji picker style selector */
+.emoji-style-row{display:flex;align-items:center;gap:10px;margin-bottom:7px;position:sticky;top:0;z-index:3;background:rgba(7,14,26,.98);padding:2px 0 4px}
+.emoji-style-label{font-size:11px;font-weight:800;color:#8fa6c7;text-transform:uppercase;letter-spacing:.08em;white-space:nowrap}
+.emoji-style-select{flex:1;min-width:0;background:#091322;color:#e9f2ff;border:1px solid #263b58;border-radius:9px;padding:7px 9px;font-size:12px}
+.emoji-style-hint{font-size:10px;line-height:1.35;color:#7186a5;margin:0 0 8px}
+.emoji-btn{display:flex!important;align-items:center;justify-content:center;overflow:hidden}
+.emoji-btn .emoji-art{width:28px;height:28px;display:block;pointer-events:none;object-fit:contain}
