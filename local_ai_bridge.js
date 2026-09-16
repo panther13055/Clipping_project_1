@@ -32,10 +32,13 @@
       if (!r.ok) throw new Error("HTTP " + r.status);
       const d = await r.json();
       const neural = !!d.realesrgan;
-      const msg = neural
-        ? `✓ Local AI ready · Real-ESRGAN GPU engine found${d.ffmpeg ? " · FFmpeg ready" : ""}`
-        : `Local helper connected, but Real-ESRGAN was not found. Enhancement will use the FFmpeg fallback until the free GPU engine is installed.`;
-      setStatus(msg, neural ? "good" : "");
+      if (!d.ffmpeg || !d.ffprobe) {
+        setStatus("Local helper connected, but FFmpeg/ffprobe is missing. Install FFmpeg, then run START_LOCAL_AI.bat again.", "bad");
+      } else if (neural) {
+        setStatus("✓ Local AI ready · Real-ESRGAN GPU engine found · FFmpeg ready", "good");
+      } else {
+        setStatus("Local helper connected · FFmpeg ready · Real-ESRGAN not found, so only the non-AI fallback is available.");
+      }
       return d;
     } catch (e) {
       if (!silent) setStatus("Local AI is offline. Run: python local_ai_server.py", "bad");
@@ -78,7 +81,7 @@
       fps: s.fps60 ? "60" : "original",
     });
     setBusy(true);
-    setStatus(`${s.tier === "max" ? "Local AI Max" : "Local AI Pro"} is processing on your PC… keep this tab open.`);
+    setStatus(`${s.tier === "max" ? "Local AI Max" : "Local AI Pro"} is processing on your PC… Real-ESRGAN 2×/4× can take several minutes. Keep this tab and START_LOCAL_AI open.`);
     try {
       const r = await fetch(`${BASE}/enhance?${q}`, {
         method: "POST",

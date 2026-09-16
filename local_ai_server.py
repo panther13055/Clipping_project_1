@@ -142,13 +142,19 @@ def neural_upscale(cleaned: Path, out_video: Path, *, ffmpeg: str, ffprobe: str,
         frames.mkdir()
         up.mkdir()
 
-        run([ffmpeg, "-y", "-i", str(cleaned), "-vsync", "0", str(frames / "%08d.png")])
+        # Normalize VFR sources before frame extraction; rebuilding a VFR
+        # source as CFR without this can change video speed.
+        run([ffmpeg, "-y", "-i", str(cleaned), "-vf", f"fps={fps:.6f}", str(frames / "%08d.png")])
         model = realesrgan_model(content)
-        cmd = [realesrgan, "-i", str(frames), "-o", str(up), "-n", model, "-s", str(scale), "-f", "png"]
-        # TTA improves detail but is much slower; reserve it for Max.
-        if tier == "max":
+        exe_dir = Path(realesrgan).resolve().parent
+        model_dir = exe_dir / "models"
+        if not model_dir.exists():
+            raise RuntimeError(f"Real-ESRGAN models folder was not found next to the executable: {model_dir}")
+        cmd = [realesrgan, "-i", str(frames), "-o", str(up), "-m", str(model_dir), "-n", model, "-s", str(scale), "-j", "2:2:2", "-f", "png"]
+        # TTA is several times slower. Keep Max usable unless explicitly enabled.
+        if tier == "max" and os.environ.get("LOCAL_AI_TTA", "0") == "1":
             cmd.append("-x")
-        run(cmd)
+        run(cmd, cwd=exe_dir)
 
         filters: list[str] = []
         if fps60:
@@ -219,7 +225,10 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type, X-Filename")
-        self.send_header("Access-Control-Expose-Headers", "X-Enhancer-Engine")
+        # Required by current Chromium when an HTTPS site talks to localhost
+        # after the user grants Local Network Access.
+        self.send_header("Access-Control-Allow-Private-Network", "true")
+        self.send_header("Access-Control-Expose-Headers", "X-Enhancer-Engine, X-Processing-Seconds")
         self.send_header("Cache-Control", "no-store")
 
     def send_json(self, code: int, obj: dict) -> None:

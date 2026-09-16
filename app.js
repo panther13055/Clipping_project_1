@@ -62,12 +62,14 @@
 
 
   const EXPORT_PROFILES = {
-    "8K":    { width: 4320, height: 7680, videoBitrate: 85_000_000, codec: "avc1.64003e" },
-    "4K":    { width: 2160, height: 3840, videoBitrate: 38_000_000, codec: "avc1.640033" },
-    "2K":    { width: 1440, height: 2560, videoBitrate: 20_000_000, codec: "avc1.640032" },
-    "1080p": { width: 1080, height: 1920, videoBitrate: 10_000_000, codec: "avc1.640028" },
-    "720p":  { width: 720,  height: 1280, videoBitrate: 5_000_000, codec: "avc1.64001f" },
-    "480p":  { width: 480,  height: 854,  videoBitrate: 2_500_000, codec: "avc1.4d401e" },
+    // The media timeline is independent of how quickly a large canvas can render.
+    // 8K is capped at 24fps to avoid starving the browser's audio/video threads.
+    "8K":    { width: 4320, height: 7680, videoBitrate: 85_000_000, codec: "avc1.64003e", fps: 24, renderFps: 24 },
+    "4K":    { width: 2160, height: 3840, videoBitrate: 38_000_000, codec: "avc1.640033", fps: 30, renderFps: 30 },
+    "2K":    { width: 1440, height: 2560, videoBitrate: 20_000_000, codec: "avc1.640032", fps: 30, renderFps: 30 },
+    "1080p": { width: 1080, height: 1920, videoBitrate: 10_000_000, codec: "avc1.640028", fps: 30, renderFps: 30 },
+    "720p":  { width: 720,  height: 1280, videoBitrate: 5_000_000, codec: "avc1.64001f", fps: 30, renderFps: 30 },
+    "480p":  { width: 480,  height: 854,  videoBitrate: 2_500_000, codec: "avc1.4d401e", fps: 30, renderFps: 30 },
   };
   const exportCanvas = document.createElement("canvas");
   const exportCtx = exportCanvas.getContext("2d", { alpha: false });
@@ -745,15 +747,24 @@
     renderFrameTo(ctx, bg, revealed, ui, pos);
     if (engine.recording && engine.exportProfile) {
       const profile = engine.exportProfile;
-      if (exportCanvas.width !== profile.width || exportCanvas.height !== profile.height) {
-        exportCanvas.width = profile.width; exportCanvas.height = profile.height;
+      const nowMs = performance.now();
+      const renderFps = profile.renderFps || profile.fps || 30;
+      const minGap = 1000 / Math.max(1, renderFps);
+      const due = !engine.exportFrameReady || !engine.exportLastRenderMs || (nowMs - engine.exportLastRenderMs) >= minGap - 1;
+      // Do not render a 4K/8K backing canvas on every 60Hz preview RAF. That
+      // used to stall the main thread, causing packed video timestamps and A/V drift.
+      if (due) {
+        if (exportCanvas.width !== profile.width || exportCanvas.height !== profile.height) {
+          exportCanvas.width = profile.width; exportCanvas.height = profile.height;
+        }
+        const sx = profile.width / W, sy = profile.height / H;
+        exportCtx.setTransform(sx, 0, 0, sy, 0, 0);
+        exportCtx.imageSmoothingEnabled = true; exportCtx.imageSmoothingQuality = "high";
+        renderFrameTo(exportCtx, bg, revealed, undefined, pos);
+        exportCtx.setTransform(1,0,0,1,0,0);
+        engine.exportFrameReady = true;
+        engine.exportLastRenderMs = nowMs;
       }
-      const sx = profile.width / W, sy = profile.height / H;
-      exportCtx.setTransform(sx, 0, 0, sy, 0, 0);
-      exportCtx.imageSmoothingEnabled = true; exportCtx.imageSmoothingQuality = "high";
-      renderFrameTo(exportCtx, bg, revealed, undefined, pos);
-      exportCtx.setTransform(1,0,0,1,0,0);
-      engine.exportFrameReady = true;
     }
   }
 
@@ -1037,7 +1048,7 @@
   async function startWebCodecsRecorder(profile) {
     if (!window.VideoEncoder || !window.Mp4Muxer) return null;
     copyEditorFrameToExportCanvas(profile);
-    const vconf = { codec: profile.codec || "avc1.640028", width: profile.width, height: profile.height, bitrate: profile.videoBitrate, framerate: 30 };
+    const vconf = { codec: profile.codec || "avc1.640028", width: profile.width, height: profile.height, bitrate: profile.videoBitrate, framerate: profile.fps || 30, hardwareAcceleration: "prefer-hardware" };
     const vsup = await VideoEncoder.isConfigSupported(vconf).catch(() => null);
     if (!vsup || !vsup.supported) return null;
 
@@ -1076,46 +1087,81 @@
     }
 
     let frameIdx = 0, timer = null;
+    let lastTimestampUs = -1;
+    let droppedFrames = 0;
     const frameDurationUs = 1_000_000 / vconf.framerate;
-    const encodeFrame = () => {
-      if (engine.exportPaused || encErr || venc.state !== "configured") return;
-      copyEditorFrameToExportCanvas(profile);
-      const timestamp = Math.round(frameIdx * frameDurationUs);
-      const frame = new VideoFrame(exportCanvas, { timestamp, duration: Math.round(frameDurationUs) });
-      venc.encode(frame, { keyFrame: frameIdx % 60 === 0 });
-      frame.close(); frameIdx++;
+    const recorderStartedMs = performance.now();
+    let recorderPausedMs = 0, recorderPauseStartedMs = 0;
+    const recorderElapsedUs = () => {
+      const now = performance.now();
+      const livePause = recorderPauseStartedMs ? (now - recorderPauseStartedMs) : 0;
+      return Math.max(0, Math.round((now - recorderStartedMs - recorderPausedMs - livePause) * 1000));
     };
-    const startTimer = () => { if (!timer) timer = setInterval(encodeFrame, 1000 / 30); };
+    const encodeFrame = (force = false) => {
+      if (engine.exportPaused || encErr || venc.state !== "configured") return;
+      let timestamp = recorderElapsedUs();
+      if (!force && lastTimestampUs >= 0 && timestamp - lastTimestampUs < frameDurationUs * 0.55) return;
+      // Under load, skip a tick instead of queueing hundreds of frames. Because
+      // timestamps come from real elapsed media time, skipped ticks hold the
+      // previous frame and never make the finished video fast-forward.
+      if (!force && venc.encodeQueueSize > 3) { droppedFrames++; return; }
+      copyEditorFrameToExportCanvas(profile);
+      if (timestamp <= lastTimestampUs) timestamp = lastTimestampUs + Math.max(1, Math.round(frameDurationUs));
+      const frame = new VideoFrame(exportCanvas, { timestamp, duration: Math.round(frameDurationUs) });
+      venc.encode(frame, { keyFrame: frameIdx % Math.max(1, Math.round(vconf.framerate * 2)) === 0 });
+      frame.close();
+      lastTimestampUs = timestamp;
+      frameIdx++;
+    };
+    const startTimer = () => { if (!timer) timer = setInterval(() => encodeFrame(false), 1000 / vconf.framerate); };
     const stopTimer = () => { if (timer) { clearInterval(timer); timer = null; } };
     const visibilityHandler = () => {
       if (!engine.recording) return;
-      if (document.hidden) { stopTimer(); setExportPaused(true); }
-      else { setExportPaused(false); startTimer(); }
+      if (document.hidden) {
+        stopTimer();
+        if (!recorderPauseStartedMs) recorderPauseStartedMs = performance.now();
+        setExportPaused(true);
+      } else {
+        if (recorderPauseStartedMs) recorderPausedMs += performance.now() - recorderPauseStartedMs;
+        recorderPauseStartedMs = 0;
+        setExportPaused(false);
+        startTimer();
+      }
     };
     document.addEventListener("visibilitychange", visibilityHandler);
+    encodeFrame(true);
     startTimer();
 
     return {
       label: audioOk ? "MP4 · H.264 + AAC (WebCodecs)" : "MP4 · H.264 (browser AAC unavailable)", ext: "mp4", mime: "video/mp4",
       async stop() {
+        if (!engine.exportPaused) encodeFrame(true);
         stopTimer(); document.removeEventListener("visibilitychange", visibilityHandler);
         if (engine.exportPaused) setExportPaused(false);
         if (encErr) throw encErr;
         await venc.flush();
+        const mediaDurationUs = Math.max(recorderElapsedUs(), lastTimestampUs >= 0 ? lastTimestampUs + Math.round(frameDurationUs) : 0);
         if (aenc && aenc.state === "configured") {
           try { audioSource.disconnect(capNode); musicGain.disconnect(capNode); sfxGain.disconnect(capNode); capNode.disconnect(); capSink.disconnect(); } catch (_) {}
           capNode.onaudioprocess = null;
-          const L = new Float32Array(pcmLen), R = new Float32Array(pcmLen); let o = 0;
-          for (let k = 0; k < pcmL.length; k++) { L.set(pcmL[k], o); R.set(pcmR[k], o); o += pcmL[k].length; }
+          // Keep AAC duration locked to the video media timeline. Missing tail
+          // samples are silence-padded rather than leaving audio/video different lengths.
+          const targetLen = Math.max(1, Math.round((mediaDurationUs / 1e6) * sampleRate));
+          const L = new Float32Array(targetLen), R = new Float32Array(targetLen); let o = 0;
+          for (let k = 0; k < pcmL.length && o < targetLen; k++) {
+            const n = Math.min(pcmL[k].length, targetLen - o);
+            L.set(pcmL[k].subarray(0, n), o); R.set(pcmR[k].subarray(0, n), o); o += n;
+          }
           const CH = 1024; let ts = 0;
-          for (let off = 0; off < pcmLen; off += CH) {
-            const n = Math.min(CH, pcmLen - off), data = new Float32Array(n * 2);
+          for (let off = 0; off < targetLen; off += CH) {
+            const n = Math.min(CH, targetLen - off), data = new Float32Array(n * 2);
             data.set(L.subarray(off, off + n), 0); data.set(R.subarray(off, off + n), n);
             const ad = new AudioData({ format: "f32-planar", sampleRate, numberOfFrames: n, numberOfChannels: 2, timestamp: Math.round(ts), data });
             aenc.encode(ad); ad.close(); ts += (n / sampleRate) * 1e6;
           }
           await aenc.flush();
         }
+        engine.exportDroppedFrames = droppedFrames;
         if (encErr) throw encErr;
         muxer.finalize();
         const buf = muxer.target && muxer.target.buffer;
@@ -1130,7 +1176,7 @@
   function startMediaRecorderPath(profile) {
     if (!window.MediaRecorder) throw new Error("This browser does not support MediaRecorder.");
     copyEditorFrameToExportCanvas(profile);
-    const stream = exportCanvas.captureStream(30);
+    const stream = exportCanvas.captureStream(profile.fps || 30);
     audioDest.stream.getAudioTracks().forEach((t) => stream.addTrack(t));
     const candidates = [
       ['video/mp4;codecs="avc1.42E01E,mp4a.40.2"', "mp4"], ["video/mp4", "mp4"],
@@ -1145,7 +1191,7 @@
     let recError = null; rec.onerror = (e) => { recError = e.error || new Error("MediaRecorder failed"); };
     const done = new Promise((res) => (rec.onstop = res));
     let copyTimer = null;
-    const startCopyLoop = () => { if (!copyTimer) copyTimer = setInterval(() => { if (!engine.exportPaused) copyEditorFrameToExportCanvas(profile); }, 1000 / 30); };
+    const startCopyLoop = () => { if (!copyTimer) copyTimer = setInterval(() => { if (!engine.exportPaused) copyEditorFrameToExportCanvas(profile); }, 1000 / (profile.fps || 30)); };
     const stopCopyLoop = () => { if (copyTimer) { clearInterval(copyTimer); copyTimer = null; } };
     const mrVisibilityHandler = () => {
       if (!engine.recording) return;
@@ -1181,7 +1227,7 @@
     const quality = $("export-quality") ? $("export-quality").value : "1080p";
     const profile = EXPORT_PROFILES[quality] || EXPORT_PROFILES["1080p"];
     engine.running = true; engine.recording = true; engine.stopFlag = false;
-    engine.exportProfile = profile; engine.exportFrameReady = false;
+    engine.exportProfile = profile; engine.exportFrameReady = false; engine.exportLastRenderMs = 0; engine.exportDroppedFrames = 0;
     engine.pauseAccumMs = 0; engine.pauseStarted = 0; engine.exportPaused = false;
     $("btn-export").disabled = true; $("btn-play").disabled = true;
     $("export-progress").classList.remove("hidden"); $("export-bar").style.width = "0%";
@@ -1209,7 +1255,8 @@
       const base = state.title.replace(/[^\w]+/g, "-").replace(/^-+|-+$/g, "").toLowerCase() || "ranking";
       a.download = `${base}-${quality}.${rec.ext}`; a.click();
       setTimeout(() => URL.revokeObjectURL(href), 30_000);
-      $("export-status").textContent = `Saved ${quality} · ${(blob.size / 1e6).toFixed(1)} MB .${rec.ext}`;
+      const dropped = engine.exportDroppedFrames || 0;
+      $("export-status").textContent = `Saved ${quality} · ${(blob.size / 1e6).toFixed(1)} MB .${rec.ext}` + (dropped ? ` · A/V sync protected while skipping ${dropped} overloaded frame tick(s)` : "");
     }
     renderStatic();
   }
