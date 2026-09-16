@@ -518,3 +518,19 @@ input:focus, select:focus { border-color:#5bd6ff; box-shadow:0 0 0 3px rgba(91,2
 .emoji-style-hint{font-size:10px;line-height:1.35;color:#7186a5;margin:0 0 8px}
 .emoji-btn{display:flex!important;align-items:center;justify-content:center;overflow:hidden}
 .emoji-btn .emoji-art{width:28px;height:28px;display:block;pointer-events:none;object-fit:contain}
+
+
+/* ---- custom per-clip SFX ---- */
+.custom-sfx-ctl { border-color: rgba(91,214,255,.30); }
+.custom-sfx-body { margin-top: 9px; display: flex; flex-direction: column; gap: 9px; }
+.custom-sfx-item { padding: 9px; border: 1px solid var(--panel-edge); border-radius: 9px; background: rgba(8,14,25,.58); }
+.custom-sfx-top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.custom-sfx-name { flex: 1 1 180px; min-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12.5px; font-weight: 700; }
+.custom-sfx-grid { display: grid; grid-template-columns: repeat(5, minmax(110px, 1fr)); gap: 7px; margin-top: 9px; }
+.custom-sfx-grid .mini-field { min-width: 0; }
+.custom-sfx-grid input[type="number"] { margin-top: 4px; padding: 7px 8px; }
+.custom-sfx-timeline { display: flex; gap: 9px; align-items: center; margin-top: 9px; }
+.custom-sfx-timeline input[type="range"] { flex: 1; }
+.custom-sfx-volume { display: block; margin-top: 8px; }
+.custom-sfx-volume b { float: right; }
+@media (max-width: 900px) { .custom-sfx-grid { grid-template-columns: repeat(2, minmax(110px, 1fr)); } }

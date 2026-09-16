@@ -182,6 +182,8 @@
     return {
       label: "", labelFromUser: false, color: cycle[(pos - 1) % 3], labelColor: "#ffffff", sizeScale: 1,
       clip: null, sourcing: null, query: "", duration: null,
+      sfxEnabled: false,
+      sfx: [], // {id,name,url,mediaType,sourceDuration,active,playAt,trimStart,trimEnd,volume,fadeIn,fadeOut}
       boxes: [], // per-rank cover boxes: { id, x, y, w, h, type:"blur"|"blend" }
     };
   }
@@ -875,7 +877,9 @@
   // -------------------------------------------------------- playback engine
   const engine = { running: false, recording: false, stopFlag: false, raf: 0 };
   let audioCtx = null, audioSource = null, audioDest = null;
-  let musicGain = null, sfxGain = null, duckAnalyser = null, duckData = null;
+  let musicGain = null, sfxGain = null, customSfxGain = null, duckAnalyser = null, duckData = null;
+  let customSfxSeq = 0;
+  const activeCustomSfxSources = new Set();
 
   // Background music element (looped under the whole video, stops with it).
   const musicEl = new Audio();
@@ -904,6 +908,13 @@
       sfxGain.gain.value = audio.sfxVol;
       sfxGain.connect(audioCtx.destination);
       sfxGain.connect(audioDest);
+
+      // uploaded per-clip SFX path. Kept separate from the built-in reveal
+      // SFX toggle so disabling reveal sounds does not mute user-added audio.
+      customSfxGain = audioCtx.createGain();
+      customSfxGain.gain.value = 1;
+      customSfxGain.connect(audioCtx.destination);
+      customSfxGain.connect(audioDest);
 
       // analyser on the CLIP audio, used to duck music under audible clips
       duckAnalyser = audioCtx.createAnalyser();
@@ -953,9 +964,87 @@
     }
   }
 
+  async function ensureCustomSfxBuffer(effect) {
+    if (!effect || !effect.url) throw new Error("Sound effect has no audio file.");
+    ensureAudioGraph();
+    if (effect._buffer) return effect._buffer;
+    const resp = await fetch(effect.url);
+    if (!resp.ok) throw new Error("Could not load sound effect: " + (effect.name || "audio"));
+    const bytes = await resp.arrayBuffer();
+    effect._buffer = await audioCtx.decodeAudioData(bytes.slice(0));
+    effect.sourceDuration = effect._buffer.duration || effect.sourceDuration || 0;
+    if (effect.trimEnd == null || effect.trimEnd <= 0 || effect.trimEnd > effect.sourceDuration) effect.trimEnd = effect.sourceDuration;
+    return effect._buffer;
+  }
+
+  async function prepareRankCustomSfx(rank) {
+    if (!rank || !rank.sfxEnabled) return;
+    const items = (rank.sfx || []).filter((x) => x && x.active !== false && x.url);
+    await Promise.all(items.map((x) => ensureCustomSfxBuffer(x).catch(() => null)));
+  }
+
+  function stopCustomSfxSources() {
+    activeCustomSfxSources.forEach((src) => { try { src.stop(); } catch (_) {} });
+    activeCustomSfxSources.clear();
+  }
+
+  function startCustomSfxEffect(effect, when, maxVisibleDuration) {
+    if (!effect || effect.active === false || !effect._buffer || !customSfxGain) return;
+    const buf = effect._buffer;
+    const at = clamp(Number(effect.playAt) || 0, 0, Math.max(0, maxVisibleDuration || 0));
+    const srcStart = clamp(Number(effect.trimStart) || 0, 0, Math.max(0, buf.duration - 0.001));
+    const requestedEnd = effect.trimEnd == null ? buf.duration : Number(effect.trimEnd);
+    const srcEnd = clamp(Number.isFinite(requestedEnd) ? requestedEnd : buf.duration, srcStart + 0.001, buf.duration);
+    const remain = Math.max(0, (maxVisibleDuration || 0) - at);
+    const dur = Math.min(srcEnd - srcStart, remain || (srcEnd - srcStart));
+    if (!(dur > 0.001)) return;
+
+    const source = audioCtx.createBufferSource();
+    source.buffer = buf;
+    const gain = audioCtx.createGain();
+    const vol = clamp(Number(effect.volume == null ? 1 : effect.volume), 0, 2);
+    const fadeIn = clamp(Number(effect.fadeIn) || 0, 0, dur / 2);
+    const fadeOut = clamp(Number(effect.fadeOut) || 0, 0, dur / 2);
+    const t0 = when + at;
+    const t1 = t0 + dur;
+    gain.gain.cancelScheduledValues(t0);
+    if (fadeIn > 0) {
+      gain.gain.setValueAtTime(0.0001, t0);
+      gain.gain.linearRampToValueAtTime(vol, t0 + fadeIn);
+    } else gain.gain.setValueAtTime(vol, t0);
+    if (fadeOut > 0) {
+      gain.gain.setValueAtTime(vol, Math.max(t0, t1 - fadeOut));
+      gain.gain.linearRampToValueAtTime(0.0001, t1);
+    }
+    source.connect(gain); gain.connect(customSfxGain);
+    source.onended = () => { activeCustomSfxSources.delete(source); try { source.disconnect(); gain.disconnect(); } catch (_) {} };
+    activeCustomSfxSources.add(source);
+    source.start(t0, srcStart, dur);
+  }
+
+  function scheduleRankCustomSfx(rank, visibleDuration) {
+    if (!rank || !rank.sfxEnabled || !audioCtx) return;
+    const now = audioCtx.currentTime + 0.015;
+    (rank.sfx || []).forEach((effect) => startCustomSfxEffect(effect, now, visibleDuration));
+  }
+
+  async function previewCustomSfx(effect) {
+    try {
+      const buf = await ensureCustomSfxBuffer(effect);
+      if (audioCtx.state === "suspended") await audioCtx.resume();
+      const srcStart = clamp(Number(effect.trimStart) || 0, 0, Math.max(0, buf.duration - 0.001));
+      const srcEnd = clamp(effect.trimEnd == null ? buf.duration : Number(effect.trimEnd), srcStart + 0.001, buf.duration);
+      const dur = Math.max(0.001, srcEnd - srcStart);
+      const copy = { ...effect, _buffer: buf, playAt: 0 };
+      startCustomSfxEffect(copy, audioCtx.currentTime + 0.02, dur);
+    } catch (e) {
+      alert("Could not preview SFX: " + (e.message || e));
+    }
+  }
+
   // Plays only the [start,end] window of a clip: seeks in, then stops the moment
   // currentTime reaches `end` (or the clip naturally ends). end=null → play to end.
-  function playClip(url, start = 0, end = null) {
+  function playClip(url, start = 0, end = null, onStarted = null) {
     return new Promise((resolve, reject) => {
       let done = false, raf = 0;
       const cleanup = () => {
@@ -975,7 +1064,7 @@
       };
       const onReady = () => {
         try { if (start > 0) player.currentTime = start; } catch (_) {}
-        player.play().then(watch).catch(onErr);
+        player.play().then(() => { try { if (onStarted) onStarted(); } catch (_) {} watch(); }).catch(onErr);
       };
       player.addEventListener("ended", onEnd);
       player.addEventListener("error", onErr);
@@ -1029,15 +1118,19 @@
         revealed.add(pos);
         playRevealSfx(pos === 1);
         if (onClipStart) onClipStart(i, seq.length, pos);
+        await prepareRankCustomSfx(r);
         if (r.clip) {
           engine.current = null;
           const s = r.clip.trimStart || 0;
           let e = r.clip.trimEnd != null ? r.clip.trimEnd : (r.clip.srcDuration || null);
           if (e != null && (e - s) > budget) e = s + budget; // trim the tail to fit the project cap
-          await playClip(r.clip.url, s, e);
+          const visibleDur = Math.max(0.05, (e != null ? e - s : clipLen(r)));
+          await playClip(r.clip.url, s, e, () => scheduleRankCustomSfx(r, visibleDur));
         } else {
           engine.current = { proc: pos, start: sequenceNow() };
-          const durMs = Math.min(clipLen(r), budget) * 1000;
+          const durSec = Math.min(clipLen(r), budget);
+          const durMs = durSec * 1000;
+          scheduleRankCustomSfx(r, durSec);
           const t0 = sequenceNow();
           while (sequenceNow() - t0 < durMs && !engine.stopFlag) await sleep(40);
           engine.current = null;
@@ -1046,6 +1139,7 @@
     } finally {
       cancelAnimationFrame(engine.raf);
       player.pause();
+      stopCustomSfxSources();
       musicEl.pause(); // music is trimmed to the video's length
       engine.current = null;
       engine.seqTimeSec = 0;
@@ -1077,6 +1171,7 @@
   function stopPlayback() {
     engine.stopFlag = true;
     player.pause();
+    stopCustomSfxSources();
     // force 'ended' style resolution
     player.dispatchEvent(new Event("ended"));
   }
@@ -1146,7 +1241,7 @@
         const b = e.inputBuffer, L = b.getChannelData(0), R = b.numberOfChannels > 1 ? b.getChannelData(1) : L;
         pcmL.push(new Float32Array(L)); pcmR.push(new Float32Array(R)); pcmLen += b.length;
       };
-      audioSource.connect(capNode); musicGain.connect(capNode); sfxGain.connect(capNode);
+      audioSource.connect(capNode); musicGain.connect(capNode); sfxGain.connect(capNode); customSfxGain.connect(capNode);
       capSink = audioCtx.createGain(); capSink.gain.value = 0;
       capNode.connect(capSink); capSink.connect(audioCtx.destination);
     }
@@ -1207,7 +1302,7 @@
         await venc.flush();
         const mediaDurationUs = Math.max(recorderElapsedUs(), lastTimestampUs >= 0 ? lastTimestampUs + Math.round(frameDurationUs) : 0);
         if (aenc && aenc.state === "configured") {
-          try { audioSource.disconnect(capNode); musicGain.disconnect(capNode); sfxGain.disconnect(capNode); capNode.disconnect(); capSink.disconnect(); } catch (_) {}
+          try { audioSource.disconnect(capNode); musicGain.disconnect(capNode); sfxGain.disconnect(capNode); customSfxGain.disconnect(capNode); capNode.disconnect(); capSink.disconnect(); } catch (_) {}
           capNode.onaudioprocess = null;
           // Keep AAC duration locked to the video media timeline. Missing tail
           // samples are silence-padded rather than leaving audio/video different lengths.
@@ -1520,7 +1615,10 @@
           pacingMode: state.pacingMode || "balanced",
           ranks: state.ranks.map((r) => ({
             label: r.label, labelFromUser: r.labelFromUser, color: r.color, labelColor: r.labelColor,
-            sizeScale: r.sizeScale, duration: r.duration, boxes: (r.boxes || []).map((b) => ({ ...b })),
+            sizeScale: r.sizeScale, duration: r.duration,
+            sfxEnabled: !!r.sfxEnabled,
+            sfx: (r.sfx || []).map((x) => ({ id:x.id, name:x.name, mediaType:x.mediaType || "", sourceDuration:x.sourceDuration || 0, active:x.active !== false, playAt:Number(x.playAt)||0, trimStart:Number(x.trimStart)||0, trimEnd:x.trimEnd == null ? null : Number(x.trimEnd), volume:x.volume == null ? 1 : Number(x.volume), fadeIn:Number(x.fadeIn)||0, fadeOut:Number(x.fadeOut)||0 })),
+            boxes: (r.boxes || []).map((b) => ({ ...b })),
             clip: r.clip ? {
               name: r.clip.name, source: r.clip.source, thumb: r.clip.thumb || null,
               attribution: r.clip.attribution || null, srcDuration: r.clip.srcDuration || null,
@@ -1540,6 +1638,14 @@
           const { b64, type } = await blobUrlToBase64(r.clip.url);
           proj.state.ranks[i].clip.data = b64;
           proj.state.ranks[i].clip.mediaType = type;
+        }
+        for (let j = 0; j < (r.sfx || []).length; j++) {
+          const fx = r.sfx[j];
+          if (!fx || !fx.url || !proj.state.ranks[i].sfx || !proj.state.ranks[i].sfx[j]) continue;
+          projStatus(`Saving project… packing SFX ${j + 1} for rank ${i + 1}`);
+          const packed = await blobUrlToBase64(fx.url);
+          proj.state.ranks[i].sfx[j].data = packed.b64;
+          proj.state.ranks[i].sfx[j].mediaType = packed.type || fx.mediaType || "audio/mpeg";
         }
       }
       // embed music
@@ -1599,6 +1705,12 @@
           color: r.color || NAMED.gold, labelColor: r.labelColor || "#ffffff",
           sizeScale: r.sizeScale || 1, clip: null, sourcing: null, query: "",
           duration: r.duration != null ? r.duration : null,
+          sfxEnabled: !!r.sfxEnabled,
+          sfx: (r.sfx || []).map((x) => {
+            const fx = { id:x.id || ("sfx" + (++customSfxSeq)), name:x.name || "Sound effect", mediaType:x.mediaType || "audio/mpeg", sourceDuration:x.sourceDuration || 0, active:x.active !== false, playAt:Number(x.playAt)||0, trimStart:Number(x.trimStart)||0, trimEnd:x.trimEnd == null ? null : Number(x.trimEnd), volume:x.volume == null ? 1 : Number(x.volume), fadeIn:Number(x.fadeIn)||0, fadeOut:Number(x.fadeOut)||0, url:"", _buffer:null };
+            if (x.data) fx.url = URL.createObjectURL(base64ToBlob(x.data, x.mediaType || "audio/mpeg"));
+            return fx;
+          }),
           boxes: (r.boxes || []).map((b) => ({ ...b })),
         };
         if (r.clip && r.clip.data) {
@@ -1827,6 +1939,84 @@
     return wrap;
   }
 
+
+  function buildCustomSfxCtl(r, pos) {
+    r.sfx = r.sfx || [];
+    const wrap = document.createElement("div");
+    wrap.className = "box-ctl custom-sfx-ctl";
+
+    const head = document.createElement("div"); head.className = "box-ctl-head";
+    const tag = document.createElement("span"); tag.className = "swatch-tag"; tag.textContent = "🔊 SFX"; head.appendChild(tag);
+    const enabledLab = document.createElement("label"); enabledLab.className = "check-field mini-check";
+    const enabled = document.createElement("input"); enabled.type = "checkbox"; enabled.checked = !!r.sfxEnabled;
+    enabled.addEventListener("change", () => { r.sfxEnabled = enabled.checked; body.classList.toggle("hidden", !r.sfxEnabled); scheduleCommit(); });
+    enabledLab.appendChild(enabled); enabledLab.append(" Enable sound effects"); head.appendChild(enabledLab);
+
+    const add = document.createElement("button"); add.type = "button"; add.className = "btn btn-ghost btn-small"; add.textContent = "＋ Add SFX";
+    const picker = document.createElement("input"); picker.type = "file"; picker.accept = "audio/*,.mp3,.wav,.m4a,.aac,.ogg,.webm"; picker.className = "hidden";
+    add.addEventListener("click", () => picker.click());
+    picker.addEventListener("change", async () => {
+      const file = picker.files && picker.files[0]; if (!file) return;
+      ensureAudioGraph();
+      const effect = {
+        id: "sfx" + (++customSfxSeq), name: file.name, url: URL.createObjectURL(file), mediaType: file.type || "audio/mpeg",
+        sourceDuration: 0, active: true, playAt: 0, trimStart: 0, trimEnd: null, volume: 1, fadeIn: 0, fadeOut: 0,
+      };
+      r.sfx.push(effect); r.sfxEnabled = true;
+      try { await ensureCustomSfxBuffer(effect); } catch (_) {}
+      advOpen.add(pos); renderRanksUI(); scheduleCommit(); picker.value = "";
+    });
+    head.appendChild(add); head.appendChild(picker); wrap.appendChild(head);
+
+    const body = document.createElement("div"); body.className = r.sfxEnabled ? "custom-sfx-body" : "custom-sfx-body hidden";
+    const clipDuration = Math.max(0.1, clipLen(r));
+    if (!r.sfx.length) {
+      const empty = document.createElement("p"); empty.className = "hint"; empty.textContent = "Add an MP3/WAV/etc., then choose exactly when it plays inside this clip."; body.appendChild(empty);
+    }
+
+    r.sfx.forEach((fx) => {
+      const card = document.createElement("div"); card.className = "custom-sfx-item";
+      const top = document.createElement("div"); top.className = "custom-sfx-top";
+      const activeLab = document.createElement("label"); activeLab.className = "check-field mini-check";
+      const active = document.createElement("input"); active.type = "checkbox"; active.checked = fx.active !== false;
+      active.addEventListener("change", () => { fx.active = active.checked; scheduleCommit(); });
+      activeLab.appendChild(active); activeLab.append(" Active"); top.appendChild(activeLab);
+      const name = document.createElement("span"); name.className = "custom-sfx-name"; name.textContent = fx.name || "Sound effect"; name.title = fx.name || ""; top.appendChild(name);
+      const preview = document.createElement("button"); preview.type = "button"; preview.className = "btn btn-ghost btn-small"; preview.textContent = "▶ SFX"; preview.addEventListener("click", () => previewCustomSfx(fx)); top.appendChild(preview);
+      const del = document.createElement("button"); del.type = "button"; del.className = "btn btn-ghost btn-small"; del.textContent = "🗑";
+      del.addEventListener("click", () => { try { if (String(fx.url || "").startsWith("blob:")) URL.revokeObjectURL(fx.url); } catch (_) {} r.sfx = r.sfx.filter((x) => x !== fx); advOpen.add(pos); renderRanksUI(); scheduleCommit(); }); top.appendChild(del);
+      card.appendChild(top);
+
+      const grid = document.createElement("div"); grid.className = "custom-sfx-grid";
+      const num = (label, value, min, max, step, onChange) => {
+        const lab = document.createElement("label"); lab.className = "mini-field"; lab.append(label);
+        const input = document.createElement("input"); input.type = "number"; input.min = String(min); input.max = String(max); input.step = String(step); input.value = Number(value || 0).toFixed(step < 1 ? 2 : 0);
+        input.addEventListener("input", () => onChange(Number(input.value) || 0)); lab.appendChild(input); grid.appendChild(lab); return input;
+      };
+      const playAt = num("Play at clip (sec)", fx.playAt || 0, 0, clipDuration, 0.05, (v) => { fx.playAt = clamp(v, 0, clipDuration); playSlider.value = String(fx.playAt); scheduleCommit(); });
+      const srcDur = Math.max(0.01, fx.sourceDuration || (fx._buffer && fx._buffer.duration) || 600);
+      const st = num("SFX start (sec)", fx.trimStart || 0, 0, srcDur, 0.05, (v) => { fx.trimStart = clamp(v, 0, Math.max(0, (fx.trimEnd == null ? srcDur : fx.trimEnd) - 0.01)); scheduleCommit(); });
+      const en = num("SFX end (sec)", fx.trimEnd == null ? srcDur : fx.trimEnd, 0.01, srcDur, 0.05, (v) => { fx.trimEnd = clamp(v, (fx.trimStart || 0) + 0.01, srcDur); scheduleCommit(); });
+      num("Fade in (sec)", fx.fadeIn || 0, 0, 5, 0.05, (v) => { fx.fadeIn = clamp(v, 0, 5); scheduleCommit(); });
+      num("Fade out (sec)", fx.fadeOut || 0, 0, 5, 0.05, (v) => { fx.fadeOut = clamp(v, 0, 5); scheduleCommit(); });
+      card.appendChild(grid);
+
+      const timeline = document.createElement("div"); timeline.className = "custom-sfx-timeline";
+      const playSlider = document.createElement("input"); playSlider.type = "range"; playSlider.min = "0"; playSlider.max = String(clipDuration); playSlider.step = "0.05"; playSlider.value = String(clamp(Number(fx.playAt) || 0, 0, clipDuration));
+      playSlider.title = "Drag to choose where the sound starts in this clip";
+      playSlider.addEventListener("input", () => { fx.playAt = Number(playSlider.value); playAt.value = Number(playSlider.value).toFixed(2); scheduleCommit(); });
+      timeline.appendChild(playSlider);
+      const read = document.createElement("span"); read.className = "trim-read"; read.textContent = `0s  →  ${clipDuration.toFixed(2)}s`; timeline.appendChild(read); card.appendChild(timeline);
+
+      const volLab = document.createElement("label"); volLab.className = "mini-field custom-sfx-volume"; volLab.append("Volume ");
+      const volRead = document.createElement("b"); volRead.textContent = Math.round((fx.volume == null ? 1 : fx.volume) * 100) + "%"; volLab.appendChild(volRead);
+      const vol = document.createElement("input"); vol.type = "range"; vol.min = "0"; vol.max = "200"; vol.step = "1"; vol.value = String(Math.round((fx.volume == null ? 1 : fx.volume) * 100));
+      vol.addEventListener("input", () => { fx.volume = Number(vol.value) / 100; volRead.textContent = vol.value + "%"; scheduleCommit(); }); volLab.appendChild(vol); card.appendChild(volLab);
+      body.appendChild(card);
+    });
+    wrap.appendChild(body);
+    return wrap;
+  }
 
   function buildCropCtl(r, pos) {
     const wrap = document.createElement("div");
@@ -2335,8 +2525,8 @@
       tools.appendChild(swap);
       adv.appendChild(tools);
 
-      // per-clip trim: choose exactly what part of the clip to keep
-      if (r.clip) { adv.appendChild(buildTrimCtl(r, pos)); adv.appendChild(buildCropCtl(r, pos)); }
+      // per-clip trim/crop + optional uploaded sound effects
+      if (r.clip) { adv.appendChild(buildTrimCtl(r, pos)); adv.appendChild(buildCropCtl(r, pos)); adv.appendChild(buildCustomSfxCtl(r, pos)); }
       // per-rank cover boxes: hide part of this clip
       adv.appendChild(buildBoxCtl(r, pos));
       main.appendChild(adv);
@@ -3055,6 +3245,8 @@
       ranks: state.ranks.map((r) => ({
         label: r.label, labelFromUser: r.labelFromUser, color: r.color, labelColor: r.labelColor, sizeScale: r.sizeScale,
         clip: r.clip, sourcing: r.sourcing, query: r.query, duration: r.duration,
+        sfxEnabled: !!r.sfxEnabled,
+        sfx: (r.sfx || []).map((x) => ({ id:x.id, name:x.name, url:x.url, mediaType:x.mediaType || "", sourceDuration:x.sourceDuration || 0, active:x.active !== false, playAt:Number(x.playAt)||0, trimStart:Number(x.trimStart)||0, trimEnd:x.trimEnd == null ? null : Number(x.trimEnd), volume:x.volume == null ? 1 : Number(x.volume), fadeIn:Number(x.fadeIn)||0, fadeOut:Number(x.fadeOut)||0 })),
         trimStart: r.clip ? r.clip.trimStart : null, trimEnd: r.clip ? r.clip.trimEnd : null,
         crop: r.clip && r.clip.crop ? { ...r.clip.crop } : null,
         boxes: (r.boxes || []).map((b) => ({ ...b })),
@@ -3101,6 +3293,8 @@
     state.titleStyle = s.titleStyle || "viral"; state.titleWordColors = { ...(s.titleWordColors || {}) };
     state.titleScale = s.titleScale; state.sideScale = s.sideScale; state.groupMove = s.groupMove;
     state.ranks = s.ranks.map((r) => {
+      r.sfxEnabled = !!r.sfxEnabled;
+      r.sfx = (r.sfx || []).map((x) => ({ ...x, _buffer: null }));
       // clips are kept by reference across snapshots, so restore the trim
       // primitives back onto the shared clip object to make trims undoable.
       if (r.clip) {
