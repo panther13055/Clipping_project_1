@@ -534,3 +534,10 @@ input:focus, select:focus { border-color:#5bd6ff; box-shadow:0 0 0 3px rgba(91,2
 .custom-sfx-volume { display: block; margin-top: 8px; }
 .custom-sfx-volume b { float: right; }
 @media (max-width: 900px) { .custom-sfx-grid { grid-template-columns: repeat(2, minmax(110px, 1fr)); } }
+
+
+/* ---- transition audio ---- */
+.transition-audio-card { border-color: rgba(139,124,255,.36); background: linear-gradient(180deg, rgba(139,124,255,.07), rgba(0,0,0,.08)); }
+.transition-audio-name { flex: 1 1 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.transition-audio-controls .mini-field { flex: 1 1 120px; min-width: 110px; }
+.transition-audio-controls input[type="number"] { margin-top: 4px; }

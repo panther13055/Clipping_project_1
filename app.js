@@ -122,7 +122,7 @@
     if (r.clip) return DEFAULT_CLIP_SECONDS; // clip still measuring
     return r.duration || DEFAULT_CLIP_SECONDS;
   }
-  const totalDuration = () => state.ranks.reduce((s, r) => s + clipLen(r), 0);
+  const totalDuration = () => state.ranks.reduce((s, r) => s + clipLen(r), 0) + transitionTotalDuration();
 
   // ------------------------------------------------------------------ state
   const state = {
@@ -885,7 +885,21 @@
   const musicEl = new Audio();
   musicEl.loop = true;
   const audio = { musicName: "", musicVol: 0.7, sfxOn: true, sfxVol: 0.6 };
+  const transitionAudio = { enabled:false, name:"", url:"", mediaType:"", sourceDuration:0, trimStart:0, trimEnd:null, volume:1, fadeIn:0, fadeOut:0, _buffer:null };
   const hasMusic = () => !!musicEl.getAttribute("src");
+  const hasTransitionAudio = () => !!transitionAudio.url;
+  function transitionSegmentDuration() {
+    if (!transitionAudio.enabled || !hasTransitionAudio()) return 0;
+    const full = Math.max(0, Number(transitionAudio.sourceDuration) || (transitionAudio._buffer && transitionAudio._buffer.duration) || 0);
+    if (!full) return 0;
+    const a = clamp(Number(transitionAudio.trimStart) || 0, 0, full);
+    const b = clamp(transitionAudio.trimEnd == null ? full : Number(transitionAudio.trimEnd), a, full);
+    return Math.max(0, b - a);
+  }
+  function transitionTotalDuration() {
+    const d = transitionSegmentDuration();
+    return d > 0 ? Math.max(0, state.ranks.length - 1) * d : 0;
+  }
 
   function ensureAudioGraph() {
     if (!audioCtx) {
@@ -1042,6 +1056,53 @@
     }
   }
 
+  async function ensureTransitionAudioBuffer() {
+    if (!transitionAudio.enabled || !transitionAudio.url) return null;
+    try {
+      const buf = await ensureCustomSfxBuffer(transitionAudio);
+      transitionAudio.sourceDuration = buf.duration || transitionAudio.sourceDuration || 0;
+      if (transitionAudio.trimEnd == null || transitionAudio.trimEnd > transitionAudio.sourceDuration) transitionAudio.trimEnd = transitionAudio.sourceDuration;
+      syncTransitionAudioUI();
+      return buf;
+    } catch (e) {
+      console.warn("Transition audio could not be decoded", e);
+      return null;
+    }
+  }
+
+  async function playTransitionAudio(maxDuration) {
+    if (!transitionAudio.enabled || !transitionAudio.url || engine.stopFlag) return 0;
+    const buf = await ensureTransitionAudioBuffer();
+    if (!buf || engine.stopFlag) return 0;
+    if (audioCtx.state === "suspended") await audioCtx.resume().catch(() => {});
+    const full = buf.duration || 0;
+    const st = clamp(Number(transitionAudio.trimStart) || 0, 0, Math.max(0, full - 0.001));
+    const en = clamp(transitionAudio.trimEnd == null ? full : Number(transitionAudio.trimEnd), st + 0.001, full);
+    const allowed = Math.max(0, Number(maxDuration) || (en - st));
+    const dur = Math.min(en - st, allowed);
+    if (!(dur > 0.01)) return 0;
+    const effect = { ...transitionAudio, _buffer:buf, active:true, playAt:0, trimStart:st, trimEnd:st + dur };
+    startCustomSfxEffect(effect, audioCtx.currentTime + 0.015, dur);
+    const t0 = sequenceNow();
+    while ((sequenceNow() - t0) < dur * 1000 && !engine.stopFlag) await sleep(20);
+    return dur;
+  }
+
+  async function previewTransitionAudio() {
+    if (!transitionAudio.url) return;
+    const old = transitionAudio.enabled;
+    transitionAudio.enabled = true;
+    await ensureTransitionAudioBuffer();
+    transitionAudio.enabled = old;
+    if (transitionAudio._buffer) {
+      const full = transitionAudio._buffer.duration || 0;
+      const st = clamp(Number(transitionAudio.trimStart) || 0, 0, Math.max(0, full - 0.001));
+      const en = clamp(transitionAudio.trimEnd == null ? full : Number(transitionAudio.trimEnd), st + 0.001, full);
+      const copy = { ...transitionAudio, _buffer:transitionAudio._buffer, active:true, playAt:0, trimStart:st, trimEnd:en };
+      startCustomSfxEffect(copy, audioCtx.currentTime + 0.02, en - st);
+    }
+  }
+
   // Plays only the [start,end] window of a clip: seeks in, then stops the moment
   // currentTime reaches `end` (or the clip naturally ends). end=null → play to end.
   function playClip(url, start = 0, end = null, onStarted = null) {
@@ -1133,8 +1194,12 @@
           scheduleRankCustomSfx(r, durSec);
           const t0 = sequenceNow();
           while (sequenceNow() - t0 < durMs && !engine.stopFlag) await sleep(40);
-          engine.current = null;
         }
+        if (i < seq.length - 1 && !engine.stopFlag && transitionAudio.enabled && transitionAudio.url) {
+          const transBudget = Math.max(0, MAX_TOTAL_SECONDS - (sequenceNow() - seqStart) / 1000);
+          if (transBudget > 0.02) await playTransitionAudio(transBudget);
+        }
+        engine.current = null;
       }
     } finally {
       cancelAnimationFrame(engine.raf);
@@ -1628,7 +1693,10 @@
             } : null,
           })),
         },
-        audio: { musicName: audio.musicName, musicVol: audio.musicVol, sfxOn: audio.sfxOn, sfxVol: audio.sfxVol },
+        audio: {
+          musicName: audio.musicName, musicVol: audio.musicVol, sfxOn: audio.sfxOn, sfxVol: audio.sfxVol,
+          transition: { enabled:!!transitionAudio.enabled, name:transitionAudio.name || "", mediaType:transitionAudio.mediaType || "", sourceDuration:transitionAudio.sourceDuration || 0, trimStart:Number(transitionAudio.trimStart)||0, trimEnd:transitionAudio.trimEnd == null ? null : Number(transitionAudio.trimEnd), volume:transitionAudio.volume == null ? 1 : Number(transitionAudio.volume), fadeIn:Number(transitionAudio.fadeIn)||0, fadeOut:Number(transitionAudio.fadeOut)||0 }
+        },
       };
       // embed the actual clip bytes
       for (let i = 0; i < state.ranks.length; i++) {
@@ -1653,6 +1721,12 @@
         projStatus("Saving project… packing music");
         const { b64, type } = await blobUrlToBase64(musicEl.src);
         proj.audio.data = b64; proj.audio.dataType = type;
+      }
+      if (hasTransitionAudio()) {
+        projStatus("Saving project… packing transition audio");
+        const packed = await blobUrlToBase64(transitionAudio.url);
+        proj.audio.transition.data = packed.b64;
+        proj.audio.transition.mediaType = packed.type || transitionAudio.mediaType || "audio/mpeg";
       }
       const blob = new Blob([JSON.stringify(proj)], { type: "application/json" });
       const a = document.createElement("a");
@@ -1740,6 +1814,7 @@
       $("inp-sfx").checked = audio.sfxOn;
       $("inp-sfx-vol").value = Math.round(audio.sfxVol * 100);
       $("val-sfx-vol").textContent = Math.round(audio.sfxVol * 100) + "%";
+      restoreTransitionAudio(a.transition || null);
 
       document.body.classList.remove("setup-mode");
       syncInputsFromState(); updateEditBadge();
@@ -3763,6 +3838,7 @@
     if (total > MAX_TOTAL_SECONDS + 0.05) issues.push(`Video is ${(total - MAX_TOTAL_SECONDS).toFixed(1)}s over the 120s cap.`);
     if (!clipsAssigned()) issues.push("No clips added yet — empty ranks will use generated backgrounds.");
     if (clipsAssigned() && !hasMusic()) issues.push("No background music added.");
+    if (transitionAudio.enabled && !hasTransitionAudio()) issues.push("Transition audio is enabled but no transition file is loaded.");
     state.ranks.forEach((r, i) => {
       if (!r.label.trim()) issues.push(`Rank #${i + 1} is missing a label.`);
       if (r.clip && r.clip.srcDuration && clipLen(r) < 0.35) issues.push(`Rank #${i + 1} trim is extremely short.`);
@@ -3900,6 +3976,78 @@
     catch (_) { window.prompt("Copy the credits below:", txt); }
     setTimeout(() => { $("btn-copy-attr").textContent = "📋 Copy attributions"; }, 2500);
   });
+
+  // ---- custom transition audio (Creative tools) ----
+  function transitionAudioFile(file) {
+    if (transitionAudio.url && String(transitionAudio.url).startsWith("blob:")) { try { URL.revokeObjectURL(transitionAudio.url); } catch (_) {} }
+    transitionAudio._buffer = null;
+    if (!file) {
+      transitionAudio.name = ""; transitionAudio.url = ""; transitionAudio.mediaType = ""; transitionAudio.sourceDuration = 0;
+      transitionAudio.trimStart = 0; transitionAudio.trimEnd = null;
+      transitionAudio.enabled = false;
+      syncTransitionAudioUI(); updateTotalUI(); return;
+    }
+    transitionAudio.url = URL.createObjectURL(file);
+    transitionAudio.name = file.name || "Transition audio";
+    transitionAudio.mediaType = file.type || "audio/mpeg";
+    transitionAudio.enabled = true;
+    ensureTransitionAudioBuffer().then(() => { syncTransitionAudioUI(); updateTotalUI(); });
+    syncTransitionAudioUI();
+  }
+
+  function restoreTransitionAudio(saved) {
+    if (transitionAudio.url && String(transitionAudio.url).startsWith("blob:")) { try { URL.revokeObjectURL(transitionAudio.url); } catch (_) {} }
+    Object.assign(transitionAudio, { enabled:false, name:"", url:"", mediaType:"", sourceDuration:0, trimStart:0, trimEnd:null, volume:1, fadeIn:0, fadeOut:0, _buffer:null });
+    if (saved) {
+      transitionAudio.enabled = !!saved.enabled;
+      transitionAudio.name = saved.name || "Transition audio";
+      transitionAudio.mediaType = saved.mediaType || "audio/mpeg";
+      transitionAudio.sourceDuration = Number(saved.sourceDuration) || 0;
+      transitionAudio.trimStart = Number(saved.trimStart) || 0;
+      transitionAudio.trimEnd = saved.trimEnd == null ? null : Number(saved.trimEnd);
+      transitionAudio.volume = saved.volume == null ? 1 : Number(saved.volume);
+      transitionAudio.fadeIn = Number(saved.fadeIn) || 0;
+      transitionAudio.fadeOut = Number(saved.fadeOut) || 0;
+      if (saved.data) transitionAudio.url = URL.createObjectURL(base64ToBlob(saved.data, transitionAudio.mediaType));
+    }
+    if (!transitionAudio.url) transitionAudio.enabled = false;
+    syncTransitionAudioUI(); updateTotalUI();
+  }
+
+  function syncTransitionAudioUI() {
+    const en=$("inp-transition-audio-enabled"), name=$("transition-audio-name"), add=$("btn-transition-audio"), rm=$("btn-transition-audio-remove");
+    if (!en) return;
+    en.checked = !!transitionAudio.enabled;
+    en.disabled = !hasTransitionAudio();
+    if (name) name.textContent = transitionAudio.name || "No transition audio selected";
+    if (add) add.textContent = hasTransitionAudio() ? "🔁 Replace transition audio" : "＋ Add transition audio";
+    if (rm) rm.classList.toggle("hidden", !hasTransitionAudio());
+    const full = Math.max(0, Number(transitionAudio.sourceDuration)||0);
+    const st=$("inp-transition-start"), ed=$("inp-transition-end"), vol=$("inp-transition-volume"), fi=$("inp-transition-fadein"), fo=$("inp-transition-fadeout");
+    if (st) { st.max=String(full || 600); st.value=String(transitionAudio.trimStart || 0); st.disabled=!hasTransitionAudio(); }
+    if (ed) { ed.max=String(full || 600); ed.value=String(transitionAudio.trimEnd == null ? full : transitionAudio.trimEnd); ed.disabled=!hasTransitionAudio(); }
+    if (vol) { vol.value=String(Math.round((transitionAudio.volume == null ? 1 : transitionAudio.volume)*100)); vol.disabled=!hasTransitionAudio(); }
+    if ($("val-transition-volume")) $("val-transition-volume").textContent=Math.round((transitionAudio.volume == null ? 1 : transitionAudio.volume)*100)+"%";
+    if (fi) { fi.value=String(transitionAudio.fadeIn || 0); fi.disabled=!hasTransitionAudio(); }
+    if (fo) { fo.value=String(transitionAudio.fadeOut || 0); fo.disabled=!hasTransitionAudio(); }
+    const dur=$("transition-duration-read"); if (dur) dur.textContent=hasTransitionAudio() ? `Selected transition: ${transitionSegmentDuration().toFixed(2)}s · plays between every clip` : "Upload one audio file; the same selected section will play after each clip except the last.";
+  }
+
+  function setupTransitionAudioUI() {
+    const add=$("btn-transition-audio"); if (!add) return;
+    add.addEventListener("click", () => { const inp=document.createElement("input"); inp.type="file"; inp.accept="audio/*,.mp3,.wav,.m4a,.aac,.ogg,.webm"; inp.onchange=()=>inp.files[0]&&transitionAudioFile(inp.files[0]); inp.click(); });
+    $("btn-transition-audio-remove").addEventListener("click", () => transitionAudioFile(null));
+    $("btn-transition-audio-preview").addEventListener("click", () => previewTransitionAudio());
+    $("inp-transition-audio-enabled").addEventListener("change", (e) => { transitionAudio.enabled=!!e.target.checked && hasTransitionAudio(); syncTransitionAudioUI(); updateTotalUI(); scheduleCommit(); });
+    $("inp-transition-start").addEventListener("input", (e) => { const full=Math.max(0.01,transitionAudio.sourceDuration||600); transitionAudio.trimStart=clamp(Number(e.target.value)||0,0,Math.max(0,full-0.01)); if (transitionAudio.trimEnd!=null && transitionAudio.trimEnd<=transitionAudio.trimStart) transitionAudio.trimEnd=Math.min(full,transitionAudio.trimStart+0.05); syncTransitionAudioUI(); updateTotalUI(); scheduleCommit(); });
+    $("inp-transition-end").addEventListener("input", (e) => { const full=Math.max(0.01,transitionAudio.sourceDuration||600); transitionAudio.trimEnd=clamp(Number(e.target.value)||full,(transitionAudio.trimStart||0)+0.01,full); syncTransitionAudioUI(); updateTotalUI(); scheduleCommit(); });
+    $("inp-transition-volume").addEventListener("input", (e) => { transitionAudio.volume=clamp(Number(e.target.value)/100,0,2); $("val-transition-volume").textContent=e.target.value+"%"; scheduleCommit(); });
+    $("inp-transition-fadein").addEventListener("input", (e) => { transitionAudio.fadeIn=clamp(Number(e.target.value)||0,0,5); scheduleCommit(); });
+    $("inp-transition-fadeout").addEventListener("input", (e) => { transitionAudio.fadeOut=clamp(Number(e.target.value)||0,0,5); scheduleCommit(); });
+    syncTransitionAudioUI();
+  }
+
+  setupTransitionAudioUI();
 
   // ---- audio panel ----
   // "Every rank silent" heuristic: stock clips are usually mute and
