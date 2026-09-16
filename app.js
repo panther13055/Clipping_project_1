@@ -139,6 +139,9 @@
     accentColor: NAMED.red,
     titleStyle: "viral",
     titleWordColors: {},
+    rankNumberStyle: "standard",
+    rankPremiumPalette: "reference",
+    rankPremiumStrength: 100,
     titleScale: 1,
     sideScale: 1,
     // ranks[i] => rank position i+1
@@ -417,6 +420,41 @@
     return cps.join("") + "…";
   }
 
+  const PREMIUM_RANK_PALETTES = {
+    reference: ["#4f5dff", "#e6495f", "#dfe5ff", "#f5c518", "#22c55e", "#a855f7", "#06b6d4", "#ff8c00", "#ff2e93", "#ffffff"],
+    neon:     ["#00e5ff", "#ff2e93", "#b6ff00", "#8b5cf6", "#ff8c00", "#00e676", "#2979ff", "#ffee32", "#d946ef", "#ffffff"],
+    medals:   ["#f5c518", "#cbd5e1", "#d97706", "#f5c518", "#cbd5e1", "#d97706", "#f5c518", "#cbd5e1", "#d97706", "#ffffff"],
+    candy:    ["#ff4fa3", "#7c3aed", "#22d3ee", "#f59e0b", "#10b981", "#fb7185", "#6366f1", "#84cc16", "#d946ef", "#ffffff"],
+    fireice:  ["#3b82f6", "#ef4444", "#e0f2fe", "#f97316", "#60a5fa", "#dc2626", "#67e8f9", "#fb923c", "#2563eb", "#ffffff"],
+  };
+  function premiumRankColor(pos) {
+    const key = state.rankPremiumPalette || "reference";
+    const pal = PREMIUM_RANK_PALETTES[key] || PREMIUM_RANK_PALETTES.reference;
+    return pal[(Math.max(1, pos) - 1) % pal.length];
+  }
+  function drawPremiumRankNumber(c, text, x, y, font, size, pos, fallbackFill) {
+    if ((state.rankNumberStyle || "standard") !== "premium") {
+      strokedText(c, text, x, y, font, toHex(fallbackFill), Math.max(4, size * 0.16), "left");
+      return;
+    }
+    const accent = premiumRankColor(pos);
+    const strength = clamp(Number(state.rankPremiumStrength) || 100, 60, 170) / 100;
+    const outer = Math.max(7, size * 0.22 * strength);
+    const inner = Math.max(4, size * 0.115 * strength);
+    c.save();
+    c.font = font; c.textAlign = "left"; c.textBaseline = "alphabetic";
+    c.lineJoin = "round"; c.miterLimit = 2;
+    c.shadowColor = "rgba(0,0,0,.45)"; c.shadowBlur = Math.max(2, size * 0.035); c.shadowOffsetY = Math.max(1, size * 0.02);
+    // Black outside border.
+    c.strokeStyle = "#050505"; c.lineWidth = outer; c.strokeText(text, x, y);
+    // Coloured premium ring.
+    c.shadowColor = "transparent";
+    c.strokeStyle = accent; c.lineWidth = inner; c.strokeText(text, x, y);
+    // Crisp white centre, as in the user's reference image.
+    c.fillStyle = "#ffffff"; c.fillText(text, x, y);
+    c.restore();
+  }
+
   function drawRanks(c, revealed) {
     if (state.noRankMode) return;
     const n = state.numRanks;
@@ -446,7 +484,7 @@
       const x = LB.x1 + strokeW / 2;      // stroke bleed stays right of x=60
       c.save();
       c.translate(dx, dy);
-      strokedText(c, pos + ".", x, y, font, toHex(r.color), strokeW, "left");
+      drawPremiumRankNumber(c, pos + ".", x, y, font, rs, pos, r.color);
       c.font = font;
       const numW = c.measureText(pos + ".").width;
       let rowW = numW;
@@ -1667,6 +1705,8 @@
           niche: state.niche, topic: state.topic, numRanks: state.numRanks, noRankMode: !!state.noRankMode, layoutMode: state.layoutMode || "classic", videoRect: { ...(state.videoRect || defaultVideoRect()) },
           titleColor: state.titleColor, accentColor: state.accentColor,
           titleStyle: state.titleStyle, titleWordColors: { ...(state.titleWordColors || {}) },
+          rankNumberStyle: state.rankNumberStyle || "standard", rankPremiumPalette: state.rankPremiumPalette || "reference", rankPremiumStrength: state.rankPremiumStrength || 100,
+      rankNumberStyle: state.rankNumberStyle || "standard", rankPremiumPalette: state.rankPremiumPalette || "reference", rankPremiumStrength: state.rankPremiumStrength || 100,
           titleScale: state.titleScale, sideScale: state.sideScale, groupMove: state.groupMove,
           editRank: state.editRank, order: state.order.slice(),
           layout: JSON.parse(JSON.stringify(state.layout)),
@@ -1760,6 +1800,8 @@
       state.videoRect = normalizeVideoRect(s.videoRect || defaultVideoRect(state.layoutMode));
       state.titleColor = s.titleColor || "#ffffff"; state.accentColor = s.accentColor || NAMED.red;
       state.titleStyle = s.titleStyle || "viral"; state.titleWordColors = { ...(s.titleWordColors || {}) };
+      state.rankNumberStyle = s.rankNumberStyle || "standard"; state.rankPremiumPalette = s.rankPremiumPalette || "reference"; state.rankPremiumStrength = Number(s.rankPremiumStrength) || 100;
+    state.rankNumberStyle = s.rankNumberStyle || "standard"; state.rankPremiumPalette = s.rankPremiumPalette || "reference"; state.rankPremiumStrength = Number(s.rankPremiumStrength) || 100;
       state.titleScale = s.titleScale || 1; state.sideScale = s.sideScale || 1;
       state.groupMove = !!s.groupMove; state.editRank = s.editRank || 1;
       state.order = (s.order && s.order.length) ? s.order.slice() : [];
@@ -3422,6 +3464,10 @@
     $("val-side-size").textContent = Math.round(state.sideScale * 100) + "%";
     const gm = $("inp-group-move"); if (gm) gm.checked = state.groupMove;
     const ts = $("inp-title-style"); if (ts) ts.value = state.titleStyle || "viral";
+    const pre = $("inp-premium-ranks"); if (pre) pre.checked = (state.rankNumberStyle || "standard") === "premium";
+    const prp = $("inp-premium-rank-palette"); if (prp) prp.value = state.rankPremiumPalette || "reference";
+    const prs = $("inp-premium-rank-strength"); if (prs) { prs.value = String(state.rankPremiumStrength || 100); const rd=$("val-premium-rank-strength"); if(rd) rd.textContent = String(state.rankPremiumStrength || 100) + "%"; }
+    syncPremiumRankPreview();
     const lm = $("inp-layout-mode"); if (lm) lm.value = state.layoutMode || "classic";
     const vr = normalizeVideoRect(state.videoRect || defaultVideoRect(state.layoutMode));
     [["inp-video-x",vr.x],["inp-video-y",vr.y],["inp-video-w",vr.w],["inp-video-h",vr.h]].forEach(([id,v]) => { const el=$(id); if(el) el.value=Math.round(v); });
@@ -3474,7 +3520,18 @@
     scheduleCommit(); scheduleStatic();
   });
   $("inp-accent").addEventListener("input", (e) => { state.accent = e.target.value; rebuildTitleWordColors(); scheduleCommit(); scheduleStatic(); });
+  function syncPremiumRankPreview() {
+    const host = $("premium-rank-preview");
+    if (!host) return;
+    const pal = PREMIUM_RANK_PALETTES[state.rankPremiumPalette || "reference"] || PREMIUM_RANK_PALETTES.reference;
+    [...host.querySelectorAll(".premium-rank-sample")].forEach((el, i) => el.style.setProperty("--premium-accent", pal[i % pal.length]));
+    host.classList.toggle("is-off", (state.rankNumberStyle || "standard") !== "premium");
+  }
   $("inp-title-style").addEventListener("change", (e) => { state.titleStyle = e.target.value || "viral"; scheduleCommit(); scheduleStatic(); });
+  const premiumRanks = $("inp-premium-ranks"); if (premiumRanks) premiumRanks.addEventListener("change", (e) => { state.rankNumberStyle = e.target.checked ? "premium" : "standard"; syncPremiumRankPreview(); commitHistory(); renderStatic(); });
+  const premiumPalette = $("inp-premium-rank-palette"); if (premiumPalette) premiumPalette.addEventListener("change", (e) => { state.rankPremiumPalette = e.target.value || "reference"; syncPremiumRankPreview(); commitHistory(); renderStatic(); });
+  const premiumStrength = $("inp-premium-rank-strength"); if (premiumStrength) premiumStrength.addEventListener("input", (e) => { state.rankPremiumStrength = clamp(Number(e.target.value) || 100, 60, 170); const rd=$("val-premium-rank-strength"); if(rd) rd.textContent = Math.round(state.rankPremiumStrength) + "%"; scheduleCommit(); scheduleStatic(); });
+
   $("btn-auto-title-colors").addEventListener("click", autoColorTitleWords);
   $("btn-clear-title-colors").addEventListener("click", () => { state.titleWordColors = {}; rebuildTitleWordColors(); commitHistory(); renderStatic(); });
   $("inp-word-limit").addEventListener("change", (e) => { state.aiOptions.wordLimit = Number(e.target.value) || 0; scheduleCommit(); });

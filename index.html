@@ -200,6 +200,29 @@
           <div id="title-word-colors" class="word-color-editor"></div>
         </div>
 
+        <div class="tool-card premium-rank-card">
+          <div class="tool-card-title">💎 Premium rank number colors</div>
+          <label class="check-field"><input type="checkbox" id="inp-premium-ranks"> Enable premium double-outline numbers</label>
+          <p class="hint" style="margin:7px 0 8px">Reference style = white centre + colored ring + black outer edge, like the 1 / 2 / 3 style you shared.</p>
+          <div class="row compact-row">
+            <label class="mini-field">Premium palette
+              <select id="inp-premium-rank-palette">
+                <option value="reference" selected>Reference · Blue / Red / Ice</option>
+                <option value="neon">Neon mix</option>
+                <option value="medals">Gold / Silver / Bronze</option>
+                <option value="candy">Candy pop</option>
+                <option value="fireice">Fire & Ice</option>
+              </select>
+            </label>
+            <label class="mini-field" style="flex:1 1 220px">Outline strength <b id="val-premium-rank-strength">100%</b>
+              <input type="range" id="inp-premium-rank-strength" min="60" max="170" value="100">
+            </label>
+          </div>
+          <div class="premium-rank-preview" id="premium-rank-preview" aria-label="Premium rank style preview">
+            <span class="premium-rank-sample">1.</span><span class="premium-rank-sample">2.</span><span class="premium-rank-sample">3.</span><span class="premium-rank-sample">4.</span><span class="premium-rank-sample">5.</span>
+          </div>
+        </div>
+
         <label class="field slider-field">
           <span>Title size <b id="val-title-size">100%</b></span>
           <input type="range" id="inp-title-size" min="50" max="200" value="100">
