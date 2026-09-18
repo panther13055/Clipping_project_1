@@ -82,9 +82,9 @@
   const EXPORT_PROFILES = {
     // The media timeline is independent of how quickly a large canvas can render.
     // 8K is capped at 24fps to avoid starving the browser's audio/video threads.
-    "8K":    { width: 4320, height: 7680, videoBitrate: 52_000_000, codec: "avc1.64003e", fps: 24, renderFps: 24 },
-    "4K":    { width: 2160, height: 3840, videoBitrate: 30_000_000, codec: "avc1.640033", fps: 30, renderFps: 30 },
-    "2K":    { width: 1440, height: 2560, videoBitrate: 18_000_000, codec: "avc1.640032", fps: 30, renderFps: 30 },
+    "8K":    { width: 4320, height: 7680, videoBitrate: 42_000_000, codec: "avc1.64003e", fps: 24, renderFps: 24 },
+    "4K":    { width: 2160, height: 3840, videoBitrate: 26_000_000, codec: "avc1.640033", fps: 30, renderFps: 30 },
+    "2K":    { width: 1440, height: 2560, videoBitrate: 16_000_000, codec: "avc1.640032", fps: 30, renderFps: 30 },
     "1080p": { width: 1080, height: 1920, videoBitrate: 10_000_000, codec: "avc1.640028", fps: 30, renderFps: 30 },
     "720p":  { width: 720,  height: 1280, videoBitrate: 5_000_000, codec: "avc1.64001f", fps: 30, renderFps: 30 },
     "480p":  { width: 480,  height: 854,  videoBitrate: 2_500_000, codec: "avc1.4d401e", fps: 30, renderFps: 30 },
@@ -1287,6 +1287,27 @@
     player.dispatchEvent(new Event("ended"));
   }
 
+  // ROBUST_EXPORT_AUDIO_V2
+  // A MediaStreamDestination owns a live audio track. Older exports added that
+  // SAME track to the recorder stream and then stopped every stream track,
+  // permanently ending the shared audio track. The next export could therefore
+  // be silent. Build a fresh destination before every export and only ever give
+  // MediaRecorder a clone of its track.
+  function rebuildExportAudioDestination() {
+    if (!audioCtx || !audioSource || !musicGain || !sfxGain || !customSfxGain) return;
+    if (audioDest) {
+      for (const node of [audioSource, musicGain, sfxGain, customSfxGain]) {
+        try { node.disconnect(audioDest); } catch (_) {}
+      }
+      try { audioDest.stream.getTracks().forEach((t) => t.stop()); } catch (_) {}
+    }
+    audioDest = audioCtx.createMediaStreamDestination();
+    audioSource.connect(audioDest);
+    musicGain.connect(audioDest);
+    sfxGain.connect(audioDest);
+    customSfxGain.connect(audioDest);
+  }
+
   // ---------------------------------------------------------------- export
   // Priority: 1) WebCodecs H.264 (+AAC if supported) muxed to real .mp4 by
   // the vendored mp4-muxer; 2) MediaRecorder 'video/mp4'; 3) MediaRecorder
@@ -1448,14 +1469,27 @@
     if (!window.MediaRecorder) throw new Error("This browser does not support MediaRecorder.");
     copyEditorFrameToExportCanvas(profile);
     const stream = exportCanvas.captureStream(profile.fps || 30);
-    audioDest.stream.getAudioTracks().forEach((t) => stream.addTrack(t));
-    const candidates = [
-      ['video/mp4;codecs="avc1.42E01E,mp4a.40.2"', "mp4"], ["video/mp4", "mp4"],
+    const sourceAudioTrack = audioDest && audioDest.stream.getAudioTracks().find((t) => t.readyState === "live");
+    if (!sourceAudioTrack) {
+      stream.getVideoTracks().forEach((t) => t.stop());
+      throw new Error("Export audio track is not live.");
+    }
+    const exportAudioTrack = sourceAudioTrack.clone();
+    stream.addTrack(exportAudioTrack);
+
+    // WebM/Opus is substantially more reliable than Chrome's newer MP4
+    // MediaRecorder path for long canvas + WebAudio captures. High-res exports
+    // use it as an internal synchronized master; normal 1080p still prefers MP4.
+    const webm = [
       ["video/webm;codecs=vp9,opus", "webm"], ["video/webm;codecs=vp8,opus", "webm"], ["video/webm", "webm"],
     ];
+    const mp4 = [
+      ['video/mp4;codecs="avc1.42E01E,mp4a.40.2"', "mp4"], ["video/mp4", "mp4"],
+    ];
+    const candidates = profile && profile.stableMaster ? [...webm, ...mp4] : [...mp4, ...webm];
     const found = candidates.find(([m]) => MediaRecorder.isTypeSupported(m)) || ["", "webm"];
     const ext = found[1];
-    const opts = { videoBitsPerSecond: profile.videoBitrate };
+    const opts = { videoBitsPerSecond: profile.videoBitrate, audioBitsPerSecond: 192_000 };
     if (found[0]) opts.mimeType = found[0];
     const rec = new MediaRecorder(stream, opts), chunks = [];
     rec.ondataavailable = (e) => { if (e.data && e.data.size) chunks.push(e.data); };
@@ -1483,7 +1517,11 @@
         stopCopyLoop(); document.removeEventListener("visibilitychange", mrVisibilityHandler);
         if (engine.exportPaused) setExportPaused(false);
         if (rec.state !== "inactive") rec.stop();
-        await done; stream.getTracks().forEach((t) => t.stop());
+        await done;
+        // Only stop tracks created for THIS recorder. Never stop audioDest's
+        // shared source track, otherwise every later export becomes silent.
+        stream.getVideoTracks().forEach((t) => t.stop());
+        try { exportAudioTrack.stop(); } catch (_) {}
         if (recError) throw recError;
         const blob = new Blob(chunks, { type: ext === "mp4" ? "video/mp4" : "video/webm" });
         if (!blob.size) throw new Error("Recorder produced an empty file.");
@@ -1493,7 +1531,7 @@
   }
 
   function recorderFormatChoice(profile) {
-    const preferWebm = profile && profile.width >= 4000;
+    const preferWebm = !!(profile && (profile.stableMaster || profile.width > 1080));
     const mp4 = [
       ['video/mp4', 'mp4'],
       ['video/mp4;codecs="avc1.42E01E,mp4a.40.2"', 'mp4'],
@@ -1544,7 +1582,7 @@
     masterAudioDest.stream.getAudioTracks().forEach((t) => outStream.addTrack(t));
 
     const [mime, ext] = recorderFormatChoice(profile);
-    const opts = { videoBitsPerSecond: profile.videoBitrate };
+    const opts = { videoBitsPerSecond: profile.videoBitrate, audioBitsPerSecond: 192_000 };
     if (mime) opts.mimeType = mime;
     let rec;
     try { rec = new MediaRecorder(outStream, opts); }
@@ -1598,7 +1636,7 @@
         v.addEventListener('ended', resolve, { once:true });
         v.addEventListener('error', () => reject(new Error('Master playback failed during high-resolution scaling.')), { once:true });
       });
-      await new Promise((r) => setTimeout(r, 150));
+      await new Promise((r) => setTimeout(r, 350));
     } finally {
       stopped = true;
       clearInterval(progressTimer);
@@ -1621,11 +1659,14 @@
   async function exportVideo() {
     if (engine.running || engine.recording) return;
     ensureAudioGraph();
+    if (audioCtx && audioCtx.state === "suspended") await audioCtx.resume().catch(() => {});
+    rebuildExportAudioDestination();
+    await sleep(40);
     const quality = $('export-quality') ? $('export-quality').value : '1080p';
     const requested = EXPORT_PROFILES[quality] || EXPORT_PROFILES['1080p'];
     const highRes = quality === '2K' || quality === '4K' || quality === '8K';
     const masterProfile = highRes
-      ? { ...EXPORT_PROFILES['1080p'], width:1080, height:1920, fps:30, renderFps:30, videoBitrate:12_000_000 }
+      ? { ...EXPORT_PROFILES['1080p'], width:1080, height:1920, fps:30, renderFps:30, videoBitrate:12_000_000, stableMaster:true }
       : requested;
 
     engine.running = true; engine.recording = true; engine.stopFlag = false;
@@ -1673,7 +1714,7 @@
       const base = state.title.replace(/[^\w]+/g, '-').replace(/^-+|-+$/g, '').toLowerCase() || 'ranking';
       a.download = `${base}-${quality}.${finalExt}`; a.click();
       setTimeout(() => URL.revokeObjectURL(href), 60_000);
-      $('export-status').textContent = `Saved ${quality} · ${requested.width}×${requested.height} · ${requested.fps || 30}fps · synchronized audio/video master · ${(finalBlob.size / 1e6).toFixed(1)} MB .${finalExt}`;
+      $('export-status').textContent = `Saved ${quality} · ${requested.width}×${requested.height} · ${requested.fps || 30}fps · synchronized audio + video · stable ${finalExt.toUpperCase()} · ${(finalBlob.size / 1e6).toFixed(1)} MB`;
     }
     renderStatic();
   }
