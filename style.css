@@ -565,3 +565,120 @@ input:focus, select:focus { border-color:#5bd6ff; box-shadow:0 0 0 3px rgba(91,2
 .premium-native-picker { display:flex; align-items:center; gap:8px; }
 .premium-native-picker input[type="color"], #inp-premium-center-color, #inp-premium-outer-color { width:42px; height:34px; padding:2px; border:1px solid var(--panel-edge-2); border-radius:7px; background:var(--bg2); cursor:pointer; }
 .premium-rank-sample { color:var(--premium-center,#fff); filter:drop-shadow(0 0 1px var(--premium-outer,#000)) drop-shadow(1px 2px 0 var(--premium-outer,#000)) drop-shadow(-1px -1px 0 var(--premium-outer,#000)); }
+
+
+/* ---- safe custom selects ----
+   Replaces native Chromium/Windows select popups, which can sometimes paint a
+   giant white compositor rectangle over this dark GPU-heavy editor. */
+html { color-scheme: dark; }
+select option { background:#09111e; color:#dbeafe; }
+
+.safe-select-shell {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+.safe-select-native {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+  overflow: hidden !important;
+}
+.safe-select-button {
+  width: 100%;
+  min-width: 0;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 12px;
+  border: 1px solid #253750;
+  border-radius: 9px;
+  background: #09111e;
+  color: #dbeafe;
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.35;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+  transition: border-color .14s, box-shadow .14s, background .14s;
+}
+.safe-select-button:hover { border-color:#3a5578; background:#0b1627; }
+.safe-select-button:focus-visible,
+.safe-select-button[aria-expanded="true"] {
+  border-color:#5bd6ff;
+  box-shadow:0 0 0 3px rgba(91,214,255,.12);
+}
+.safe-select-button:disabled { opacity:.45; cursor:not-allowed; }
+.safe-select-value {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.safe-select-arrow {
+  flex: 0 0 auto;
+  color:#8fa6c7;
+  font-size:16px;
+  line-height:1;
+  transform: translateY(-1px);
+}
+.safe-select-button[aria-expanded="true"] .safe-select-arrow { transform: rotate(180deg) translateY(1px); }
+
+.safe-select-menu {
+  position: fixed;
+  z-index: 100000;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 6px;
+  background: rgba(7,13,24,.995);
+  border: 1px solid #315071;
+  border-radius: 11px;
+  box-shadow: 0 18px 50px rgba(0,0,0,.58), 0 0 0 1px rgba(91,214,255,.06);
+  color:#dbeafe;
+}
+.safe-select-option {
+  width: 100%;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color:#dbeafe;
+  font: inherit;
+  font-size:13px;
+  text-align:left;
+  cursor:pointer;
+  outline:none;
+}
+.safe-select-option:hover,
+.safe-select-option:focus-visible { background:#13243a; color:#fff; }
+.safe-select-option.selected { background:linear-gradient(135deg,rgba(70,102,255,.34),rgba(0,184,217,.22)); color:#fff; }
+.safe-select-option:disabled { opacity:.4; cursor:not-allowed; }
+.safe-select-check { width:16px; flex:0 0 16px; color:#72e6ff; font-weight:900; }
+.safe-select-option-text { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+.mini-field > .safe-select-shell,
+.field > .safe-select-shell { width:100%; }
+.trim-ctl > .safe-select-shell { flex:1 1 220px; width:auto; min-width:150px; }
+.emoji-style-row > .safe-select-shell { flex:1 1 auto; width:auto; min-width:0; }
+.source-picker > .safe-select-shell { min-width:250px; }
+#panel-export .safe-select-button { min-height:42px; }
+
+@media (max-width: 900px) {
+  .source-picker > .safe-select-shell { min-width:0; }
+  .safe-select-menu { max-width:calc(100vw - 16px)!important; }
+}
