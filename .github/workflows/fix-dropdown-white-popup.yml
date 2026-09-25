@@ -1,0 +1,37 @@
+name: Fix dropdown white popup bug
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/scripts/fix_dropdown_white_popup.py'
+      - '.github/workflows/fix-dropdown-white-popup.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply dropdown UI fix
+        run: python .github/scripts/fix_dropdown_white_popup.py
+      - name: Syntax check
+        run: node --check app.js
+      - name: Verify custom select coverage
+        run: |
+          grep -q "SAFE_SELECT_UI_V1" app.js
+          grep -q "MutationObserver" app.js
+          grep -q "safe-select-menu" style.css
+          grep -q "safeSelectUI.install()" app.js
+      - name: Commit fix
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app.js style.css
+          git commit -m "Replace buggy native dropdowns with stable custom selects" || exit 0
+          git push
