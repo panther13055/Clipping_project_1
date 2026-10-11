@@ -151,7 +151,7 @@
     </section>
 
     <!-- Text style -->
-    <section class="panel editor-only collapsed" id="panel-text">
+    <section class="panel editor-only" id="panel-text">
       <button type="button" class="panel-head">
         <span class="panel-badge">4</span>
         <span class="panel-name">Text style &amp; size</span>
@@ -159,6 +159,20 @@
       </button>
       <div class="panel-body">
         <div id="title-colors" class="title-colors"></div>
+
+        <div class="tool-card rank-box-tool">
+          <div class="tool-card-title">Rank box &amp; spacing</div>
+          <label class="check-field">
+            <input type="checkbox" id="inp-rank-box-move"> Show rank box on preview (drag border to move all ranks)
+          </label>
+          <div class="row" style="margin-top:9px">
+            <button class="btn btn-primary btn-small" id="btn-distribute-ranks" title="Distribute the rank rows with equal gaps">↕ Equal spacing</button>
+          </div>
+          <label class="check-field" style="margin-top:10px">
+            <input type="checkbox" id="inp-auto-rank-spacing" checked> Auto equal spacing when a rank is moved
+          </label>
+          <p class="hint" style="margin-bottom:0">Turn the box on to see a clear cyan frame around the full rank stack in the editor preview. Drag the frame border to move every rank together. The frame is an editing guide only and will not appear in your exported video.</p>
+        </div>
 
         <div class="tool-card" id="video-layout-card">
           <div class="tool-card-title">Layout &amp; video position</div>
@@ -284,7 +298,7 @@
             <label class="check-field mini-check"><input type="checkbox" id="inp-selected-lock" disabled> Lock selected</label>
             <button class="btn btn-ghost btn-small" id="btn-reset-selected" disabled>Reset selected</button>
           </div>
-          <p class="hint" style="margin-bottom:0">Tip: drag a rank to adjust its position. Use Creative tools → Rank box & spacing for the box and equal-spacing controls. Arrow keys nudge 2px; Shift+Arrow nudges 10px.</p>
+          <p class="hint" style="margin-bottom:0">Tip: drag a rank to adjust its position. Use the Rank box & spacing controls at the top of this Text style & size panel. Arrow keys nudge 2px; Shift+Arrow nudges 10px.</p>
         </div>
 
         <button class="btn btn-ghost btn-small" id="btn-reset-layout">Reset all layout positions</button>
@@ -293,26 +307,14 @@
 
 
     <!-- Creative tools -->
-    <section class="panel" id="panel-tools">
+    <section class="panel editor-only collapsed" id="panel-tools">
       <button type="button" class="panel-head">
         <span class="panel-badge">5</span>
         <span class="panel-name">Creative tools</span>
         <span class="chev">▾</span>
       </button>
       <div class="panel-body">
-        <div class="tool-card rank-box-tool">
-          <div class="tool-card-title">Rank box & spacing</div>
-          <label class="check-field">
-            <input type="checkbox" id="inp-rank-box-move"> Show rank box on preview (drag border to move all ranks)
-          </label>
-          <div class="row" style="margin-top:9px">
-            <button class="btn btn-primary btn-small" id="btn-distribute-ranks" title="Distribute the rank rows with equal gaps">↕ Equal spacing</button>
-          </div>
-          <label class="check-field" style="margin-top:10px">
-            <input type="checkbox" id="inp-auto-rank-spacing" checked> Auto equal spacing when a rank is moved
-          </label>
-          <p class="hint" style="margin-bottom:0">Turn the box on to see a clear cyan frame around the full rank stack in the editor preview. Drag the frame border to move every rank together. The frame is an editing guide only and will not appear in your exported video.</p>
-        </div>
+
 
         <div class="tool-card">
           <div class="tool-card-title">Watermark</div>
