@@ -819,7 +819,7 @@
 
     // RANK_SPACING_BOX_MOVE_V1: optional group frame. The visible outline is
     // draggable; clicks directly on a rank still select that individual rank.
-    if (state.rankBoxMove && !engine.recording && !engine.running) {
+    if (state.rankBoxMove && !engine.recording) {
       const rankRows = hitBoxes.filter((hb) => /^rank\d+$/.test(hb.id));
       if (rankRows.length) {
         const gx1 = Math.min(...rankRows.map((b) => b.x));
@@ -3954,6 +3954,8 @@
     if (engine.recording) return;
     const p = canvasPoint(e), hb = hitTest(p);
     if (!hb) { if (!engine.running) selectText(null); return; }
+    // Keep the editing frame visible during preview playback, but don't drag it while playing.
+    if (engine.running && hb.id === "ranksGroup") return;
     e.preventDefault();
     if (hb.id.indexOf("box") === 0 || hb.id === "videoRect") {
       if (engine.running) return;
