@@ -827,16 +827,28 @@
         const gx2 = Math.max(...rankRows.map((b) => b.x + b.w));
         const gy2 = Math.max(...rankRows.map((b) => b.y + b.h));
         const pad = 34;
-        const groupHit = { id:"ranksGroup", x:gx1-pad, y:gy1-pad, w:gx2-gx1+pad*2, h:gy2-gy1+pad*2 };
+        // Keep the complete frame on-canvas even when the first/last rank is near an edge.
+        const left = Math.max(8, gx1-pad), top = Math.max(8, gy1-pad);
+        const right = Math.min(W-8, gx2+pad), bottom = Math.min(H-8, gy2+pad);
+        const groupHit = { id:"ranksGroup", x:left, y:top, w:Math.max(1,right-left), h:Math.max(1,bottom-top) };
         hitBoxes.push(groupHit);
         c.save();
-        c.setLineDash([14,10]); c.lineWidth=3; c.strokeStyle="rgba(91,214,255,.96)";
+        // Subtle tint plus a high-contrast glowing dashed frame makes the entire stack easy to spot.
+        c.fillStyle="rgba(25,173,255,.065)";
+        c.fillRect(groupHit.x, groupHit.y, groupHit.w, groupHit.h);
+        c.setLineDash([12,8]); c.lineWidth=4; c.strokeStyle="rgba(91,214,255,.99)";
+        c.shadowColor="rgba(91,214,255,.55)"; c.shadowBlur=12;
         c.strokeRect(groupHit.x, groupHit.y, groupHit.w, groupHit.h);
-        c.setLineDash([]);
-        c.fillStyle="rgba(7,13,24,.96)";
-        c.fillRect(groupHit.x, groupHit.y-24, 118, 22);
-        c.fillStyle="#8ceaff"; c.font="bold 16px system-ui"; c.textAlign="left"; c.textBaseline="middle";
-        c.fillText("DRAG RANK BOX", groupHit.x+7, groupHit.y-13);
+        c.shadowBlur=0; c.setLineDash([]);
+        const labelW=184, labelH=26;
+        const labelX=(groupHit.x+groupHit.w+labelW+12 < W) ? groupHit.x+groupHit.w+8 : Math.max(4,groupHit.x);
+        const labelY=Math.max(4,groupHit.y-labelH-4);
+        c.fillStyle="rgba(7,13,24,.98)";
+        c.fillRect(labelX,labelY,labelW,labelH);
+        c.lineWidth=1.5; c.strokeStyle="rgba(91,214,255,.98)";
+        c.strokeRect(labelX,labelY,labelW,labelH);
+        c.fillStyle="#8ceaff"; c.font="bold 14px system-ui"; c.textAlign="left"; c.textBaseline="middle";
+        c.fillText("RANK BOX · DRAG EDGE", labelX+8, labelY+labelH/2);
         c.restore();
       }
     }
