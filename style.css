@@ -63,11 +63,6 @@ body.setup-mode .sidebar { max-width: 540px; flex: 0 1 540px; }
 body.setup-mode #panel-project .panel-head { pointer-events: none; }
 body.setup-mode #panel-project .chev { display: none; }
 body.setup-mode #panel-project.collapsed .panel-body { display: block; }
-/* Keep Rank box & spacing discoverable even before a project is created. */
-body.setup-mode #panel-tools .panel-body { display: block !important; }
-body.setup-mode #panel-tools .tool-card:not(.rank-box-tool) { display: none !important; }
-body.setup-mode #panel-tools .panel-head { cursor: default; }
-body.setup-mode #panel-tools .chev { display: none; }
 body:not(.setup-mode) .setup-only { display: none; }
 body:not(.setup-mode) #btn-create { display: none; }
 
