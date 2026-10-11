@@ -240,7 +240,13 @@
           <input type="range" id="inp-side-size" min="50" max="200" value="100">
         </label>
         <label class="field check-field">
-          <input type="checkbox" id="inp-group-move"> Move ranks as one group
+          <input type="checkbox" id="inp-group-move"> Drag any rank = move whole list
+        </label>
+        <label class="field check-field">
+          <input type="checkbox" id="inp-auto-rank-spacing" checked> Auto equal spacing when a rank is moved
+        </label>
+        <label class="field check-field">
+          <input type="checkbox" id="inp-rank-box-move"> Show draggable rank box (drag its border to move all ranks)
         </label>
 
         <div class="tool-card">
@@ -275,7 +281,7 @@
             <button class="btn btn-ghost btn-small" id="btn-align-left">Left</button>
             <button class="btn btn-ghost btn-small" id="btn-align-center">Center</button>
             <button class="btn btn-ghost btn-small" id="btn-align-right">Right</button>
-            <button class="btn btn-ghost btn-small" id="btn-distribute-ranks">Distribute ranks</button>
+            <button class="btn btn-ghost btn-small" id="btn-distribute-ranks">Equal spacing</button>
           </div>
           <div class="row compact-row">
             <label class="mini-field">X <input type="number" id="inp-pos-x" step="1" disabled></label>
@@ -283,7 +289,7 @@
             <label class="check-field mini-check"><input type="checkbox" id="inp-selected-lock" disabled> Lock selected</label>
             <button class="btn btn-ghost btn-small" id="btn-reset-selected" disabled>Reset selected</button>
           </div>
-          <p class="hint" style="margin-bottom:0">Tip: drag text directly on the preview. Arrow keys nudge 2px; Shift+Arrow nudges 10px. Snapping helps with center/safe-zone alignment.</p>
+          <p class="hint" style="margin-bottom:0">Tip: drag a rank to set its position; Auto equal spacing reflows the other ranks around it. Enable the draggable rank box to move the full rank stack by its border. Arrow keys nudge 2px; Shift+Arrow nudges 10px.</p>
         </div>
 
         <button class="btn btn-ghost btn-small" id="btn-reset-layout">Reset all layout positions</button>

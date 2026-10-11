@@ -153,6 +153,8 @@
                          // label holds text + emoji as one string
     order: [],           // playback order as rank positions, e.g. [6,5,4,3,2,1]
     groupMove: false,    // when true, dragging any rank moves the whole list
+    autoRankSpacing: true, // dragging a rank reflows the stack with equal gaps
+    rankBoxMove: false,    // show a draggable outline around the complete rank stack
     // custom drag offsets in canvas coords; null/absent = auto layout.
     // Applied as a translation of the auto-layout position, so the sliders
     // still scale each element around its own (possibly moved) anchor.
@@ -752,7 +754,7 @@
   // Bounding box of the currently dragged element (union of rows for a group).
   function boxForDrag(id) {
     if (id === "ranksGroup") {
-      const rs = hitBoxes.filter((hb) => hb.id.indexOf("rank") === 0);
+      const rs = hitBoxes.filter((hb) => /^rank\d+$/.test(hb.id));
       if (!rs.length) return null;
       const x1 = Math.min(...rs.map((b) => b.x)), y1 = Math.min(...rs.map((b) => b.y));
       const x2 = Math.max(...rs.map((b) => b.x + b.w)), y2 = Math.max(...rs.map((b) => b.y + b.h));
@@ -814,6 +816,31 @@
     }
     drawTitle(c);
     drawRanks(c, revealed);
+
+    // RANK_SPACING_BOX_MOVE_V1: optional group frame. The visible outline is
+    // draggable; clicks directly on a rank still select that individual rank.
+    if (state.rankBoxMove && !engine.recording && !engine.running) {
+      const rankRows = hitBoxes.filter((hb) => /^rank\d+$/.test(hb.id));
+      if (rankRows.length) {
+        const gx1 = Math.min(...rankRows.map((b) => b.x));
+        const gy1 = Math.min(...rankRows.map((b) => b.y));
+        const gx2 = Math.max(...rankRows.map((b) => b.x + b.w));
+        const gy2 = Math.max(...rankRows.map((b) => b.y + b.h));
+        const pad = 34;
+        const groupHit = { id:"ranksGroup", x:gx1-pad, y:gy1-pad, w:gx2-gx1+pad*2, h:gy2-gy1+pad*2 };
+        hitBoxes.push(groupHit);
+        c.save();
+        c.setLineDash([14,10]); c.lineWidth=3; c.strokeStyle="rgba(91,214,255,.96)";
+        c.strokeRect(groupHit.x, groupHit.y, groupHit.w, groupHit.h);
+        c.setLineDash([]);
+        c.fillStyle="rgba(7,13,24,.96)";
+        c.fillRect(groupHit.x, groupHit.y-24, 118, 22);
+        c.fillStyle="#8ceaff"; c.font="bold 16px system-ui"; c.textAlign="left"; c.textBaseline="middle";
+        c.fillText("DRAG RANK BOX", groupHit.x+7, groupHit.y-13);
+        c.restore();
+      }
+    }
+
     drawFreeTexts(c);
     drawWatermark(c);
     drawSequencePrompts(c);
@@ -1757,6 +1784,7 @@
           rankNumberStyle: state.rankNumberStyle || "standard", rankPremiumPalette: state.rankPremiumPalette || "reference", rankPremiumStrength: state.rankPremiumStrength || 100, rankPremiumCustomColors: (state.rankPremiumCustomColors || []).slice(), rankPremiumCenterColor: state.rankPremiumCenterColor || "#ffffff", rankPremiumOuterColor: state.rankPremiumOuterColor || "#050505",
       rankNumberStyle: state.rankNumberStyle || "standard", rankPremiumPalette: state.rankPremiumPalette || "reference", rankPremiumStrength: state.rankPremiumStrength || 100, rankPremiumCustomColors: (state.rankPremiumCustomColors || []).slice(), rankPremiumCenterColor: state.rankPremiumCenterColor || "#ffffff", rankPremiumOuterColor: state.rankPremiumOuterColor || "#050505",
           titleScale: state.titleScale, sideScale: state.sideScale, groupMove: state.groupMove,
+          autoRankSpacing: state.autoRankSpacing !== false, rankBoxMove: !!state.rankBoxMove,
           editRank: state.editRank, order: state.order.slice(),
           layout: JSON.parse(JSON.stringify(state.layout)),
           locks: JSON.parse(JSON.stringify(state.locks || { title:false, ranks:{} })),
@@ -1852,7 +1880,8 @@
       state.rankNumberStyle = s.rankNumberStyle || "standard"; state.rankPremiumPalette = s.rankPremiumPalette || "reference"; state.rankPremiumStrength = Number(s.rankPremiumStrength) || 100; state.rankPremiumCustomColors = (s.rankPremiumCustomColors || ["#4f5dff","#e6495f","#dfe5ff","#f5c518","#22c55e","#a855f7","#06b6d4","#ff8c00","#ff2e93","#ffffff"]).slice(); state.rankPremiumCenterColor = s.rankPremiumCenterColor || "#ffffff"; state.rankPremiumOuterColor = s.rankPremiumOuterColor || "#050505";
     state.rankNumberStyle = s.rankNumberStyle || "standard"; state.rankPremiumPalette = s.rankPremiumPalette || "reference"; state.rankPremiumStrength = Number(s.rankPremiumStrength) || 100; state.rankPremiumCustomColors = (s.rankPremiumCustomColors || ["#4f5dff","#e6495f","#dfe5ff","#f5c518","#22c55e","#a855f7","#06b6d4","#ff8c00","#ff2e93","#ffffff"]).slice(); state.rankPremiumCenterColor = s.rankPremiumCenterColor || "#ffffff"; state.rankPremiumOuterColor = s.rankPremiumOuterColor || "#050505";
       state.titleScale = s.titleScale || 1; state.sideScale = s.sideScale || 1;
-      state.groupMove = !!s.groupMove; state.editRank = s.editRank || 1;
+      state.groupMove = !!s.groupMove; state.autoRankSpacing = s.autoRankSpacing !== false; state.rankBoxMove = !!s.rankBoxMove;
+      state.editRank = s.editRank || 1;
       state.order = (s.order && s.order.length) ? s.order.slice() : [];
       state.layout = s.layout ? JSON.parse(JSON.stringify(s.layout)) : { title: null, ranks: {}, ranksGroup: null };
       state.locks = s.locks ? JSON.parse(JSON.stringify(s.locks)) : { title:false, ranks:{} };
@@ -3408,6 +3437,7 @@
       numRanks: state.numRanks, noRankMode: !!state.noRankMode, layoutMode: state.layoutMode || "classic", videoRect: { ...(state.videoRect || defaultVideoRect()) }, titleColor: state.titleColor, accentColor: state.accentColor,
       titleStyle: state.titleStyle, titleWordColors: { ...(state.titleWordColors || {}) },
       titleScale: state.titleScale, sideScale: state.sideScale, groupMove: state.groupMove,
+          autoRankSpacing: state.autoRankSpacing !== false, rankBoxMove: !!state.rankBoxMove,
       ranks: state.ranks.map((r) => ({
         label: r.label, labelFromUser: r.labelFromUser, color: r.color, labelColor: r.labelColor, sizeScale: r.sizeScale,
         clip: r.clip, sourcing: r.sourcing, query: r.query, duration: r.duration,
@@ -3458,6 +3488,7 @@
     state.numRanks = s.numRanks; state.noRankMode = !!s.noRankMode; state.layoutMode = s.layoutMode || "classic"; state.videoRect = normalizeVideoRect(s.videoRect || defaultVideoRect(state.layoutMode)); state.titleColor = s.titleColor; state.accentColor = s.accentColor;
     state.titleStyle = s.titleStyle || "viral"; state.titleWordColors = { ...(s.titleWordColors || {}) };
     state.titleScale = s.titleScale; state.sideScale = s.sideScale; state.groupMove = s.groupMove;
+    state.autoRankSpacing = s.autoRankSpacing !== false; state.rankBoxMove = !!s.rankBoxMove;
     state.ranks = s.ranks.map((r) => {
       r.sfxEnabled = !!r.sfxEnabled;
       r.sfx = (r.sfx || []).map((x) => ({ ...x, _buffer: null }));
@@ -3512,6 +3543,8 @@
     $("inp-side-size").value = Math.round(state.sideScale * 100);
     $("val-side-size").textContent = Math.round(state.sideScale * 100) + "%";
     const gm = $("inp-group-move"); if (gm) gm.checked = state.groupMove;
+    const ars = $("inp-auto-rank-spacing"); if (ars) ars.checked = state.autoRankSpacing !== false;
+    const rbm = $("inp-rank-box-move"); if (rbm) rbm.checked = !!state.rankBoxMove;
     const ts = $("inp-title-style"); if (ts) ts.value = state.titleStyle || "viral";
     const pre = $("inp-premium-ranks"); if (pre) pre.checked = (state.rankNumberStyle || "standard") === "premium";
     const prp = $("inp-premium-rank-palette"); if (prp) prp.value = state.rankPremiumPalette || "reference";
@@ -3751,9 +3784,23 @@
   });
   $("btn-reset-order").addEventListener("click", () => { resetOrder(); renderOrderUI(); updateIdlePoster(); scheduleCommit(); });
 
-  // group-move toggle: when on, dragging any rank moves the whole list at once
+  // Group drag moves the whole stack when any rank is grabbed.
   const grp = $("inp-group-move");
-  if (grp) grp.addEventListener("change", (e) => { state.groupMove = e.target.checked; scheduleCommit(); });
+  if (grp) grp.addEventListener("change", (e) => { state.groupMove = e.target.checked; scheduleCommit(); renderStatic(); });
+
+  const autoSpace = $("inp-auto-rank-spacing");
+  if (autoSpace) autoSpace.addEventListener("change", (e) => {
+    state.autoRankSpacing = e.target.checked;
+    scheduleCommit();
+  });
+
+  const rankBox = $("inp-rank-box-move");
+  if (rankBox) rankBox.addEventListener("change", (e) => {
+    state.rankBoxMove = e.target.checked;
+    selectedTextId = null;
+    scheduleCommit();
+    renderStatic();
+  });
 
   // undo / redo — Ctrl/Cmd+Z (Shift or Ctrl/Cmd+Y to redo) + toolbar buttons
   $("btn-undo").addEventListener("click", undo);
@@ -3785,7 +3832,17 @@
     return false;
   }
   function hitTest(p) {
-    const pri = (b) => (b.id.startsWith("free:") ? 0 : b.id.indexOf("rank") === 0 ? 1 : b.id === "title" ? 2 : b.id === "videoRect" ? 4 : 3);
+    if (state.rankBoxMove) {
+      const group = hitBoxes.find((b) => b.id === "ranksGroup");
+      if (group) {
+        const edge = 16;
+        const inside = p.x >= group.x && p.x <= group.x + group.w && p.y >= group.y && p.y <= group.y + group.h;
+        const onEdge = p.x - group.x <= edge || group.x + group.w - p.x <= edge ||
+          p.y - group.y <= edge || group.y + group.h - p.y <= edge;
+        if (inside && onEdge) return group;
+      }
+    }
+    const pri = (b) => (b.id.startsWith("free:") ? 0 : /^rank\d+$/.test(b.id) ? 1 : b.id === "title" ? 2 : b.id === "ranksGroup" ? 3 : b.id === "videoRect" ? 4 : 3);
     const ordered = [...hitBoxes].sort((a, b) => pri(a) - pri(b));
     return ordered.find((b) => {
       const pad = isTextId(b.id) ? 28 : 0; // generous text hit area
@@ -3936,8 +3993,19 @@
   });
   const endDrag = (e) => {
     if (!drag) return;
+    const endedDrag = drag;
     drag=null; activeGuides=[]; canvas.style.cursor="default";
     try { canvas.releasePointerCapture(e.pointerId); } catch (_) {}
+
+    // If a single row was moved, keep that row near its dropped position and
+    // reflow every other row around it with equal visible gaps. Group drags
+    // already preserve spacing and should not be reflowed.
+    if (state.autoRankSpacing !== false && !state.groupMove && /^rank\d+$/.test(endedDrag.id)) {
+      renderStatic();
+      const anchorPos = Number(endedDrag.id.slice(4));
+      const anchor = hitBoxes.find((b) => b.id === "rank" + anchorPos);
+      if (anchor) equalizeRankSpacing(anchorPos, anchor.y);
+    }
     commitHistory(); renderStatic(); updateSelectionControls();
   };
   canvas.addEventListener("pointerup",endDrag); canvas.addEventListener("pointercancel",endDrag);
@@ -3994,14 +4062,55 @@
   $("btn-align-left").addEventListener("click",()=>alignRanks("left"));
   $("btn-align-center").addEventListener("click",()=>alignRanks("center"));
   $("btn-align-right").addEventListener("click",()=>alignRanks("right"));
+  function equalizeRankSpacing(anchorPos = null, anchorY = null) {
+    const rows = [];
+    for (let pos=1; pos<=state.numRanks; pos++) {
+      const hb = hitBoxes.find((b) => b.id === "rank" + pos);
+      if (hb) rows.push({ pos, hb, h: Math.max(1, hb.h) });
+    }
+    if (rows.length < 2) return false;
+
+    const list = layoutMetrics().list;
+    const top = list.y1 + 12, bottom = list.y2 - 12;
+    const heights = rows.map((r) => r.h);
+    const totalHeight = heights.reduce((sum, value) => sum + value, 0);
+    let targets = new Array(rows.length);
+    let gap = Math.max(0, (bottom - top - totalHeight) / (rows.length - 1));
+
+    const anchorIndex = anchorPos == null ? -1 : rows.findIndex((r) => r.pos === anchorPos);
+    if (anchorIndex >= 0) {
+      const beforeHeight = heights.slice(0, anchorIndex).reduce((sum, value) => sum + value, 0);
+      const afterHeight = heights.slice(anchorIndex + 1).reduce((sum, value) => sum + value, 0);
+      const minY = top + beforeHeight;
+      const maxY = bottom - heights[anchorIndex] - afterHeight;
+      const wantedY = Number.isFinite(anchorY) ? anchorY : rows[anchorIndex].hb.y;
+      const fixedY = clamp(wantedY, minY, maxY);
+      const beforeGap = anchorIndex > 0 ? (fixedY - top - beforeHeight) / anchorIndex : Infinity;
+      const afterCount = rows.length - anchorIndex - 1;
+      const afterGap = afterCount > 0 ? (bottom - fixedY - heights[anchorIndex] - afterHeight) / afterCount : Infinity;
+      gap = Math.max(0, Math.min(beforeGap, afterGap));
+      targets[anchorIndex] = fixedY;
+      for (let i=anchorIndex-1; i>=0; i--) targets[i] = targets[i+1] - gap - heights[i];
+      for (let i=anchorIndex+1; i<rows.length; i++) targets[i] = targets[i-1] + heights[i-1] + gap;
+    } else {
+      targets[0] = top;
+      for (let i=1; i<rows.length; i++) targets[i] = targets[i-1] + heights[i-1] + gap;
+    }
+
+    rows.forEach((row, i) => {
+      const old = state.layout.ranks[row.pos] || { dx:0, dy:0 };
+      state.layout.ranks[row.pos] = {
+        dx: Number(old.dx) || 0,
+        dy: (Number(old.dy) || 0) + targets[i] - row.hb.y,
+      };
+    });
+    return true;
+  }
+
   $("btn-distribute-ranks").addEventListener("click",()=>{
-    renderStatic(); const boxes=[];
-    for(let pos=1;pos<=state.numRanks;pos++){const hb=hitBoxes.find((b)=>b.id==="rank"+pos);if(hb)boxes.push({pos,hb});}
-    if(boxes.length>1){
-      const maxH=Math.max(...boxes.map((it)=>it.hb.h));
-      const first=LIST_BOX.y1, last=LIST_BOX.y2-maxH;
-      boxes.forEach((it,i)=>{const target=first+(last-first)*(i/(boxes.length-1));const o=getOffset("rank"+it.pos);state.layout.ranks[it.pos]={dx:o.dx,dy:o.dy+(target-it.hb.y)};});
-      commitHistory();renderStatic();updateSelectionControls();
+    renderStatic();
+    if (equalizeRankSpacing()) {
+      commitHistory(); renderStatic(); updateSelectionControls();
     }
   });
 
