@@ -1192,31 +1192,60 @@
   // currentTime reaches `end` (or the clip naturally ends). end=null → play to end.
   function playClip(url, start = 0, end = null, onStarted = null) {
     return new Promise((resolve, reject) => {
-      let done = false, raf = 0;
+      let done = false, raf = 0, watchdog = 0, readyTimeout = 0;
       const cleanup = () => {
         cancelAnimationFrame(raf);
+        clearTimeout(watchdog);
+        clearTimeout(readyTimeout);
         player.removeEventListener("ended", onEnd);
         player.removeEventListener("error", onErr);
         player.removeEventListener("loadeddata", onReady);
+        player.removeEventListener("canplay", onReady);
       };
-      const stop = (ok, err) => { if (done) return; done = true; cleanup(); ok ? resolve() : reject(err); };
+      const stop = (ok, err) => {
+        if (done) return;
+        done = true; cleanup();
+        if (!ok) { try { player.pause(); } catch (_) {} reject(err); }
+        else resolve();
+      };
       const onEnd = () => stop(true);
-      const onErr = () => stop(false, new Error("Could not play clip"));
+      const onErr = () => stop(false, new Error("Could not play clip" + (player.error && player.error.message ? ": " + player.error.message : "")));
       const watch = () => {
         if (done) return;
-        if (engine.stopFlag) { player.pause(); return stop(true); }
-        if (end != null && player.currentTime >= end - 0.02) { player.pause(); return stop(true); }
+        if (engine.stopFlag) { try { player.pause(); } catch (_) {} return stop(true); }
+        if (end != null && player.currentTime >= end - 0.025) { player.pause(); return stop(true); }
         raf = requestAnimationFrame(watch);
       };
-      const onReady = () => {
-        try { if (start > 0) player.currentTime = start; } catch (_) {}
-        player.play().then(() => { try { if (onStarted) onStarted(); } catch (_) {} watch(); }).catch(onErr);
+      const onReady = async () => {
+        if (done || player.readyState < 2) return;
+        player.removeEventListener("loadeddata", onReady);
+        player.removeEventListener("canplay", onReady);
+        try {
+          if (start > 0) {
+            if (player.readyState >= 1) player.currentTime = start;
+            else await new Promise((res, rej) => {
+              const seeked = () => { clean(); res(); }, seekErr = () => { clean(); rej(new Error("Could not seek to clip trim point.")); };
+              const clean = () => { player.removeEventListener("seeked", seeked); player.removeEventListener("error", seekErr); };
+              player.addEventListener("seeked", seeked, { once:true });
+              player.addEventListener("error", seekErr, { once:true });
+              player.currentTime = start;
+            });
+          }
+          await player.play();
+          if (done) return;
+          try { if (onStarted) onStarted(); } catch (_) {}
+          watch();
+        } catch (e) { stop(false, e); }
       };
       player.addEventListener("ended", onEnd);
       player.addEventListener("error", onErr);
-      player.addEventListener("loadeddata", onReady, { once: true });
+      player.addEventListener("loadeddata", onReady);
+      player.addEventListener("canplay", onReady);
+      readyTimeout = setTimeout(() => stop(false, new Error("Clip timed out while loading. Check the clip URL/network and retry.")), 20000);
+      watchdog = setTimeout(() => stop(false, new Error("Clip playback timed out. Retry with a shorter clip or a stable network.")), Math.max(45000, ((end != null ? end : clipLen({url})) - start + 15) * 1000));
       player.src = url;
       player.load();
+      if (player.readyState >= 2) onReady();
     });
   }
 
