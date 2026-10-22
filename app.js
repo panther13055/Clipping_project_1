@@ -1696,66 +1696,133 @@
   }
 
   async function exportVideo() {
+    // Acquire the export lock synchronously, before any await. This prevents
+    // double-clicks from starting overlapping recorders/audio graphs.
     if (engine.running || engine.recording) return;
-    ensureAudioGraph();
-    if (audioCtx && audioCtx.state === "suspended") await audioCtx.resume().catch(() => {});
-    rebuildExportAudioDestination();
-    await sleep(40);
-    const quality = $('export-quality') ? $('export-quality').value : '1080p';
-    const requested = EXPORT_PROFILES[quality] || EXPORT_PROFILES['1080p'];
-    const highRes = quality === '2K' || quality === '4K' || quality === '8K';
+    engine.running = true;
+    engine.recording = true;
+    engine.stopFlag = false;
+    engine.pauseAccumMs = 0;
+    engine.pauseStarted = 0;
+    engine.exportPaused = false;
+    engine.exportProfile = null;
+    engine.exportFrameReady = false;
+
+    const exportBtn = $("btn-export");
+    const playBtn = $("btn-play");
+    const status = $("export-status");
+    const bar = $("export-bar");
+    const progress = $("export-progress");
+    if (exportBtn) exportBtn.disabled = true;
+    if (playBtn) playBtn.disabled = true;
+    if (progress) progress.classList.remove("hidden");
+    if (bar) bar.style.width = "0%";
+    if (status) status.textContent = "Preparing export…";
+
+    let rec = null;
+    let masterBlob = null;
+    let finalBlob = null;
+    let finalExt = "mp4";
+    let quality = $("export-quality") ? $("export-quality").value : "1080p";
+    let requested = EXPORT_PROFILES[quality] || EXPORT_PROFILES["1080p"];
+    const highRes = quality === "2K" || quality === "4K" || quality === "8K";
     const masterProfile = highRes
-      ? { ...EXPORT_PROFILES['1080p'], width:1080, height:1920, fps:30, renderFps:30, videoBitrate:12_000_000, stableMaster:true }
+      ? { ...EXPORT_PROFILES["1080p"], width:1080, height:1920, fps:30, renderFps:30, videoBitrate:12_000_000, stableMaster:true }
       : requested;
+    let fallbackNote = "";
 
-    engine.running = true; engine.recording = true; engine.stopFlag = false;
-    engine.exportProfile = masterProfile; engine.exportFrameReady = false; engine.exportLastRenderMs = 0; engine.exportDroppedFrames = 0;
-    engine.pauseAccumMs = 0; engine.pauseStarted = 0; engine.exportPaused = false;
-    $('btn-export').disabled = true; $('btn-play').disabled = true;
-    $('export-progress').classList.remove('hidden'); $('export-bar').style.width = '0%';
-
-    let rec = null, seqErr = null, masterBlob = null;
     try {
-      // Prefer MediaRecorder: its canvas and audio tracks share the same real-time
-      // clock. The old WebCodecs path is retained only as a compatibility fallback.
+      ensureAudioGraph();
+      if (audioCtx && audioCtx.state === "suspended") await audioCtx.resume();
+      rebuildExportAudioDestination();
+      await sleep(80);
+
+      engine.exportProfile = masterProfile;
+      engine.exportLastRenderMs = 0;
+      engine.exportDroppedFrames = 0;
+
+      // Prefer a single real-time audio/video recorder clock. Fall back to
+      // WebCodecs only when the browser cannot construct the MediaRecorder path.
       try { rec = startMediaRecorderPath(masterProfile); } catch (_) { rec = null; }
       if (!rec) rec = await startWebCodecsRecorder(masterProfile);
-      if (!rec) throw new Error('No supported synchronized recorder is available in this browser.');
-      $('export-status').textContent = highRes
-        ? `Pass 1/2 · creating synchronized 1080p master · 30fps · ${rec.label}`
-        : `Exporting ${quality} · ${requested.width}×${requested.height} · ${requested.fps || 30}fps · ${rec.label}`;
-      await runSequence((i, n) => {
-        const pct = Math.round((i / Math.max(1,n)) * (highRes ? 50 : 100));
-        $('export-bar').style.width = pct + '%';
-      });
-    } catch (e) { seqErr = e; }
+      if (!rec) throw new Error("This browser cannot start a synchronized video recorder. Try Chrome/Edge and export at 1080p.");
 
-    try { if (rec) masterBlob = await rec.stop(); } catch (e) { seqErr = seqErr || e; }
-    engine.running = false; engine.recording = false; engine.exportPaused = false;
-    engine.exportProfile = null; engine.exportFrameReady = false;
+      if (status) status.textContent = highRes
+        ? `Pass 1/2 · recording synchronized 1080p master · 30fps · ${rec.label}`
+        : `Recording ${quality} · ${requested.width}×${requested.height} · ${requested.fps || 30}fps · ${rec.label}`;
 
-    let finalBlob = masterBlob, finalExt = rec ? rec.ext : 'mp4';
-    if (!seqErr && !engine.stopFlag && highRes && masterBlob && masterBlob.size) {
+      let sequenceError = null;
       try {
-        $('export-bar').style.width = '50%';
-        const scaled = await upscaleSyncedMaster(masterBlob, requested, quality);
-        finalBlob = scaled.blob; finalExt = scaled.ext;
-      } catch (e) { seqErr = e; }
-    }
+        await runSequence((i, n) => {
+          if (bar) bar.style.width = Math.round((i / Math.max(1, n)) * (highRes ? 50 : 92)) + "%";
+          if (status && !engine.exportPaused) status.textContent = highRes
+            ? `Pass 1/2 · rendering rank ${i + 1}/${n} · synchronized audio/video`
+            : `Rendering rank ${i + 1}/${n} · synchronized audio/video`;
+        });
+      } catch (e) { sequenceError = e; }
 
-    $('btn-export').disabled = false; $('btn-play').disabled = false;
-    if (seqErr) {
-      $('export-status').textContent = 'Export error: ' + (seqErr.message || seqErr) + (highRes && masterBlob && masterBlob.size ? ' · Your synchronized master was created correctly; this device may not support the selected high-res encoder.' : '');
-    } else if (!engine.stopFlag && finalBlob && finalBlob.size > 0) {
-      $('export-bar').style.width = '100%';
-      const a = document.createElement('a'), href = URL.createObjectURL(finalBlob);
+      try { masterBlob = await rec.stop(); }
+      catch (e) { throw sequenceError || e; }
+      if (sequenceError) throw sequenceError;
+      if (engine.stopFlag) throw new Error("Export was stopped before the video finished.");
+      if (!masterBlob || !masterBlob.size) throw new Error("The recorder returned an empty video. Please retry the export.");
+
+      finalBlob = masterBlob;
+      finalExt = rec.ext || "webm";
+
+      if (highRes) {
+        if (bar) bar.style.width = "50%";
+        if (status) status.textContent = `Pass 2/2 · scaling synchronized master to ${quality}…`;
+        try {
+          const scaled = await upscaleSyncedMaster(masterBlob, requested, quality);
+          finalBlob = scaled.blob;
+          finalExt = scaled.ext;
+        } catch (e) {
+          // Preserve a valid, synchronized master rather than failing the whole
+          // download when this device/GPU cannot handle the optional upscale.
+          finalBlob = masterBlob;
+          finalExt = rec.ext || "webm";
+          quality = "1080p";
+          requested = EXPORT_PROFILES["1080p"];
+          fallbackNote = ` High-resolution scaling was unavailable, so the synchronized 1080p master was downloaded instead (${e.message || e}).`;
+        }
+      }
+
+      if (!finalBlob || !finalBlob.size) throw new Error("The final video file is empty, so it was not downloaded.");
+
+      const base = state.title.replace(/[^\w]+/g, "-").replace(/^-+|-+$/g, "").toLowerCase() || "ranking";
+      const href = URL.createObjectURL(finalBlob);
+      const a = document.createElement("a");
       a.href = href;
-      const base = state.title.replace(/[^\w]+/g, '-').replace(/^-+|-+$/g, '').toLowerCase() || 'ranking';
-      a.download = `${base}-${quality}.${finalExt}`; a.click();
-      setTimeout(() => URL.revokeObjectURL(href), 60_000);
-      $('export-status').textContent = `Saved ${quality} · ${requested.width}×${requested.height} · ${requested.fps || 30}fps · synchronized audio + video · stable ${finalExt.toUpperCase()} · ${(finalBlob.size / 1e6).toFixed(1)} MB`;
+      a.download = `${base}-${quality}.${finalExt}`;
+      a.style.display = "none";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(href), 120_000);
+
+      if (bar) bar.style.width = "100%";
+      if (status) status.textContent = `Download ready: ${quality} · ${requested.width}×${requested.height} · synchronized audio + video · ${finalExt.toUpperCase()} · ${(finalBlob.size / 1e6).toFixed(1)} MB.${fallbackNote}`;
+    } catch (e) {
+      if (status) status.textContent = "Export failed: " + (e && e.message ? e.message : String(e)) + " Please keep this tab open and retry; if it repeats, choose 1080p and try again.";
+    } finally {
+      // Always release locks and UI controls, even if audio setup, encoding,
+      // sequence playback, or the browser download path throws.
+      engine.running = false;
+      engine.recording = false;
+      engine.exportPaused = false;
+      engine.exportProfile = null;
+      engine.exportFrameReady = false;
+      engine.pauseAccumMs = 0;
+      engine.pauseStarted = 0;
+      try { if (engine.raf) cancelAnimationFrame(engine.raf); } catch (_) {}
+      try { player.pause(); } catch (_) {}
+      try { musicEl.pause(); } catch (_) {}
+      try { stopCustomSfxSources(); } catch (_) {}
+      if (exportBtn) exportBtn.disabled = false;
+      if (playBtn) playBtn.disabled = false;
+      renderStatic();
     }
-    renderStatic();
   }
 
   // ---------------------------------------------- save / load a whole project
