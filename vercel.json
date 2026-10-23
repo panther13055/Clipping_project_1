@@ -1,8 +1,73 @@
 {
   "rewrites": [
-    { "source": "/social/:path*", "destination": "https://clipping-backend-production-d7a6.up.railway.app/social/:path*" },
-    { "source": "/yt/:path*", "destination": "https://clipping-backend-production-d7a6.up.railway.app/yt/:path*" },
-    { "source": "/media/:path*", "destination": "https://clipping-backend-production-d7a6.up.railway.app/media/:path*" },
-    { "source": "/.cache/:path*", "destination": "https://clipping-backend-production-d7a6.up.railway.app/.cache/:path*" }
+    {
+      "source": "/social/:path*",
+      "destination": "https://clipping-backend-production-d7a6.up.railway.app/social/:path*"
+    },
+    {
+      "source": "/yt/:path*",
+      "destination": "https://clipping-backend-production-d7a6.up.railway.app/yt/:path*"
+    },
+    {
+      "source": "/media/:path*",
+      "destination": "https://clipping-backend-production-d7a6.up.railway.app/media/:path*"
+    },
+    {
+      "source": "/.cache/:path*",
+      "destination": "https://clipping-backend-production-d7a6.up.railway.app/.cache/:path*"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, no-cache, max-age=0, must-revalidate"
+        },
+        {
+          "key": "Pragma",
+          "value": "no-cache"
+        },
+        {
+          "key": "Expires",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "source": "/index.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, no-cache, max-age=0, must-revalidate"
+        },
+        {
+          "key": "Pragma",
+          "value": "no-cache"
+        },
+        {
+          "key": "Expires",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "source": "/app-exportfix-20261023b.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, no-cache, max-age=0, must-revalidate"
+        },
+        {
+          "key": "Pragma",
+          "value": "no-cache"
+        },
+        {
+          "key": "Expires",
+          "value": "0"
+        }
+      ]
+    }
   ]
 }
