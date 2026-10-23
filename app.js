@@ -1212,9 +1212,9 @@
 
   // Plays only the [start,end] window of a clip: seeks in, then stops the moment
   // currentTime reaches `end` (or the clip naturally ends). end=null → play to end.
-  function playClip(url, start = 0, end = null, onStarted = null) {
+  function playClip(url, start = 0, end = null, onStarted = null, clipName = "clip") {
     return new Promise((resolve, reject) => {
-      let done = false, raf = 0, watchdog = 0, readyTimeout = 0;
+      let done = false, raf = 0, watchdog = 0, readyTimeout = 0, loadRetries = 0;
       const cleanup = () => {
         cancelAnimationFrame(raf);
         clearTimeout(watchdog);
@@ -1231,7 +1231,13 @@
         else resolve();
       };
       const onEnd = () => stop(true);
-      const onErr = () => stop(false, new Error("Could not play clip" + (player.error && player.error.message ? ": " + player.error.message : "")));
+      const onErr = () => {
+        const mediaError = player.error;
+        const details = mediaError
+          ? ` (media error code ${mediaError.code}${mediaError.message ? ": " + mediaError.message : ""})`
+          : "";
+        stop(false, new Error(`Could not play "${clipName}"${details}. The file may use a codec this browser cannot decode.`));
+      };
       const watch = () => {
         if (done) return;
         if (engine.stopFlag) { try { player.pause(); } catch (_) {} return stop(true); }
@@ -1268,8 +1274,29 @@
       player.addEventListener("error", onErr);
       player.addEventListener("loadeddata", onReady);
       player.addEventListener("canplay", onReady);
-      readyTimeout = setTimeout(() => stop(false, new Error("Clip timed out while loading. Check the clip URL/network and retry.")), 20000);
-      watchdog = setTimeout(() => stop(false, new Error("Clip playback timed out. Retry with a shorter clip or a stable network.")), Math.max(45000, ((end != null ? end : clipLen({url})) - start + 15) * 1000));
+      // Some local/remote videos occasionally stall on the first media request.
+      // Retry the same source once before failing, and report browser media state
+      // so a true unsupported-codec or broken-source issue is distinguishable.
+      const armReadyTimeout = (delay) => {
+        clearTimeout(readyTimeout);
+        readyTimeout = setTimeout(() => {
+          if (done || player.readyState >= 2) return;
+          if (loadRetries < 1) {
+            loadRetries++;
+            try { player.pause(); player.load(); } catch (_) {}
+            armReadyTimeout(25000);
+            return;
+          }
+          const states = `readyState=${player.readyState}, networkState=${player.networkState}`;
+          const mediaCode = player.error ? `, mediaError=${player.error.code}` : "";
+          stop(false, new Error(`"${clipName}" did not become playable after a retry (${states}${mediaCode}). Try re-uploading it as MP4 (H.264 video + AAC audio) or use a shorter clip.`));
+        }, delay);
+      };
+      armReadyTimeout(25000);
+      watchdog = setTimeout(() => stop(false, new Error(`"${clipName}" playback timed out. Try a shorter clip or re-upload as MP4 (H.264/AAC).`)), Math.max(60000, ((end != null ? end : clipLen({url})) - start + 20) * 1000));
+      player.pause();
+      player.removeAttribute("src");
+      player.load();
       player.src = url;
       player.load();
       if (player.readyState >= 2) onReady();
@@ -1340,7 +1367,7 @@
           let e = r.clip.trimEnd != null ? r.clip.trimEnd : (r.clip.srcDuration || null);
           if (e != null && (e - s) > budget) e = s + budget; // trim the tail to fit the project cap
           const visibleDur = Math.max(0.05, (e != null ? e - s : clipLen(r)));
-          await playClip(r.clip.url, s, e, () => scheduleRankCustomSfx(r, visibleDur));
+          await playClip(r.clip.url, s, e, () => scheduleRankCustomSfx(r, visibleDur), r.clip.name || `rank ${pos}`);
         } else {
           engine.current = { proc: pos, start: sequenceNow() };
           const durSec = Math.min(clipLen(r), budget);
