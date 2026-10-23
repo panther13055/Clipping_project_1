@@ -1949,7 +1949,7 @@ console.info("[Ranking Shorts Maker] export-fix build 2026-10-23 loaded");
       if (bar) bar.style.width = "100%";
       if (status) status.textContent = `Download ready: ${quality} · ${requested.width}×${requested.height} · synchronized audio + video · ${finalExt.toUpperCase()} · ${(finalBlob.size / 1e6).toFixed(1)} MB.${fallbackNote}`;
     } catch (e) {
-      if (status) status.textContent = "Export failed: " + (e && e.message ? e.message : String(e)) + " Please keep this tab open and retry; if it repeats, choose 1080p and try again.";
+      if (status) status.textContent = "[Export build 2026-10-23b] Export failed: " + (e && e.message ? e.message : String(e)) + " Please keep this tab open and retry; if it repeats, choose 1080p and try again.";
     } finally {
       // Always release locks and UI controls, even if audio setup, encoding,
       // sequence playback, or the browser download path throws.
