@@ -1240,6 +1240,11 @@
       };
       const onReady = async () => {
         if (done || player.readyState < 2) return;
+        // This timer is ONLY for initial media loading. If it stays armed
+        // during playback, any clip longer than 20 seconds is falsely reported
+        // as "timed out while loading" even though it loaded and is playing.
+        clearTimeout(readyTimeout);
+        readyTimeout = 0;
         player.removeEventListener("loadeddata", onReady);
         player.removeEventListener("canplay", onReady);
         try {
