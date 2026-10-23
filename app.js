@@ -1172,7 +1172,14 @@
 
   async function playTransitionAudio(maxDuration) {
     if (!transitionAudio.enabled || !transitionAudio.url || engine.stopFlag) return 0;
-    const buf = await ensureTransitionAudioBuffer();
+    // A damaged/slow transition-audio file must not block the entire export.
+    // If decoding does not finish promptly, skip this optional transition and
+    // keep rendering the remaining clips.
+    const buf = await withTimeout(
+      ensureTransitionAudioBuffer(),
+      12000,
+      "Transition audio took too long to decode; skipping this transition."
+    ).catch(() => null);
     if (!buf || engine.stopFlag) return 0;
     if (audioCtx.state === "suspended") await audioCtx.resume().catch(() => {});
     const full = buf.duration || 0;
@@ -1832,11 +1839,23 @@
         });
       } catch (e) { sequenceError = e; }
 
+      // Make the recording-finalization phase explicit. The sequence may
+      // finish before MediaRecorder/WebCodecs has assembled the MP4, so leaving
+      // the bar at its last render tick looks exactly like a frozen export.
+      if (!sequenceError) {
+        if (bar) bar.style.width = highRes ? "50%" : "94%";
+        if (status) status.textContent = highRes
+          ? "Pass 1/2 complete · finalizing synchronized master…"
+          : "Finalizing video file… please keep this tab open.";
+      }
+
       try { masterBlob = await rec.stop(); }
       catch (e) { throw sequenceError || e; }
       if (sequenceError) throw sequenceError;
       if (engine.stopFlag) throw new Error("Export was stopped before the video finished.");
       if (!masterBlob || !masterBlob.size) throw new Error("The recorder returned an empty video. Please retry the export.");
+      if (!highRes && bar) bar.style.width = "97%";
+      if (!highRes && status) status.textContent = "Video recorded · preparing the download…";
 
       finalBlob = masterBlob;
       finalExt = rec.ext || "webm";
