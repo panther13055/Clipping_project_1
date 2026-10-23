@@ -197,6 +197,15 @@
   }
 
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  // Bound async export stages so a browser/codec/network stall cannot leave
+  // the export button disabled forever.
+  function withTimeout(promise, ms, message) {
+    let timer = 0;
+    return Promise.race([
+      Promise.resolve(promise),
+      new Promise((_, reject) => { timer = setTimeout(() => reject(new Error(message)), ms); }),
+    ]).finally(() => clearTimeout(timer));
+  }
   const stripEmoji = (s) => String(s || "").replace(/[^\p{L}\p{N}\s]/gu, "").replace(/\s+/g, " ").trim();
   const escapeHtml = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) =>
     ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -1079,7 +1088,13 @@
   async function prepareRankCustomSfx(rank) {
     if (!rank || !rank.sfxEnabled) return;
     const items = (rank.sfx || []).filter((x) => x && x.active !== false && x.url);
-    await Promise.all(items.map((x) => ensureCustomSfxBuffer(x).catch(() => null)));
+    // Sound effects are optional. Never let a slow remote SFX URL freeze
+    // the entire video export before the rank even begins.
+    await withTimeout(
+      Promise.all(items.map((x) => ensureCustomSfxBuffer(x).catch(() => null))),
+      10000,
+      "Sound effects took too long to load."
+    ).catch(() => null);
   }
 
   function stopCustomSfxSources() {
@@ -1259,9 +1274,11 @@
   // Plays EVERY rank in order: real clips via <video>, clipless ranks as
   // timed procedural backgrounds — so a zero-upload project still yields a
   // complete watchable video.
-  async function runSequence(onClipStart) {
+  async function runSequence(onClipStart, onProgress) {
     const revealed = new Set();
     const seq = state.order.slice();
+    let activeSequenceIndex = 0;
+    let lastProgressPaint = 0;
     engine.current = null; // null => draw the <video>; {proc,start} => procedural bg
     engine.pos = seq[0] || 1;
     engine.pauseAccumMs = 0; engine.pauseStarted = 0; engine.exportPaused = false;
@@ -1271,6 +1288,16 @@
       if (cur) drawFrame({ proc: cur.proc, t: (sequenceNow() - cur.start) / 1000 }, revealed, dragUI(), engine.pos);
       else drawFrame(player.readyState >= 2 ? player : null, revealed, dragUI(), engine.pos);
       updateDucking();
+      // Update export progress continuously while a rank's video is playing.
+      // Previously progress changed only when the next rank started, making a
+      // perfectly healthy 6–10 second clip look like a frozen export.
+      if (onProgress && engine.recording) {
+        const now = performance.now();
+        if (now - lastProgressPaint >= 120) {
+          lastProgressPaint = now;
+          try { onProgress(engine.seqTimeSec, engine.expectedTotalSec, engine.pos, activeSequenceIndex, seq.length); } catch (_) {}
+        }
+      }
       if (engine.running) engine.raf = requestAnimationFrame(loop);
     };
     engine.raf = requestAnimationFrame(loop);
@@ -1283,6 +1310,7 @@
     engine.seqTimeSec = 0; engine.expectedTotalSec = Math.min(MAX_TOTAL_SECONDS, totalDuration());
     try {
       for (let i = 0; i < seq.length; i++) {
+        activeSequenceIndex = i;
         if (engine.stopFlag) break;
         // Project cap: never let the produced video exceed MAX_TOTAL_SECONDS.
         const budget = MAX_TOTAL_SECONDS - (sequenceNow() - seqStart) / 1000;
@@ -1499,7 +1527,7 @@
         stopTimer(); document.removeEventListener("visibilitychange", visibilityHandler);
         if (engine.exportPaused) setExportPaused(false);
         if (encErr) throw encErr;
-        await venc.flush();
+        await withTimeout(venc.flush(), 20000, "Video encoder finalization timed out. Retry at 1080p and keep this tab active.");
         const mediaDurationUs = Math.max(recorderElapsedUs(), lastTimestampUs >= 0 ? lastTimestampUs + Math.round(frameDurationUs) : 0);
         if (aenc && aenc.state === "configured") {
           try { audioSource.disconnect(capNode); musicGain.disconnect(capNode); sfxGain.disconnect(capNode); customSfxGain.disconnect(capNode); capNode.disconnect(); capSink.disconnect(); } catch (_) {}
@@ -1519,7 +1547,7 @@
             const ad = new AudioData({ format: "f32-planar", sampleRate, numberOfFrames: n, numberOfChannels: 2, timestamp: Math.round(ts), data });
             aenc.encode(ad); ad.close(); ts += (n / sampleRate) * 1e6;
           }
-          await aenc.flush();
+          await withTimeout(aenc.flush(), 20000, "Audio encoder finalization timed out. Retry the export with this tab active.");
         }
         engine.exportDroppedFrames = droppedFrames;
         if (encErr) throw encErr;
@@ -1582,18 +1610,26 @@
     return {
       label: ext === "mp4" ? "MP4 (MediaRecorder)" : "WebM (MediaRecorder fallback)", ext, mime: ext === "mp4" ? "video/mp4" : "video/webm",
       async stop() {
-        stopCopyLoop(); document.removeEventListener("visibilitychange", mrVisibilityHandler);
-        if (engine.exportPaused) setExportPaused(false);
-        if (rec.state !== "inactive") rec.stop();
-        await done;
-        // Only stop tracks created for THIS recorder. Never stop audioDest's
-        // shared source track, otherwise every later export becomes silent.
-        stream.getVideoTracks().forEach((t) => t.stop());
-        try { exportAudioTrack.stop(); } catch (_) {}
-        if (recError) throw recError;
-        const blob = new Blob(chunks, { type: ext === "mp4" ? "video/mp4" : "video/webm" });
-        if (!blob.size) throw new Error("Recorder produced an empty file.");
-        return blob;
+        stopCopyLoop();
+        document.removeEventListener("visibilitychange", mrVisibilityHandler);
+        try {
+          if (engine.exportPaused) setExportPaused(false);
+          if (rec.state !== "inactive") rec.stop();
+          await withTimeout(
+            done,
+            15000,
+            "Video recorder got stuck while finalizing the file. Retry once with 1080p and keep this tab active."
+          );
+          if (recError) throw recError;
+          const blob = new Blob(chunks, { type: ext === "mp4" ? "video/mp4" : "video/webm" });
+          if (!blob.size) throw new Error("Recorder produced an empty file.");
+          return blob;
+        } finally {
+          // Only stop tracks created for THIS recorder. Never stop audioDest's
+          // shared source track, otherwise every later export becomes silent.
+          stream.getVideoTracks().forEach((t) => t.stop());
+          try { exportAudioTrack.stop(); } catch (_) {}
+        }
       },
     };
   }
@@ -1782,11 +1818,17 @@
 
       let sequenceError = null;
       try {
-        await runSequence((i, n) => {
-          if (bar) bar.style.width = Math.round((i / Math.max(1, n)) * (highRes ? 50 : 92)) + "%";
+        await runSequence((i, n, pos) => {
           if (status && !engine.exportPaused) status.textContent = highRes
-            ? `Pass 1/2 · rendering rank ${i + 1}/${n} · synchronized audio/video`
-            : `Rendering rank ${i + 1}/${n} · synchronized audio/video`;
+            ? `Pass 1/2 · rendering rank ${pos || (i + 1)}/${n} · synchronized audio/video`
+            : `Rendering rank ${pos || (i + 1)}/${n} · synchronized audio/video`;
+        }, (elapsed, total, pos) => {
+          const ratio = total > 0 ? Math.min(1, Math.max(0, elapsed / total)) : 0;
+          const pct = Math.round(ratio * (highRes ? 50 : 92));
+          if (bar) bar.style.width = pct + "%";
+          if (status && !engine.exportPaused) status.textContent = highRes
+            ? `Pass 1/2 · rank ${pos} · ${Math.floor(elapsed)}s / ${Math.ceil(total || 0)}s · synchronized audio/video`
+            : `Rendering rank ${pos} · ${Math.floor(elapsed)}s / ${Math.ceil(total || 0)}s · synchronized audio/video`;
         });
       } catch (e) { sequenceError = e; }
 
